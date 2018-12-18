@@ -5,6 +5,7 @@ import Layout from '../components/layout'
 // import Image from '../components/image'
 import SEO from '../components/seo'
 import Input from '../components/input'
+import Timer from '../components/timer'
 
 const IndexPage = () => (
   <Layout>
