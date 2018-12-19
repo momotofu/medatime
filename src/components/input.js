@@ -14,17 +14,24 @@ class Input extends React.Component {
 	}
 
 	handleKeyDown(event) {
+		const { onKeyDownCallback } = this.props
+		const { time } = this.state
 		if (event.which === ENTER_KEY) {
-			console.log(event)
+			onKeyDownCallback(time)
+			//console.log(event)
 			// this.handleSubmit(event);
 		}
+	}
+
+	// lifecycle methods
+	componentDidMount() {
+		console.log("Props: ", this.props)
+		console.log("State: ", this.state)
 	}
 
 	componentDidUpdate() {
 		console.log(this.state)
 	}
-
-
 
 	render() {
 		return (
@@ -39,6 +46,7 @@ class Input extends React.Component {
 
 Input.propTypes = {
   siteTitle: PropTypes.string,
+  onKeyDownCallback: PropTypes.func.isRequired
 }
 
 Input.defaultProps = {
