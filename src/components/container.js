@@ -6,7 +6,10 @@ import Timer from './timer'
 class Container extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {isTimerVisible: false, inputTime: '0 sec'}
+		this.state = {
+			isTimerVisible: false,
+			inputTime: '0 sec'
+		}
 	}
 
 	inputCallback(currentInputTime) {
