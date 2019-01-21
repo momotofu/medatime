@@ -8,7 +8,7 @@ class Container extends React.Component {
 		super(props)
 		this.state = {
 			isTimerVisible: false,
-			inputTime: '0 sec'
+			inputTime: 0
 		}
 	}
 
@@ -28,7 +28,7 @@ class Container extends React.Component {
 		if (/*inputTime.trim().length > 0 && */ isTimerVisible) {
 			return (
 				<React.Fragment>
-					<Timer startingTimeInMilliseconds={ 60000 } />
+					<Timer startingTimeInMilliseconds={ inputTime } />
 					<button onClick={() => { this.setState({ isTimerVisible: false})}}>Cancel</button>
 				</React.Fragment>
 			)

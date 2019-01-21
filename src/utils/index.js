@@ -64,20 +64,27 @@ const reduceListToTimeUnits = (list, timeUnitsDict, numbersDict) => {
     }
 
     if (word in timeUnitsDict && !timeUnitsDict[word].captured) {
-      shouldBreak = true
-      if (word === 'second') {
+      if (currentIndex === list.length - 1)
         return accumulator * timeUnitsDict[word].value
-      }
 
       const nextTimeUnitsDict = Object.assign({}, timeUnitsDict)
-      nextTimeUnitsDict[word].captured = true
       const nextList = list.slice(currentIndex + 1, list.length)
+      nextTimeUnitsDict[word].captured = true
+      shouldBreak = true
 
-      return accumulator * timeUnitsDict[word].value + reduceListToTimeUnits(
+      const nextReducer = reduceListToTimeUnits(
         nextList,
         nextTimeUnitsDict,
         numbersDict
       )
+
+      //console.log('nextReducer', nextReducer)
+      //console.log('accumulator: ', accumulator)
+      //console.log('word: ', word)
+
+      return accumulator * timeUnitsDict[word].value + nextReducer !== undefined
+        ? nextReducer
+        : 0
     }
 
     return accumulator + numbersDict[word]
