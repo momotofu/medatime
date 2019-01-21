@@ -133,7 +133,6 @@ class Digit extends React.Component {
 
     render() {
         const { digit } = this.props
-        console.log('render function called', digit)
 
         return (
             <div className="Digit-container">

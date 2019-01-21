@@ -5,20 +5,6 @@ import Digit from './Digit'
 class Timer extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-      totalSeconds: 0,
-			secondsOnes: 0,
-			secondsTens: 0,
-			minutesOnes: 0,
-			minutesTens: 0,
-			hoursOnes: 0,
-			hoursTens: 0
-		}
-
-		const { startingTimeInMilliseconds } = props
-    const baseSeconds = 54000000
-    this.state.totalSeconds = baseSeconds + startingTimeInMilliseconds
-
     const checkTime = (time, limit) => {
       return time === limit
     }
@@ -42,20 +28,32 @@ class Timer extends React.Component {
       }
     }
 
+    const getTimeStringFrom = (seconds, dateObject) => {
+      return new Date(seconds).toTimeString().substr(0,8)
+    }
+
+		const { startingTimeInMilliseconds } = props
+    const baseSeconds = 54000000
+    const startingTime = baseSeconds + startingTimeInMilliseconds
+    const startingTimeString = getTimeStringFrom(startingTime, Date)
+
+    this.state = mapTimeStringToStateObject(startingTimeString, Number)
+    this.state.totalSeconds = startingTime
+
     this.stopClock = returnStopClock(clearInterval, window, setInterval(() => {
-      const currentSeconds = this.state.totalSeconds
-      const date = new Date(currentSeconds)
-      const timeString = date.toTimeString().substr(0,8)
-
-      this.setState(mapTimeStringToStateObject(timeString, Number))
-
-      if (checkTime(currentSeconds, baseSeconds)) {
-        this.stopClock()
-      }
-
       this.setState({
-        totalSeconds: currentSeconds - 1000
+        totalSeconds: this.state.totalSeconds - 1000
+      }, () => {
+        const currentSeconds = this.state.totalSeconds
+        const timeString = getTimeStringFrom(currentSeconds, Date)
+
+        if (checkTime(currentSeconds, baseSeconds)) {
+          this.stopClock()
+        }
+
+        this.setState(mapTimeStringToStateObject(timeString, Number))
       })
+
     }, 1000))
 	}
 
