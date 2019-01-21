@@ -1,36 +1,26 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { mapTextToSeconds } from '../utils'
 
 const ENTER_KEY = 13;
 
 class Input extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { time: '0 seconds' }
+		this.state = { inputTime: '0' }
 	}
 
 	handleChange(event) {
-		this.setState({ time: event.target.value })
+		this.setState({ inputTime: event.target.value })
 	}
 
 	handleKeyDown(event) {
 		const { onKeyDownCallback } = this.props
-		const { time } = this.state
+		const { inputTime } = this.state
 		if (event.which === ENTER_KEY) {
-			onKeyDownCallback(time)
-			//console.log(event)
-			// this.handleSubmit(event);
+      const seconds = mapTextToSeconds(inputTime)
+			onKeyDownCallback(seconds)
 		}
-	}
-
-	// lifecycle methods
-	componentDidMount() {
-		console.log("Props: ", this.props)
-		console.log("State: ", this.state)
-	}
-
-	componentDidUpdate() {
-		console.log(this.state)
 	}
 
 	render() {
