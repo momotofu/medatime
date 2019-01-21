@@ -21,13 +21,13 @@ class Digit extends React.Component {
             case 1:
                 return (
                     <React.Fragment>
+                    <div className="Digit-line"></div>
+                    <div className="Digit-line"></div>
                     <div className="Digit-line Digit-line-on"></div>
                     <div className="Digit-line"></div>
                     <div className="Digit-line"></div>
                     <div className="Digit-line"></div>
                     <div className="Digit-line Digit-line-on"></div>
-                    <div className="Digit-line"></div>
-                    <div className="Digit-line"></div>
                     </React.Fragment>
                 )
             case 2:
@@ -132,7 +132,8 @@ class Digit extends React.Component {
     }
 
     render() {
-        const {digit} = this.props
+        const { digit } = this.props
+        console.log('render function called', digit)
 
         return (
             <div className="Digit-container">
