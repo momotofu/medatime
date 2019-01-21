@@ -61,10 +61,6 @@ class Timer extends React.Component {
     this.stopClock()
   }
 
-  componentDidUpdate() {
-    console.log(this.state)
-  }
-
 	render() {
     const {
       secondsOnes,
@@ -74,8 +70,6 @@ class Timer extends React.Component {
       hoursOnes,
       hoursTens
     } = this.state
-
-    console.log(secondsOnes, secondsTens, minutesOnes, minutesTens, hoursOnes, hoursTens)
 
 		return (
 			<React.Fragment>
