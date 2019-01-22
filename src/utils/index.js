@@ -107,7 +107,9 @@ const createMapTextToSeconds = (
   magnitudesDict ) => {
 
   return (inputString) => {
-    const wordList = inputString.split(/\s+/)
+    const wordList = inputString.split(/(\s+|\d+|\w+)/).filter((word) => {
+      return (word.match(/\s+/) === null ^ !Boolean(word)) === 1
+    })
     return reducer(wordList, timeUnitsDict, magnitudesDict, numbersDict)
   }
 }
