@@ -6,7 +6,7 @@ class Timer extends React.Component {
 	constructor(props) {
 		super(props)
     const checkTime = (time, limit) => {
-      return time === limit
+      return time === limit || time - 54000000 < 1000
     }
 
     const returnStopClock = (callback, context, timerId) => {
@@ -40,7 +40,7 @@ class Timer extends React.Component {
     this.state = mapTimeStringToStateObject(startingTimeString, Number)
     this.state.totalSeconds = startingTime
 
-    if (checkTime(this.state.totalSeconds, baseSeconds))
+    if (checkTime(startingTime, baseSeconds))
       return
 
     this.stopClock = returnStopClock(clearInterval, window, setInterval(() => {

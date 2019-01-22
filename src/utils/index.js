@@ -98,6 +98,8 @@ const reduceListToTimeUnits = (
         return accumulator
     }
   }
+
+    return accumulator < 1000 ? accumulator * 1000 : accumulator
 }
 
 const createMapTextToSeconds = (
