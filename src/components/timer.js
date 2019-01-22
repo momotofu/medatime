@@ -32,13 +32,16 @@ class Timer extends React.Component {
       return new Date(seconds).toTimeString().substr(0,8)
     }
 
-		const { startingTimeInMilliseconds } = props
+		const { startingTimeInMilliseconds = 0 } = props
     const baseSeconds = 54000000
     const startingTime = baseSeconds + startingTimeInMilliseconds
     const startingTimeString = getTimeStringFrom(startingTime, Date)
 
     this.state = mapTimeStringToStateObject(startingTimeString, Number)
     this.state.totalSeconds = startingTime
+
+    if (checkTime(this.state.totalSeconds, baseSeconds))
+      return
 
     this.stopClock = returnStopClock(clearInterval, window, setInterval(() => {
       this.setState({
@@ -58,7 +61,8 @@ class Timer extends React.Component {
 	}
 
   componentWillUnmount() {
-    this.stopClock()
+    if ('stopClock' in this)
+      this.stopClock()
   }
 
 	render() {
