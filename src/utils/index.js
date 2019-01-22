@@ -26,7 +26,10 @@ const numbersDict = {
   sixty: 60,
   seventy: 70,
   eighty: 80,
-  ninety: 90,
+  ninety: 90
+}
+
+const magnitudesDict = {
   hundred:      100,
   thousand:     1000,
   million:      1000000,
@@ -38,68 +41,69 @@ const numbersDict = {
   septillion:   1000000000000000000000000,
   octillion:    1000000000000000000000000000,
   nonillion:    1000000000000000000000000000000,
-  decillion:    1000000000000000000000000000000000,
+  decillion:    1000000000000000000000000000000000
 }
 
 const timeUnitsDict = {
-  second: {
-    captured: false,
-    value: 1000
-  },
-  minute: {
-    captured: false,
-    value: 60000
-  },
-  hour: {
-    captured: false,
-    value: 3600000
+  second: 1000,
+  minute: 60000,
+  hour: 3600000
+}
+
+const reduceListToTimeUnits = (
+  list,
+  timeUnitsDict,
+  magnitudesDict,
+  numbersDict ) => {
+
+  let accumulator = 0
+
+  for (let i = 0; i < list.length; i++) {
+    const currentWord = list[i]
+
+    switch (true) {
+      case (currentWord in numbersDict):
+        accumulator += numbersDict[currentWord]
+        break
+      case (currentWord in magnitudesDict):
+        accumulator *= magnitudesDict[currentWord]
+        break
+      case (currentWord in timeUnitsDict):
+        accumulator *= timeUnitsDict[currentWord]
+        // check if loop is on last iteration
+        if (i === list.length - 1)
+          return accumulator
+
+        const nextList = list.slice(i + 1, list.length)
+
+        // recurse through next section of time
+        return accumulator + reduceListToTimeUnits(
+          nextList,
+          timeUnitsDict,
+          magnitudesDict,
+          numbersDict
+        )
+      default:
+        return accumulator
+    }
   }
 }
 
-const reduceListToTimeUnits = (list, timeUnitsDict, numbersDict) => {
-  let shouldBreak = false
-  return list.reduce((accumulator, word, currentIndex) => {
-    if (shouldBreak) {
-      return accumulator
-    }
+const createMapTextToSeconds = (
+  reducer,
+  timeUntisDict,
+  numbersDict,
+  magnitudesDict ) => {
 
-    if (word in timeUnitsDict && !timeUnitsDict[word].captured) {
-      if (currentIndex === list.length - 1)
-        return accumulator * timeUnitsDict[word].value
-
-      const nextTimeUnitsDict = Object.assign({}, timeUnitsDict)
-      const nextList = list.slice(currentIndex + 1, list.length)
-      nextTimeUnitsDict[word].captured = true
-      shouldBreak = true
-
-      const nextReducer = reduceListToTimeUnits(
-        nextList,
-        nextTimeUnitsDict,
-        numbersDict
-      )
-
-      //console.log('nextReducer', nextReducer)
-      //console.log('accumulator: ', accumulator)
-      //console.log('word: ', word)
-
-      return accumulator * timeUnitsDict[word].value + nextReducer !== undefined
-        ? nextReducer
-        : 0
-    }
-
-    return accumulator + numbersDict[word]
-  }, 0)
-}
-
-const createMapTextToSeconds = (timeUntisDict, numbersDict, reducer) => {
   return (inputString) => {
     const wordList = inputString.split(/\s+/)
-    return reducer(wordList, timeUnitsDict, numbersDict)
+    return reducer(wordList, timeUnitsDict, magnitudesDict, numbersDict)
   }
 }
 
 export const mapTextToSeconds = createMapTextToSeconds(
+  reduceListToTimeUnits,
   timeUnitsDict,
   numbersDict,
-  reduceListToTimeUnits
+  magnitudesDict
 )
