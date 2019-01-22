@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { mapTextToSeconds } from '../utils'
+import { mapTextToSeconds } from 'words-to-time'
 
 const ENTER_KEY = 13;
 
