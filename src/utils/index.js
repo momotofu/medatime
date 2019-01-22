@@ -26,7 +26,35 @@ const numbersDict = {
   sixty: 60,
   seventy: 70,
   eighty: 80,
-  ninety: 90
+  ninety: 90,
+ //'0': 0,
+ //'1' : 1,
+ //'2' : 2,
+ //'3' : 3,
+ //'4' : 4,
+ //'5' : 5,
+ //'6' : 6,
+ //'7' : 7,
+ //'8' : 8,
+ //'9' : 9,
+ //'10' : 10,
+ //'11' : 11,
+ //'12' : 12,
+ //'13' : 13,
+ //'14' : 14,
+ //'15' : 15,
+ //'16' : 16,
+ //'17' : 17,
+ //'18' : 18,
+ //'19' : 19,
+ //'20' : 20,
+ //'30' : 30,
+ //'40' : 40,
+ //'50' : 50,
+ //'60' : 60,
+ //'70' : 70,
+ //'80' : 80,
+ //'90' : 90
 }
 
 const magnitudesDict = {
@@ -46,8 +74,16 @@ const magnitudesDict = {
 
 const timeUnitsDict = {
   second: 1000,
+  seconds: 1000,
+  sec: 1000,
+  s: 1000,
   minute: 60000,
-  hour: 3600000
+  minutes: 60000,
+  min: 60000,
+  m: 60000,
+  hour: 3600000,
+  hours: 3600000,
+  h: 3600000
 }
 
 const reduceListToTimeUnits = (
@@ -62,6 +98,9 @@ const reduceListToTimeUnits = (
     const currentWord = list[i]
 
     switch (true) {
+      case (!isNaN(Number(currentWord))):
+        accumulator += Number(currentWord)
+        break
       case (currentWord in numbersDict):
         accumulator += numbersDict[currentWord]
         break
