@@ -16,9 +16,9 @@ const Layout = ({ children }) => (
         }
       }
     `}
-    render={data => (
-      <>
-        <Header siteTitle={data.site.siteMetadata.title} />
+    render={ data => {
+      console.log('date: ', data)
+      return (
         <div
           style={{
             margin: '0 auto',
@@ -29,8 +29,8 @@ const Layout = ({ children }) => (
         >
           {children}
         </div>
-      </>
-    )}
+      )
+    }}
   />
 )
 
