@@ -5,42 +5,45 @@ import Digit from './Digit'
 class Timer extends React.Component {
 	constructor(props) {
 		super(props)
-    const checkTime = (time, limit) => {
-      return time === limit || time - 54000000 < 1000
+
+    const checkTime = (time) => {
+      return time === 0 || time < 0
     }
 
     const returnStopClock = (callback, context, timerId) => {
       return callback.bind(context, timerId)
     }
 
-    const mapTimeStringToStateObject = (timeString, transform) => {
+    const mapTimeStringToStateObject = (timeString) => {
       const seconds = timeString.substr(6,2)
       const minutes = timeString.substr(3,2)
       const hours = timeString.substr(0,2)
 
       return {
-        secondsOnes: transform(seconds[1]),
-        secondsTens: transform(seconds[0]),
-        minutesOnes: transform(minutes[1]),
-        minutesTens: transform(minutes[0]),
-        hoursOnes: transform(hours[1]),
-        hoursTens: transform(hours[0])
+        secondsOnes: Number(seconds[1]),
+        secondsTens: Number(seconds[0]),
+        minutesOnes: Number(minutes[1]),
+        minutesTens: Number(minutes[0]),
+        hoursOnes: Number(hours[1]),
+        hoursTens: Number(hours[0])
       }
     }
 
     const getTimeStringFrom = (seconds, dateObject) => {
-      return new Date(seconds).toTimeString().substr(0,8)
+      const date = new Date()
+      date.setHours(0, 0, 0, 0)
+      date.setMilliseconds(seconds)
+
+      return date.toTimeString().substr(0,8)
     }
 
 		const { startingTimeInMilliseconds = 0 } = props
-    const baseSeconds = 54000000
-    const startingTime = baseSeconds + startingTimeInMilliseconds
-    const startingTimeString = getTimeStringFrom(startingTime, Date)
+    const startingTimeString = getTimeStringFrom(startingTimeInMilliseconds, Date)
 
     this.state = mapTimeStringToStateObject(startingTimeString, Number)
-    this.state.totalSeconds = startingTime
+    this.state.totalSeconds = startingTimeInMilliseconds
 
-    if (checkTime(startingTime, baseSeconds))
+    if (checkTime(startingTimeInMilliseconds))
       return
 
     this.stopClock = returnStopClock(clearInterval, window, setInterval(() => {
@@ -50,7 +53,7 @@ class Timer extends React.Component {
         const currentSeconds = this.state.totalSeconds
         const timeString = getTimeStringFrom(currentSeconds, Date)
 
-        if (checkTime(currentSeconds, baseSeconds)) {
+        if (checkTime(currentSeconds)) {
           this.stopClock()
         }
 
