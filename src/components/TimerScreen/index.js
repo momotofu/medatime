@@ -1,16 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Input from './input'
-import Timer from './timer'
 
-class Container extends React.Component {
+// Imported components
+import Input from '../input'
+import Timer from '../timer'
+
+// CSS
+import './index.styl'
+
+class TimerScreen extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			isTimerVisible: false,
 			inputTime: 0
 		}
-	}
+  }
 
 	inputCallback(currentInputTime) {
 		this.setState({inputTime: currentInputTime, isTimerVisible: true})
@@ -25,7 +30,7 @@ class Container extends React.Component {
 
 	renderTimer() {
 		const { isTimerVisible, inputTime } = this.state
-		if (/*inputTime.trim().length > 0 && */ isTimerVisible) {
+		if (isTimerVisible) {
 			return (
 				<React.Fragment>
 					<Timer startingTimeInMilliseconds={ inputTime } />
@@ -45,4 +50,4 @@ class Container extends React.Component {
 	}
 }
 
-export default Container
+export default TimerScreen
