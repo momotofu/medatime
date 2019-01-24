@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
 
-import Header from './header'
-import './layout.css'
+import './index.styl'
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -17,7 +16,6 @@ const Layout = ({ children }) => (
       }
     `}
     render={ data => {
-      console.log('date: ', data)
       return (
         <div
           style={{
