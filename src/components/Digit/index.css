@@ -1,0 +1,38 @@
+.Timer-digits {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.Digit-container {
+    display: grid;
+    grid-gap: 0.05rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template:  ". b ."
+                    "a . c"
+                    "a . c"
+                    "a . c"
+                    ". d ."
+                    "e . g"
+                    "e . g"
+                    "e . g"
+                    ". f .";
+    margin-right: 1.5rem;
+    max-width: 60px;
+    position: relative;
+}
+
+.Digit-container:nth-child(even)::after {
+    content: " : ";
+    font-size: 2rem;
+    position: absolute;
+    right: -1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.Digit-container:nth-child(even):last-of-type::after {
+    content: "";
+}
+
+
