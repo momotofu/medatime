@@ -1,5 +1,5 @@
 .DigitLine {
-    background-color: #eee;
+    background-color: #333;
     padding: 0.2rem;
     position: relative;
 }
@@ -11,7 +11,7 @@
     height: 0;
     border-top: .195rem solid rgba(0,0,0,0);
     border-bottom: .195rem solid rgba(0,0,0,0);
-    border-right: 5px solid #eee;
+    border-right: 5px solid #333;
     position: absolute;
     left: -5px;
     top: 0;
@@ -24,7 +24,7 @@
     height: 0;
     border-top: .195rem solid rgba(0,0,0,0);
     border-bottom: .195rem solid rgba(0,0,0,0);
-    border-left: 4px solid #eee;
+    border-left: 4px solid #333;
     position: absolute;
     right: -4px;
     top: 0;
@@ -52,11 +52,11 @@
 .DigitLine:nth-child(7) { grid-area: g; height: 2rem; }
 
 .DigitLine-on {
-    background-color: #444;
+    background-color: #eee;
 }
 
 .DigitLine-on::before,
 .DigitLine-on::after {
-    border-left-color: #444;
-    border-right-color: #444;
+    border-left-color: #eee;
+    border-right-color: #eee;
 }
