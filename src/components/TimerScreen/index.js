@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 // Imported components
-import Input from '../input'
+import TextInputField from '../TextInputField'
 import Timer from '../timer'
 
 // CSS
@@ -23,8 +23,9 @@ class TimerScreen extends React.Component {
 
 	renderInputField() {
 		const { isTimerVisible } = this.state
+
 		if (!isTimerVisible) {
-			return <Input onKeyDownCallback={this.inputCallback.bind(this)} />
+			return <TextInputField onKeyDownCallback={this.inputCallback.bind(this)} />
 		}
 	}
 

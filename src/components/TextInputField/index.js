@@ -2,6 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { mapTextToSeconds } from 'words-to-time'
 
+// CSS
+import './index.styl'
+
 const ENTER_KEY = 13;
 
 class Input extends React.Component {
@@ -24,11 +27,15 @@ class Input extends React.Component {
 	}
 
 	render() {
+    const { placeholder = 'Type something...' } = this.props
+
 		return (
 			<input
+        className="TextInputField"
+        placeholder={ placeholder }
 				type="text"
-				onChange={this.handleChange.bind(this)}
-				onKeyDown={this.handleKeyDown.bind(this)}
+				onChange={ this.handleChange.bind(this) }
+				onKeyDown={ this.handleKeyDown.bind(this) }
 				/>
 		)
 	}
