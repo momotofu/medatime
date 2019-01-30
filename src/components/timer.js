@@ -64,38 +64,37 @@ class Timer extends React.Component {
 	}
 
   componentWillUnmount() {
-    if ('stopClock' in this)
-      this.stopClock()
+    if ('stopClock' in this) this.stopClock()
   }
 
-	render() {
+  render() {
     const {
       secondsOnes,
       secondsTens,
       minutesOnes,
       minutesTens,
       hoursOnes,
-      hoursTens
+      hoursTens,
     } = this.state
 
-		return (
-			<React.Fragment>
-				<h1>Timer</h1>
-				<div className='Timer-digits'>
-					<Digit digit={hoursTens} />
-					<Digit digit={hoursOnes} />
-					<Digit digit={minutesTens} />
-					<Digit digit={minutesOnes} />
-					<Digit digit={secondsTens} />
-					<Digit digit={secondsOnes} />
-				</div>
-			</React.Fragment>
-		)
-	}
+    return (
+      <React.Fragment>
+        <h1>Timer</h1>
+        <div className="Timer-digits">
+          <Digit digit={hoursTens} />
+          <Digit digit={hoursOnes} />
+          <Digit digit={minutesTens} />
+          <Digit digit={minutesOnes} />
+          <Digit digit={secondsTens} />
+          <Digit digit={secondsOnes} />
+        </div>
+      </React.Fragment>
+    )
+  }
 }
 
 Timer.propTypes = {
-  startingTimeInMilliseconds: PropTypes.number.isRequired
+  startingTimeInMilliseconds: PropTypes.number.isRequired,
 }
 
 export default Timer
