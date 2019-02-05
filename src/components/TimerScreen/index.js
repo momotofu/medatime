@@ -43,7 +43,7 @@ class TimerScreen extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className="TimerScreen">
 				{this.renderInputField()}
 				{this.renderTimer()}
 			</div>
