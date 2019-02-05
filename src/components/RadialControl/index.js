@@ -14,13 +14,12 @@ class RadialControl extends React.Component {
 
   }
 
-  constraintPointToRadius(origin, destination) {
+  constraintPointToRadius(origin, destination, radius) {
     /* First get vector from destination and origin
      * Then get unit vector
      * then add radious to unit vector
      *
      */
-    const destRadius = -10
 
     const vector = {
       x: destination.x - origin.x,
@@ -32,18 +31,17 @@ class RadialControl extends React.Component {
       y: vector.y / magnitude
     }
 
-    //const newDestination = {
-      //x: (destination.x + destRadius) * unitVector.x,
-      //y: (destination.y + destRadius) * unitVector.y
-    //}
     const newDestination = {
-      x: 100 * unitVector.x,
-      y: 100 * unitVector.y
+      x: radius * unitVector.x,
+      y: radius * unitVector.y
     }
 
     return newDestination
   }
 
+  getDegreesFromPoint(point) {
+    return Math.atan(point.y / point.x) * 180 / Math.PI
+  }
 
   onMove(event) {
     const target = event.target
@@ -60,12 +58,14 @@ class RadialControl extends React.Component {
 
     const adjustedPoint = this.constraintPointToRadius(
       originPoint,
-      destinationPoint
+      destinationPoint,
+      100
     )
-    // translate the element
+
+    const deg = this.getDegreesFromPoint(adjustedPoint)
     target.style.webkitTransform =
     target.style.transform =
-      'translate(' + adjustedPoint.x + 'px, ' + adjustedPoint.y + 'px)';
+      'translate(' + adjustedPoint.x + 'px, ' + adjustedPoint.y + 'px) rotate('+ deg + 'deg) ';
 
     this.setState({
       controlPoint: destinationPoint
