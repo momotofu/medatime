@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Digit from './Digit'
+import Digit from '../Digit'
 
 class Timer extends React.Component {
 	constructor(props) {

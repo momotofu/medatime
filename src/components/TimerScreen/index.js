@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 // Imported components
 import TextInputField from '../TextInputField'
-import Timer from '../timer'
+import Timer from '../Timer'
+import RadialControl from '../RadialControl'
 
 // CSS
 import './index.styl'
@@ -46,6 +47,7 @@ class TimerScreen extends React.Component {
 			<div className="TimerScreen">
 				{this.renderInputField()}
 				{this.renderTimer()}
+        <RadialControl />
 			</div>
 		)
 	}
