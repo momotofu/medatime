@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Digit from './Digit'
+import TimerControlButton from './TimerControlButton'
 
 class Timer extends React.Component {
 	constructor(props) {
-		super(props)
+    super(props)
 
     const checkTime = (time) => {
       return time === 0 || time < 0
@@ -67,6 +68,10 @@ class Timer extends React.Component {
     if ('stopClock' in this) this.stopClock()
   }
 
+  pausePlayTimerCallback() {
+    // this.stopClock()
+  }
+
   render() {
     const {
       secondsOnes,
@@ -87,11 +92,46 @@ class Timer extends React.Component {
           <Digit digit={minutesOnes} />
           <Digit digit={secondsTens} />
           <Digit digit={secondsOnes} />
-        </div>
+				</div>
+        <TimerControlButton
+          play
+          timerControlCallback={this.pausePlayTimerCallback.bind(this)}
+        />
+				<TimerControlButton restart />
       </React.Fragment>
     )
   }
 }
+
+/*
+this.pausePlayTimerCallback.bind(this)
+[this = the object you are referencing].[property name or attribute on the object being referenced]
+const s = {}
+s.pausePlayTimerCallback = () => {
+  this.setState
+  this.material
+  console.log
+}
+
+s.pausePlayTimerCallback()
+
+s.pausePlayTimerCallback.bind()
+
+.[bind() // used only if the value of the attribute is a function]
+const objectA = {
+  material = 'lumber',
+  callback = () => {
+    console.log(Timer.material) // Timer is the same as this
+    timer.setState()
+    console.log('I\'m object A')
+  }
+}
+
+<TimerControlButton
+  play
+  timerControlCallback={objectA.callback.bind(Timer, 'hello')}
+/>
+*/
 
 Timer.propTypes = {
   startingTimeInMilliseconds: PropTypes.number.isRequired,
