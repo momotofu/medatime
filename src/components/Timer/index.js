@@ -1,75 +1,81 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Digit from './Digit'
-import TimerControlButton from './TimerControlButton'
+import Digit from '../Digit'
+import TimerControlButton from '../TimerControlButton'
 
 class Timer extends React.Component {
 	constructor(props) {
     super(props)
 
-    const checkTime = (time) => {
-      return time === 0 || time < 0
-    }
+    const { startingTimeInMilliseconds = 0 } = props
+    const startingTimeString = this.getTimeStringFrom(startingTimeInMilliseconds, Date)
 
-    const returnStopClock = (callback, context, timerId) => {
-      return callback.bind(context, timerId)
-    }
-
-    const mapTimeStringToStateObject = (timeString) => {
-      const seconds = timeString.substr(6,2)
-      const minutes = timeString.substr(3,2)
-      const hours = timeString.substr(0,2)
-
-      return {
-        secondsOnes: Number(seconds[1]),
-        secondsTens: Number(seconds[0]),
-        minutesOnes: Number(minutes[1]),
-        minutesTens: Number(minutes[0]),
-        hoursOnes: Number(hours[1]),
-        hoursTens: Number(hours[0])
-      }
-    }
-
-    const getTimeStringFrom = (seconds, dateObject) => {
-      const date = new Date()
-      date.setHours(0, 0, 0, 0)
-      date.setMilliseconds(seconds)
-
-      return date.toTimeString().substr(0,8)
-    }
-
-		const { startingTimeInMilliseconds = 0 } = props
-    const startingTimeString = getTimeStringFrom(startingTimeInMilliseconds, Date)
-
-    this.state = mapTimeStringToStateObject(startingTimeString, Number)
+    this.state = this.mapTimeStringToStateObject(startingTimeString, Number)
     this.state.totalSeconds = startingTimeInMilliseconds
+  }
 
-    if (checkTime(startingTimeInMilliseconds))
-      return
+  mapTimeStringToStateObject = (timeString) => {
+    const seconds = timeString.substr(6,2)
+    const minutes = timeString.substr(3,2)
+    const hours = timeString.substr(0,2)
 
-    this.stopClock = returnStopClock(clearInterval, window, setInterval(() => {
+    return {
+      secondsOnes: Number(seconds[1]),
+      secondsTens: Number(seconds[0]),
+      minutesOnes: Number(minutes[1]),
+      minutesTens: Number(minutes[0]),
+      hoursOnes: Number(hours[1]),
+      hoursTens: Number(hours[0])
+    }
+  }
+
+  getTimeStringFrom = (seconds, dateObject) => {
+    const date = new Date()
+    date.setHours(0, 0, 0, 0)
+    date.setMilliseconds(seconds)
+
+    return date.toTimeString().substr(0,8)
+  }
+
+  checkTime = (time) => {
+    return time === 0 || time < 0
+  }
+
+  returnStopClock = (callback, context, timerId) => {
+    return callback.bind(context, timerId)
+  }
+
+  startClock() {
+    this.stopClockCallback = this.returnStopClock(clearInterval, window, setInterval(() => {
       this.setState({
         totalSeconds: this.state.totalSeconds - 1000
       }, () => {
         const currentSeconds = this.state.totalSeconds
-        const timeString = getTimeStringFrom(currentSeconds, Date)
+        const timeString = this.getTimeStringFrom(currentSeconds, Date)
 
-        if (checkTime(currentSeconds)) {
+        if (this.checkTime(currentSeconds)) {
           this.stopClock()
         }
 
-        this.setState(mapTimeStringToStateObject(timeString, Number))
+        this.setState(this.mapTimeStringToStateObject(timeString, Number))
       })
 
     }, 1000))
-	}
+  }
+
+  stopClock() {
+    this.stopClockCallback()
+  }
+
+  componentDidMount() {
+    const { startingTimeInMilliseconds } = this.props
+    if (this.checkTime(startingTimeInMilliseconds))
+      return
+    this.startClock()
+  }
 
   componentWillUnmount() {
     if ('stopClock' in this) this.stopClock()
-  }
-
-  pausePlayTimerCallback() {
-    // this.stopClock()
   }
 
   render() {
@@ -95,43 +101,14 @@ class Timer extends React.Component {
 				</div>
         <TimerControlButton
           play
-          timerControlCallback={this.pausePlayTimerCallback.bind(this)}
+          playCallback={this.startClock.bind(this)}
+          pauseCallback={this.stopClock.bind(this)}
         />
 				<TimerControlButton restart />
       </React.Fragment>
     )
   }
 }
-
-/*
-this.pausePlayTimerCallback.bind(this)
-[this = the object you are referencing].[property name or attribute on the object being referenced]
-const s = {}
-s.pausePlayTimerCallback = () => {
-  this.setState
-  this.material
-  console.log
-}
-
-s.pausePlayTimerCallback()
-
-s.pausePlayTimerCallback.bind()
-
-.[bind() // used only if the value of the attribute is a function]
-const objectA = {
-  material = 'lumber',
-  callback = () => {
-    console.log(Timer.material) // Timer is the same as this
-    timer.setState()
-    console.log('I\'m object A')
-  }
-}
-
-<TimerControlButton
-  play
-  timerControlCallback={objectA.callback.bind(Timer, 'hello')}
-/>
-*/
 
 Timer.propTypes = {
   startingTimeInMilliseconds: PropTypes.number.isRequired,
