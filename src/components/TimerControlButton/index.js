@@ -13,43 +13,66 @@ class TimerControlButton extends React.Component {
   }
 
   handleClick(event) {
-    const { isPlaying } = this.state
-    const { playCallback, pauseCallback } = this.props
+    const { isRestart, isPlay } = this.props
 
-    if (isPlaying)
-      playCallback()
-    else
-      pauseCallback()
+    if (isPlay) {
+      const { isPlaying } = this.state
+      const { playCallback, pauseCallback } = this.props
 
-    this.setState({ isPlaying: !isPlaying })
+      if (isPlaying)
+        playCallback()
+      else
+        pauseCallback()
+
+      this.setState({ isPlaying: !isPlaying })
+    } else if (isRestart) {
+      const { restartCallback } = this.props
+      restartCallback()
+    }
   }
 
-  /*
-   * Component functionality
-   *
-   * 1. Continue timer countdown
-   *    a. event listener on button, onClick
-   *    b. call function, which is a callback function, to look for timer to change state to play countdown
-   *    c. button value changes from Play to Pause
-   *
-   * 2. Pause timer countdown
-   *    a. event listener on button, onClick
-   *    b. invoking callback function, to look for timer to change state to pause countdown
-   *       1. get props from timer component (parent)
-   *       2. use callback function to update a prop from the timer component
-   *    c. button value changes from Pause to Play
-   *
-   * 3. Restart/Repeat timer countdown
-   *    a. event listener on button, onClick
-   *    b. invoking callback function, to actively restart timer to given time
-   */
-
-  render() {
+  renderPlayButton() {
     return (
       <button onClick={this.handleClick.bind(this)}>
-        {this.state.isPlaying ? `Play` : `Pause`}
+      {this.state.isPlaying ? `Play` : `Pause`}
       </button>
     )
+  }
+
+  renderRestartButton() {
+    return (
+      <button onClick={this.handleClick.bind(this)}>Restart</button>
+    )
+  }
+
+    /*
+    * Component functionality
+    *
+    * 1. Continue timer countdown
+    *    a. event listener on button, onClick
+    *    b. call function, which is a callback function, to look for timer to change state to play countdown
+    *    c. button value changes from Play to Pause
+    *
+    * 2. Pause timer countdown
+    *    a. event listener on button, onClick
+    *    b. invoking callback function, to look for timer to change state to pause countdown
+    *       1. get props from timer component (parent)
+    *       2. use callback function to update a prop from the timer component
+    *    c. button value changes from Pause to Play
+    *
+    * 3. Restart/Repeat timer countdown
+    *    a. event listener on button, onClick
+    *    b. invoking callback function, to actively restart timer to given time
+    */
+
+  render() {
+    const { isRestart, isPlay } = this.props
+
+    if (isPlay) {
+      return this.renderPlayButton()
+    } else if (isRestart) {
+      return this.renderRestartButton()
+    }
   }
 }
 

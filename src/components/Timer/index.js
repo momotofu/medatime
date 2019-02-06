@@ -67,6 +67,10 @@ class Timer extends React.Component {
     this.stopClockCallback()
   }
 
+  restartClock() {
+    console.log('restart')
+  }
+
   componentDidMount() {
     const { startingTimeInMilliseconds } = this.props
     if (this.checkTime(startingTimeInMilliseconds))
@@ -100,11 +104,11 @@ class Timer extends React.Component {
           <Digit digit={secondsOnes} />
 				</div>
         <TimerControlButton
-          play
+          isPlay
           playCallback={this.startClock.bind(this)}
           pauseCallback={this.stopClock.bind(this)}
         />
-				<TimerControlButton restart />
+				<TimerControlButton isRestart restartCallback={this.restartClock.bind(this)} />
       </React.Fragment>
     )
   }
