@@ -1,0 +1,31 @@
+.TimerProgressBar {
+	appearance: none;
+	border: none;
+	display: block;
+	margin-bottom: 1rem;
+	transition: all 500ms ease;
+	width: 50%;
+}
+
+.TimerProgressBar[value]::-webkit-progress-bar {
+  background-color: whitesmoke;
+  border-radius: 2px;
+}
+
+.TimerProgressBar[value]::-webkit-progress-value {
+  background-image:
+   -webkit-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .25)),
+   -webkit-linear-gradient(left, blue, purple);
+
+  border-radius: 2px;
+  background-size: 35px 20px, 100% 100%, 100% 100%;
+}
+
+.TimerProgressBar[value]::-moz-progress-value {
+  background-image:
+   -moz-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .25)),
+   -moz-linear-gradient(left, blue, purple);
+
+  border-radius: 2px;
+  background-size: 35px 20px, 100% 100%, 100% 100%;
+}

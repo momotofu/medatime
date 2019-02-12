@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Digit from '../Digit'
 import TimerControlButton from '../TimerControlButton'
+import TimerProgressBar from '../TimerProgressBar'
 
 class Timer extends React.Component {
 	constructor(props) {
     super(props)
 
-    const { startingTimeInMilliseconds = 0 } = props
+    const { startingTimeInMilliseconds } = props
     const startingTimeString = this.getTimeStringFrom(startingTimeInMilliseconds, Date)
 
     this.state = this.mapTimeStringToStateObject(startingTimeString, Number)
@@ -45,21 +46,41 @@ class Timer extends React.Component {
     return callback.bind(context, timerId)
   }
 
+  updateDigitsState = () => {
+    const currentSeconds = this.state.totalSeconds
+    const timeString = this.getTimeStringFrom(currentSeconds, Date)
+    const isOutOfTime = this.checkTime(currentSeconds)
+
+    if (isOutOfTime) {
+      this.stopClock()
+    }
+
+    this.setState(this.mapTimeStringToStateObject(timeString, Number))
+  }
+
+  /*
+   * stopClock = () => {
+   *   clearInterval(this.intervalTimerID)
+   * }
+   *
+   * decrementClock = () => {
+   *   this.setState (
+   *    {totalSeconds: this.state.totalSeconds - 1000},
+   *     this.renderTimerDigits
+   *   )
+   * }
+   *
+   * startClock() {
+   *   this.intervalTimerID = setInterval(this.decrementClock, 1000)
+   * }
+   *
+   */
+
   startClock() {
     this.stopClockCallback = this.returnStopClock(clearInterval, window, setInterval(() => {
       this.setState({
         totalSeconds: this.state.totalSeconds - 1000
-      }, () => {
-        const currentSeconds = this.state.totalSeconds
-        const timeString = this.getTimeStringFrom(currentSeconds, Date)
-
-        if (this.checkTime(currentSeconds)) {
-          this.stopClock()
-        }
-
-        this.setState(this.mapTimeStringToStateObject(timeString, Number))
-      })
-
+      }, this.updateDigitsState)
     }, 1000))
   }
 
@@ -103,6 +124,10 @@ class Timer extends React.Component {
           <Digit digit={secondsTens} />
           <Digit digit={secondsOnes} />
 				</div>
+        <TimerProgressBar
+          totalSeconds={this.props.startingTimeInMilliseconds}
+          remainingSeconds={this.state.totalSeconds}
+        />
         <TimerControlButton
           isPlay
           playCallback={this.startClock.bind(this)}
@@ -119,3 +144,17 @@ Timer.propTypes = {
 }
 
 export default Timer
+
+/*
+ * Stateless component for progress bar
+ *
+ * Stateless function
+ * Takes in props for percentage complete
+ * Based on prop value, which should be a number, the progress bar will show the progress
+ *
+ * Refactor startClock() to also update the state to show percentage complete
+ * Pass above state to a prop of the progress bar
+ *
+ * Create function in timer component
+ * Every time state changes in tick, it'll update the progress bar in real time
+ */
