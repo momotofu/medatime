@@ -17,8 +17,7 @@ class RadialControl extends React.Component {
   constraintPointToRadius(origin, destination, radius) {
     /* First get vector from destination and origin
      * Then get unit vector
-     * then add radious to unit vector
-     *
+     * then add radius to unit vector
      */
 
     const vector = {
@@ -82,12 +81,24 @@ class RadialControl extends React.Component {
   render() {
     const { children } = this.props
     return (
-      <div
-        className='RadialControl-square'
-        ref={ (el) => this.square = el }
-       >
-         { children }
-      </div>
+      <>
+        <svg height='100%' width='100%' xmlns='http://www.w3.org/2000/svg'>
+          <circle
+            cx='50%'
+            cy='50%'
+            r='50'
+            stroke='red'
+            strokeWidth='3'
+            fill='none'
+          />
+        </svg>
+        <div
+          className='RadialControl-square'
+          ref={ (el) => this.square = el }
+         >
+           { children }
+        </div>
+      </>
     )
   }
 }
