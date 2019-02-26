@@ -89,7 +89,10 @@ class Timer extends React.Component {
   }
 
   restartClock() {
-    console.log('restart')
+    const { startingTimeInMilliseconds } = this.props
+    this.setState({
+      totalSeconds: startingTimeInMilliseconds
+    }, this.updateDigitsState)
   }
 
   componentDidMount() {
