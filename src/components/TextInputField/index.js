@@ -21,7 +21,7 @@ class Input extends React.Component {
 		const { onKeyDownCallback } = this.props
 		const { inputTime } = this.state
 		if (event.which === ENTER_KEY) {
-      const seconds = mapTextToSeconds(inputTime)
+			const seconds = mapTextToSeconds(inputTime)
 			onKeyDownCallback(seconds)
 		}
 	}
@@ -30,13 +30,18 @@ class Input extends React.Component {
     const { placeholder = 'Type something...' } = this.props
 
 		return (
-			<input
-        className="TextInputField"
-        placeholder={ placeholder }
-				type="text"
-				onChange={ this.handleChange.bind(this) }
-				onKeyDown={ this.handleKeyDown.bind(this) }
+			<React.Fragment>
+				<label className="visuallyhidden" htmlFor="medaTime">Enter Meditation Time</label>
+				<input
+					className="TextInputField"
+					id="medaTime"
+					placeholder={ placeholder }
+					type="text"
+					onChange={ this.handleChange.bind(this) }
+					onKeyDown={ this.handleKeyDown.bind(this) }
+					autoFocus
 				/>
+			</React.Fragment>
 		)
 	}
 }
