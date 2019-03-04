@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Digit from '../Digit'
 import TimerControlButton from '../TimerControlButton'
+import TimerRestartButton from '../TimerRestartButton'
 import TimerProgressBar from '../TimerProgressBar'
 
 class Timer extends React.Component {
@@ -136,7 +137,7 @@ class Timer extends React.Component {
           playCallback={this.startClock.bind(this)}
           pauseCallback={this.stopClock.bind(this)}
         />
-				<TimerControlButton isRestart restartCallback={this.restartClock.bind(this)} />
+				<TimerRestartButton restartCallback={this.restartClock.bind(this)} />
       </React.Fragment>
     )
   }
