@@ -5,45 +5,44 @@ import { mapTextToSeconds } from 'words-to-time'
 // CSS
 import './index.styl'
 
-const ENTER_KEY = 13;
+const ENTER_KEY = 'Enter'
 
-class Input extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = { inputTime: '0' }
+function Input(props) {
+	const handleChange = event => {
+		const { onKeydownCallback } = props
+		const seconds = mapTextToSeconds(event.target.value)
+
+		onKeydownCallback(seconds)
 	}
 
-	handleChange(event) {
-		this.setState({ inputTime: event.target.value })
-	}
-
-	handleKeyDown(event) {
-		const { onKeyDownCallback } = this.props
-		const { inputTime } = this.state
-		if (event.which === ENTER_KEY) {
-      const seconds = mapTextToSeconds(inputTime)
-			onKeyDownCallback(seconds)
+	const handleKeyPress = event => {
+		const {onEnterCallback } = props
+		if (event.key === ENTER_KEY) {
+			onEnterCallback()
 		}
 	}
 
-	render() {
-    const { placeholder = 'Type something...' } = this.props
-
-		return (
+	const { placeholder = 'Type something...' } = props
+	return (
+		<React.Fragment>
+			<label className="visuallyhidden" htmlFor="medaTime">Enter Meditation Time</label>
 			<input
-        className="TextInputField"
-        placeholder={ placeholder }
+				className="TextInputField"
+				id="medaTime"
+				placeholder={ placeholder }
 				type="text"
-				onChange={ this.handleChange.bind(this) }
-				onKeyDown={ this.handleKeyDown.bind(this) }
-				/>
-		)
-	}
+				onChange={ handleChange }
+				onKeyDown={ handleKeyPress }
+				autoFocus
+			/>
+		</React.Fragment>
+	)
 }
 
 Input.propTypes = {
   siteTitle: PropTypes.string,
-  onKeyDownCallback: PropTypes.func.isRequired
+  onKeydownCallback: PropTypes.func.isRequired,
+  onEnterCallback: PropTypes.func.isRequired
 }
 
 Input.defaultProps = {

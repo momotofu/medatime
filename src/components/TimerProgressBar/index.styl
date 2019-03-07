@@ -1,0 +1,21 @@
+.TimerProgressBar
+	appearance none
+	border none
+	border-radius 2px
+	display block
+	margin-bottom 1rem
+	transition all 1s ease
+	width 50%
+
+	&[value]::-webkit-progress-bar
+		background-color whitesmoke
+		border-radius 2px
+
+	&[value]::-webkit-progress-value
+		border-radius 2px
+		transition width 1s linear
+
+	&[value]::-moz-progress-bar
+		background-image -moz-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .25)), -moz-linear-gradient(left, blue, purple)
+		border-radius 2px
+		background-size 35px 20px, 100% 100%, 100% 100%

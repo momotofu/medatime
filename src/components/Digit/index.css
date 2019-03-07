@@ -24,6 +24,7 @@
 
 .Digit-container:nth-child(even)::after {
     content: " : ";
+    color: white;
     font-size: 2rem;
     position: absolute;
     right: -1rem;
