@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import TextInputField from '../TextInputField'
 import Timer from '../Timer'
 import RadialControl from '../RadialControl'
+import NavButton from '../NavButton'
 
 // CSS
 import './index.styl'
@@ -19,14 +20,23 @@ class TimerScreen extends React.Component {
   }
 
 	inputCallback(currentInputTime) {
-		this.setState({inputTime: currentInputTime, isTimerVisible: true})
+		this.setState({isTimerVisible: true})
+	}
+
+	inputKeydownCallback(currentInputTime) {
+		this.setState({inputTime: currentInputTime})
 	}
 
 	renderInputField() {
 		const { isTimerVisible } = this.state
 
 		if (!isTimerVisible) {
-			return <TextInputField onKeyDownCallback={this.inputCallback.bind(this)} />
+			return (
+				<TextInputField
+					onEnterCallback={this.inputCallback.bind(this)}
+					onKeydownCallback={this.inputKeydownCallback.bind(this)}
+				/>
+			)
 		}
 	}
 
@@ -42,12 +52,24 @@ class TimerScreen extends React.Component {
 		}
 	}
 
+	toggleTimerScreen() {
+		const { isTimerVisible } = this.state
+
+		this.setState({ isTimerVisible: !isTimerVisible })
+	}
+
 	render() {
+		const { inputTime } = this.state
+
 		return (
 			<div className="TimerScreen">
 				{this.renderInputField()}
 				{this.renderTimer()}
         <RadialControl />
+        <NavButton
+        	isDisabled={parseInt(inputTime) === 0}
+        	transitionCallback={this.toggleTimerScreen.bind(this)}
+        />
 			</div>
 		)
 	}
