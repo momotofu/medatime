@@ -1,14 +1,18 @@
+.progressBarWrapper
+	position relative
+
 .TimerProgressBar
 	appearance none
+	background-color red
 	border none
 	border-radius 2px
 	display block
+	height 1.05rem
 	margin-bottom 1rem
-	transition all 1s ease
 	width 50%
 
 	&[value]::-webkit-progress-bar
-		background-color whitesmoke
+		background-color red
 		border-radius 2px
 
 	&[value]::-webkit-progress-value
@@ -16,6 +20,15 @@
 		transition width 1s linear
 
 	&[value]::-moz-progress-bar
-		background-image -moz-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .25)), -moz-linear-gradient(left, blue, purple)
-		border-radius 2px
+		background-color transparent
+		// background-image -moz-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .25)), -moz-linear-gradient(left, blue, purple)
 		background-size 35px 20px, 100% 100%, 100% 100%
+		border-radius 2px
+
+.progressBarPolyfill
+	background-color white
+	clip-path polygon(0 0, 100% 0, 100% 100%, 0 100%)
+	height 1.05rem
+	position absolute
+	top 0
+	transition width 1s linear
