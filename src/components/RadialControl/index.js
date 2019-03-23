@@ -7,14 +7,14 @@ class RadialControl extends React.Component {
     super(props)
     this.state = {
       controlPoint: {
-        x: 100,
-        y: 100
+        x: 400,
+        y: 180,
       }
     }
 
   }
 
-  constraintPointToRadius(origin, destination, radius) {
+  constrainPointToRadius(origin, destination, radius) {
     /* First get vector from destination and origin
      * Then get unit vector
      * then add radius to unit vector
@@ -44,11 +44,7 @@ class RadialControl extends React.Component {
 
   onMove(event) {
     const target = event.target
-    const controlPoint = this.state.controlPoint
-    const originPoint = {
-      x: 100,
-      y: 100
-    }
+    const { controlPoint, originPoint } = this.state
 
     const destinationPoint = {
       x: controlPoint.x + event.dx,
@@ -62,10 +58,10 @@ class RadialControl extends React.Component {
 
     const adjustedPoint = this.constraintControlPoint(
       percentage,
-      this.constraintPointToRadius(
+      this.constrainPointToRadius(
         originPoint,
         destinationPoint,
-        100
+        50
       )
     )
 
@@ -92,13 +88,10 @@ class RadialControl extends React.Component {
   }
 
   getDegreesFromPoint2(point) {
-    const origin = {
-      x: 100,
-      y: 100,
-    }
+    const { originPoint } = this.state
 
-    const deltaX = point.x - origin.x
-    const deltaY = point.y - origin.y
+    const deltaX = point.x - originPoint.x
+    const deltaY = point.y - originPoint.y
     const radians = Math.atan2(deltaY, deltaX)
 
     return radians * (180 / Math.PI)
@@ -132,6 +125,14 @@ class RadialControl extends React.Component {
   }
 
   componentDidMount() {
+    const originRect = this.circle.getBoundingClientRect()
+    this.setState({
+      originPoint: {
+        x: originRect.x,
+        y: originRect.y,
+      }
+    })
+
     Interact(this.square)
       .draggable({
         onmove: this.onMove.bind(this),
@@ -145,14 +146,25 @@ class RadialControl extends React.Component {
   render() {
     const { children } = this.props
     return (
-      <>
+      <div className='RadialControl'>
       <svg
-        className='RadialControl'
+        className='RadialControl-circle-container'
         height='100%'
         width='100%'
         xmlns='http://www.w3.org/2000/svg'>
           <circle
+            className='RadialControl-circle RadialControl-circle-background'
+            ref={ (el) => this.circle = el}
+            cx='50%'
+            cy='50%'
+            r='50'
+            strokeDasharray={this.getStrokeDashFrom(0, 50)}
+            strokeDashoffset={0}
+            fill='none'
+          />
+          <circle
             className='RadialControl-circle'
+            ref={ (el) => this.circle = el}
             cx='50%'
             cy='50%'
             r='50'
@@ -167,7 +179,7 @@ class RadialControl extends React.Component {
          >
            { children }
         </div>
-      </>
+      </div>
     )
   }
 }
