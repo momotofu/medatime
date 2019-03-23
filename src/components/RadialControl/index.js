@@ -64,11 +64,44 @@ class RadialControl extends React.Component {
     const deg = this.getDegreesFromPoint(adjustedPoint)
     target.style.webkitTransform =
     target.style.transform =
-      'translate(' + adjustedPoint.x + 'px, ' + adjustedPoint.y + 'px) rotate('+ deg + 'deg) ';
+      'translate(' + adjustedPoint.x + 'px, ' + adjustedPoint.y + 'px) rotate('+ deg + 'deg) '
+
+    const percentage = this.convertDegreesToPercentage(
+      this.getDegreesFromPoint2(destinationPoint)
+    )
 
     this.setState({
-      controlPoint: destinationPoint
+      controlPoint: destinationPoint,
+      percentage,
     })
+  }
+
+  getStrokeDashFrom(percentage, radius) {
+    const circumference = Math.PI * (radius * 2)
+
+    return `${((100 - percentage) / 100) * circumference}px`
+  }
+
+  getDegreesFromPoint2(point) {
+    const origin = {
+      x: 100,
+      y: 100,
+    }
+
+    const deltaX = point.x - origin.x
+    const deltaY = point.y - origin.y
+    const radians = Math.atan2(deltaY, deltaX)
+
+    return radians * (180 / Math.PI)
+  }
+
+  convertDegreesToPercentage(degrees) {
+    if (degrees < 0)
+      degrees = -1 * degrees
+    else
+      degrees = 180 - degrees + 180
+
+    return degrees / 360 * 100
   }
 
   componentDidMount() {
@@ -78,17 +111,26 @@ class RadialControl extends React.Component {
       })
   }
 
+  componentDidUpdate(prevState, curState) {
+    console.log('state: ', this.state)
+  }
+
   render() {
     const { children } = this.props
     return (
       <>
-        <svg height='100%' width='100%' xmlns='http://www.w3.org/2000/svg'>
+      <svg
+        className='RadialControl'
+        height='100%'
+        width='100%'
+        xmlns='http://www.w3.org/2000/svg'>
           <circle
+            className='RadialControl-circle'
             cx='50%'
             cy='50%'
             r='50'
-            stroke='red'
-            strokeWidth='3'
+            strokeDasharray={this.getStrokeDashFrom(0, 50)}
+            strokeDashoffset={this.getStrokeDashFrom(this.state.percentage, 50)}
             fill='none'
           />
         </svg>
