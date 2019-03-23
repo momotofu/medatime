@@ -55,20 +55,29 @@ class RadialControl extends React.Component {
       y: controlPoint.y + event.dy
     }
 
-    const adjustedPoint = this.constraintPointToRadius(
-      originPoint,
-      destinationPoint,
-      100
+
+    const percentage = this.convertDegreesToPercentage(
+      this.getDegreesFromPoint2(destinationPoint)
     )
+
+    const adjustedPoint = this.constraintControlPoint(
+      percentage,
+      this.constraintPointToRadius(
+        originPoint,
+        destinationPoint,
+        100
+      )
+    )
+
+    if (adjustedPoint.x === controlPoint.x
+      && adjustedPoint.y === controlPoint.y)
+      return
 
     const deg = this.getDegreesFromPoint(adjustedPoint)
     target.style.webkitTransform =
     target.style.transform =
       'translate(' + adjustedPoint.x + 'px, ' + adjustedPoint.y + 'px) rotate('+ deg + 'deg) '
 
-    const percentage = this.convertDegreesToPercentage(
-      this.getDegreesFromPoint2(destinationPoint)
-    )
 
     this.setState({
       controlPoint: destinationPoint,
@@ -101,7 +110,25 @@ class RadialControl extends React.Component {
     else
       degrees = 180 - degrees + 180
 
-    return degrees / 360 * 100
+    const percentage = degrees / 360 * 100
+
+    if (percentage <= 0.5)
+      return 0
+    else
+      return Math.ceil(percentage)
+  }
+
+  constraintControlPoint(curPercentage, newControlPoint) {
+    const prevPercentage = this.state.percentage
+
+    if ((prevPercentage >= 95
+      && curPercentage <= 5)
+      || (prevPercentage <= 5
+      && curPercentage >= 95)) {
+      return this.state.controlPoint
+    }
+
+    return newControlPoint
   }
 
   componentDidMount() {
