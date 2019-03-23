@@ -3,16 +3,17 @@
 
 .TimerProgressBar
 	appearance none
-	background-color red
+	background-color white
 	border none
 	border-radius 2px
 	display block
-	height 1.05rem
+	height 1rem
 	margin-bottom 1rem
+	transform rotate(180deg)
 	width 50%
 
 	&[value]::-webkit-progress-bar
-		background-color red
+		background-color white
 		border-radius 2px
 
 	&[value]::-webkit-progress-value
@@ -26,9 +27,10 @@
 		border-radius 2px
 
 .progressBarPolyfill
-	background-color white
+	background-color red
 	clip-path polygon(0 0, 100% 0, 100% 100%, 0 100%)
-	height 1.05rem
+	height 1rem
 	position absolute
+	right 50%
 	top 0
 	transition width 1s linear
