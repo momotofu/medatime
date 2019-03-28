@@ -6,7 +6,7 @@ function NavButton(props) {
 		transitionCallback()
 	}
 
-	const { isDisabled } = props
+	const { isDisabled, isTimerVisible } = props
 	return(
 		<button
 			style={{padding:'1rem', backgroundColor:'white'}}
@@ -14,7 +14,7 @@ function NavButton(props) {
 			disabled={isDisabled}
 		>
 			<span className="visuallyhidden">Switch Step</span>
-			test
+			{isTimerVisible ? 'Back' : 'Next'}
 		</button>
 	)
 }

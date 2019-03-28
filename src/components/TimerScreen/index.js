@@ -46,7 +46,6 @@ class TimerScreen extends React.Component {
 			return (
 				<React.Fragment>
 					<Timer startingTimeInMilliseconds={ inputTime } />
-					<button onClick={() => { this.setState({ isTimerVisible: false})}}>Cancel</button>
 				</React.Fragment>
 			)
 		}
@@ -59,7 +58,7 @@ class TimerScreen extends React.Component {
 	}
 
 	render() {
-		const { inputTime } = this.state
+		const { inputTime, isTimerVisible } = this.state
 
 		return (
 			<div className="TimerScreen">
@@ -69,6 +68,7 @@ class TimerScreen extends React.Component {
         <NavButton
         	isDisabled={parseInt(inputTime) === 0}
         	transitionCallback={this.toggleTimerScreen.bind(this)}
+        	isTimerVisible={isTimerVisible}
         />
 			</div>
 		)
