@@ -64,7 +64,9 @@ class TimerScreen extends React.Component {
 			<div className="TimerScreen">
 				{this.renderInputField()}
 				{this.renderTimer()}
-        <RadialControl />
+        <RadialControl
+          radius={50}
+        />
         <NavButton
         	isDisabled={parseInt(inputTime) === 0}
         	transitionCallback={this.toggleTimerScreen.bind(this)}

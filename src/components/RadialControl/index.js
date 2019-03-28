@@ -6,7 +6,7 @@ class RadialControl extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      controlPoint: {
+      squareCoord: {
         x: 400,
         y: 180,
       }
@@ -44,29 +44,33 @@ class RadialControl extends React.Component {
 
   onMove(event) {
     const target = event.target
-    const { controlPoint, originPoint } = this.state
+    const { squareCoord, originPoint } = this.state
 
     const destinationPoint = {
-      x: controlPoint.x + event.dx,
-      y: controlPoint.y + event.dy
+      x: squareCoord.x + event.dx,
+      y: squareCoord.y + event.dy
     }
 
-
+    // percentage out of 360 degrees
     const percentage = this.convertDegreesToPercentage(
       this.getDegreesFromPoint2(destinationPoint)
     )
 
-    const adjustedPoint = this.constraintControlPoint(
+    // prevent square coords from going beyond 100% or 0%
+    // Also constrains the squares coordinates to the radius
+    const adjustedPoint = this.constrainSquareCoord(
       percentage,
       this.constrainPointToRadius(
         originPoint,
         destinationPoint,
-        50
+        this.props.radius,
       )
     )
 
-    if (adjustedPoint.x === controlPoint.x
-      && adjustedPoint.y === controlPoint.y)
+    // If the draggable event coords
+    // match the squareCoords don't do any work
+    if (adjustedPoint.x === squareCoord.x
+      && adjustedPoint.y === squareCoord.y)
       return
 
     const deg = this.getDegreesFromPoint(adjustedPoint)
@@ -76,7 +80,7 @@ class RadialControl extends React.Component {
 
 
     this.setState({
-      controlPoint: destinationPoint,
+      squareCoord: destinationPoint,
       percentage,
     })
   }
@@ -111,14 +115,16 @@ class RadialControl extends React.Component {
       return Math.ceil(percentage)
   }
 
-  constraintControlPoint(curPercentage, newControlPoint) {
+  constrainSquareCoord(curPercentage, newControlPoint) {
+    // constrains the square control from dragging beyond
+    // 100% or 0%
     const prevPercentage = this.state.percentage
 
     if ((prevPercentage >= 95
       && curPercentage <= 5)
       || (prevPercentage <= 5
       && curPercentage >= 95)) {
-      return this.state.controlPoint
+      return this.state.squareCoord // previous square coords
     }
 
     return newControlPoint
@@ -144,13 +150,16 @@ class RadialControl extends React.Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, radius } = this.props
+    const height = radius * 2 + 4
+    const width = height
+
     return (
-      <div className='RadialControl'>
+      <div className='RadialControl' style={{ height, width }}>
       <svg
         className='RadialControl-circle-container'
-        height='100%'
-        width='100%'
+        height={height}
+        width={width}
         xmlns='http://www.w3.org/2000/svg'>
           <circle
             className='RadialControl-circle RadialControl-circle-background'
@@ -164,7 +173,6 @@ class RadialControl extends React.Component {
           />
           <circle
             className='RadialControl-circle'
-            ref={ (el) => this.circle = el}
             cx='50%'
             cy='50%'
             r='50'
