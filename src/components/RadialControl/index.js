@@ -137,7 +137,17 @@ class RadialControl extends React.Component {
         x: originRect.x,
         y: originRect.y,
       }
+    }, () => {
+      const eventObject = {
+        target: this.square,
+        dx: 1000,
+        dy: -80,
+      }
+
+      this.onMove(eventObject)
     })
+
+
 
     Interact(this.square)
       .draggable({
@@ -166,8 +176,8 @@ class RadialControl extends React.Component {
             ref={ (el) => this.circle = el}
             cx='50%'
             cy='50%'
-            r='50'
-            strokeDasharray={this.getStrokeDashFrom(0, 50)}
+            r={radius}
+            strokeDasharray={this.getStrokeDashFrom(0, radius)}
             strokeDashoffset={0}
             fill='none'
           />
@@ -175,9 +185,9 @@ class RadialControl extends React.Component {
             className='RadialControl-circle'
             cx='50%'
             cy='50%'
-            r='50'
-            strokeDasharray={this.getStrokeDashFrom(0, 50)}
-            strokeDashoffset={this.getStrokeDashFrom(this.state.percentage, 50)}
+            r={radius}
+            strokeDasharray={this.getStrokeDashFrom(0, radius)}
+            strokeDashoffset={this.getStrokeDashFrom(this.state.percentage, radius)}
             fill='none'
           />
         </svg>
@@ -185,8 +195,8 @@ class RadialControl extends React.Component {
           className='RadialControl-square'
           ref={ (el) => this.square = el }
          >
-           { children }
         </div>
+         { children }
       </div>
     )
   }
