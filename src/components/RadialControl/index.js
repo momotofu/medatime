@@ -196,7 +196,9 @@ class RadialControl extends React.Component {
           ref={ (el) => this.square = el }
          >
         </div>
-         { children }
+		<div className='RadialControl-children'>
+		 { children }
+		 </div>
       </div>
     )
   }
