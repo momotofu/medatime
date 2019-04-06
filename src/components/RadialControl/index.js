@@ -11,7 +11,6 @@ class RadialControl extends React.Component {
         y: 180,
       }
     }
-
   }
 
   constrainPointToRadius(origin, destination, radius) {
@@ -43,8 +42,10 @@ class RadialControl extends React.Component {
   }
 
   onMove(event) {
+    console.log('onMove: ', event.clientX, event.clientY)
     const target = event.target
     const { squareCoord, originPoint } = this.state
+    //console.log('squareCoords: ', squareCoord.x, squareCoord.y)
 
     const destinationPoint = {
       x: squareCoord.x + event.dx,
@@ -132,31 +133,43 @@ class RadialControl extends React.Component {
 
   componentDidMount() {
     const originRect = this.circle.getBoundingClientRect()
+    const originPoint = {
+      x: originRect.x + originRect.width / 2,
+      y: originRect.y + originRect.height / 2,
+    }
+    const squareCoord =  {
+      x: originPoint.x + this.props.radius,
+      y: originPoint.y - 1,
+    }
+
+
     this.setState({
-      originPoint: {
-        x: originRect.x,
-        y: originRect.y,
-      }
+      originPoint,
+      squareCoord,
     }, () => {
       const eventObject = {
         target: this.square,
-        dx: 1000,
-        dy: -80,
+        dx: 0,
+        dy: 0,
       }
 
       this.onMove(eventObject)
     })
 
-
-
     Interact(this.square)
       .draggable({
+        onstart: (event) => {
+          //console.log('start event: ', event.speed)
+        },
         onmove: this.onMove.bind(this),
+        onend: (event) => {
+          //console.log('end event: ', event.speed)
+        }
       })
   }
 
   componentDidUpdate(prevState, curState) {
-    console.log('state: ', this.state)
+    //console.log('state: ', this.state)
   }
 
   render() {
@@ -196,9 +209,9 @@ class RadialControl extends React.Component {
           ref={ (el) => this.square = el }
          >
         </div>
-		<div className='RadialControl-children'>
-		 { children }
-		 </div>
+        <div className='RadialControl-children'>
+         { children }
+         </div>
       </div>
     )
   }

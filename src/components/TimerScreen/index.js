@@ -68,8 +68,12 @@ class TimerScreen extends React.Component {
           radius={200}
         >
           <RadialControl
-            radius={100}
-          />
+            radius={150}
+          >
+            <RadialControl
+              radius={100}
+            />
+          </RadialControl>
         </RadialControl>
         <NavButton
         	isDisabled={parseInt(inputTime) === 0}
