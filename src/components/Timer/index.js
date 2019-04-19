@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Digit from '../Digit'
 import TimerControlButton from '../TimerControlButton'
 import TimerRestartButton from '../TimerRestartButton'
 import TimerProgressBar from '../TimerProgressBar'
@@ -120,14 +119,6 @@ class Timer extends React.Component {
     return (
       <React.Fragment>
         <h1>Timer</h1>
-        <div className="Timer-digits">
-          <Digit digit={hoursTens} />
-          <Digit digit={hoursOnes} />
-          <Digit digit={minutesTens} />
-          <Digit digit={minutesOnes} />
-          <Digit digit={secondsTens} />
-          <Digit digit={secondsOnes} />
-				</div>
         <TimerProgressBar
           totalSeconds={this.props.startingTimeInMilliseconds}
           remainingSeconds={this.state.totalSeconds}
