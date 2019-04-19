@@ -2,7 +2,6 @@ import React from 'react'
 import './index.styl'
 
 function TimerProgressBar(props) {
-	console.log(props)
 	const { remainingSeconds, totalSeconds, refill } = props
 	const percent = remainingSeconds * 100 / totalSeconds
 	const percentPolyfill = percent / 2 + .15 + '%'
