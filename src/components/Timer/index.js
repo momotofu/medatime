@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import TimerControlButton from '../TimerControlButton'
 import TimerRestartButton from '../TimerRestartButton'
 import TimerProgressBar from '../TimerProgressBar'
+import TimerDisplay from '../TimerDisplay'
 import Sound from '../Sound'
 import { withPrefix } from 'gatsby'
 
@@ -131,18 +132,9 @@ class Timer extends React.Component {
   }
 
   render() {
-    const {
-      secondsOnes,
-      secondsTens,
-      minutesOnes,
-      minutesTens,
-      hoursOnes,
-      hoursTens,
-    } = this.state
-
     return (
       <React.Fragment>
-        <h1>Timer</h1>
+        <TimerDisplay seconds={this.state} />
         <TimerProgressBar
           totalSeconds={this.props.startingTimeInMilliseconds}
           remainingSeconds={this.state.totalSeconds}
