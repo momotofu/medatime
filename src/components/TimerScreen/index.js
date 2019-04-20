@@ -6,6 +6,7 @@ import TextInputField from '../TextInputField'
 import Timer from '../Timer'
 import RadialControl from '../RadialControl'
 import NavButton from '../NavButton'
+import TimerControls from '../TimerControls'
 
 // CSS
 import './index.styl'

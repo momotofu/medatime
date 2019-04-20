@@ -1,11 +1,24 @@
+import {
+  DECREMENT,
+  SET_STOP_CLOCK_CALLBACK,
+  RESTART_CLOCK,
+  SET_INITIAL_SECONDS,
+} from './actions'
+
 export default timerReducer = (state, action) => {
   switch (action.type) {
-    case 'DECREMENT':
+    case DECREMENT:
       return { ...state, ...updateDigitState(state.currentSeconds - 1) }
-    case 'SET_STOP_CLOCK_CALLBACK':
-      return {}
-    case 'RESTART_CLOCK':
-      return {}
+    case SET_STOP_CLOCK_CALLBACK:
+      return { ...state, stopClockCallback: action.callback }
+    case RESTART_CLOCK:
+      return { ...state, ...updateDigitState(state.initialTime) }
+    case SET_INITIAL_SECONDS:
+      return {
+        ...state,
+        initalSeconds: action.seconds,
+        totalSeconds: action.seconds,
+      }
     default:
       return state
   }
