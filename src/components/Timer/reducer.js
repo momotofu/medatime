@@ -5,14 +5,14 @@ import {
   SET_INITIAL_SECONDS,
 } from './actions'
 
-export default timerReducer = (state, action) => {
+const timerReducer = (state, action) => {
   switch (action.type) {
     case DECREMENT:
-      return { ...state, ...updateDigitState(state.currentSeconds - 1) }
+      return { ...state, ...updateDigitsState(state.currentSeconds - 1) }
     case SET_STOP_CLOCK_CALLBACK:
       return { ...state, stopClockCallback: action.callback }
     case RESTART_CLOCK:
-      return { ...state, ...updateDigitState(state.initialTime) }
+      return { ...state, ...updateDigitsState(state.initialTime) }
     case SET_INITIAL_SECONDS:
       return {
         ...state,
@@ -64,3 +64,5 @@ function updateDigitsState(state) {
 function checkTime(time) {
   return time === 0 || time < 0
 }
+
+export default timerReducer

@@ -9,7 +9,7 @@ import {
   startClock,
   stopClock,
   restartClock,
-} from '../Timer'
+} from '../Timer/actions'
 
 const TimerControls = () => {
   const { state, dispatch } = useContext(TimerContext)
