@@ -11,6 +11,7 @@ function Input(props) {
 	const handleChange = event => {
 		const { onKeydownCallback } = props
 		const seconds = mapTextToSeconds(event.target.value)
+    console.log('onKeydownCallback: ', onKeydownCallback, seconds)
 
 		onKeydownCallback(seconds)
 	}
@@ -19,13 +20,16 @@ function Input(props) {
 		const {onEnterCallback } = props
 		if (event.key === ENTER_KEY) {
 			onEnterCallback()
+      console.log('onEnterCallback: ', onEnterCallback)
 		}
 	}
 
 	const { placeholder = 'Type something...' } = props
 	return (
 		<React.Fragment>
-			<label className="visuallyhidden" htmlFor="medaTime">Enter Meditation Time</label>
+      <label className="visuallyhidden" htmlFor="medaTime">
+        Enter Meditation Time
+      </label>
 			<input
 				className="TextInputField"
 				id="medaTime"

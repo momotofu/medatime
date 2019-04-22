@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 // Imported components
@@ -13,14 +13,25 @@ import './index.styl'
 
 const TimerScreen = (props) => {
   const [isTimerVisible, setIsTimerVisible] = useState(false)
-  const [inputTime, setInputTime] = useState(null)
+  const [inputTime, setInputTime] = useState(0)
+  console.log('inputTime: ', inputTime)
+  console.log('isTimerVisible: ', isTimerVisible)
 
-  const inputCallback = (currentInputTime) => {
+  //useEffect(() => {
+    //console.log('isTimerVisible: ', isTimerVisible)
+  //}, [isTimerVisible])
+
+  const inputCallback = () => {
+    console.log('before visible: ', isTimerVisible)
 		setIsTimerVisible(true)
+    console.log('before visible: ', isTimerVisible)
 	}
 
   const inputKeydownCallback = (currentInputTime) => {
+    console.log('input: ', currentInputTime)
+    console.log('before time: ', inputTime)
     setInputTime(currentInputTime)
+    console.log('after time: ', inputTime)
 	}
 
   const renderInputField = () => {
