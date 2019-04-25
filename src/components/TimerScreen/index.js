@@ -66,12 +66,12 @@ class TimerScreen extends React.Component {
 		    <TimerDisplay
 		    	digitData={
 		    		{
-		    			secondsOnes: 0,
-			    		secondsTens: 0,
-			    		minutesOnes: 0,
-			    		minutesTens: 0,
-			    		hoursOnes: 0,
-			    		hoursTens: 0
+		    			secondsOnes: 1,
+			    		secondsTens: 2,
+			    		minutesOnes: 3,
+			    		minutesTens: 4,
+			    		hoursOnes: 5,
+			    		hoursTens: 6
 			    	}
 		    	}
 		    />

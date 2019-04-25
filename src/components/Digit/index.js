@@ -13,7 +13,13 @@ class Digit extends React.Component {
             <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine isOn />
@@ -24,10 +30,16 @@ class Digit extends React.Component {
           <React.Fragment>
             <DigitLine />
             <DigitLine />
+            <DigitLine />
+            <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine />
             <DigitLine />
             <DigitLine />
+            <DigitLine />
+            <DigitLine />
+            <DigitLine isOn />
             <DigitLine isOn />
           </React.Fragment>
         )
@@ -40,7 +52,13 @@ class Digit extends React.Component {
             <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine isOn />
-            <DigitLine />{' '}
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine />
           </React.Fragment>
         )
       case 3:
@@ -50,7 +68,13 @@ class Digit extends React.Component {
             <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine />
+            <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine isOn />
           </React.Fragment>
@@ -59,11 +83,17 @@ class Digit extends React.Component {
         return (
           <React.Fragment>
             <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine />
             <DigitLine isOn />
             <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine />
             <DigitLine />
+            <DigitLine />
+            <DigitLine isOn />
             <DigitLine isOn />
           </React.Fragment>
         )
@@ -72,9 +102,15 @@ class Digit extends React.Component {
           <React.Fragment>
             <DigitLine isOn />
             <DigitLine isOn />
-            <DigitLine />
+            <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine />
+            <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine isOn />
           </React.Fragment>
@@ -84,7 +120,12 @@ class Digit extends React.Component {
           <React.Fragment>
             <DigitLine isOn />
             <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine isOn />
@@ -98,15 +139,27 @@ class Digit extends React.Component {
             <DigitLine />
             <DigitLine isOn />
             <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine />
             <DigitLine />
             <DigitLine />
+            <DigitLine />
+            <DigitLine />
+            <DigitLine isOn />
             <DigitLine isOn />
           </React.Fragment>
         )
       case 8:
         return (
           <React.Fragment>
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine isOn />
@@ -123,8 +176,14 @@ class Digit extends React.Component {
             <DigitLine isOn />
             <DigitLine isOn />
             <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
+            <DigitLine isOn />
             <DigitLine />
             <DigitLine />
+            <DigitLine />
+            <DigitLine isOn />
             <DigitLine isOn />
           </React.Fragment>
         )
