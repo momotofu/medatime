@@ -142,7 +142,6 @@ class Timer extends React.Component {
 
     return (
       <React.Fragment>
-        <h1>Timer</h1>
         <TimerProgressBar
           totalSeconds={this.props.startingTimeInMilliseconds}
           remainingSeconds={this.state.totalSeconds}

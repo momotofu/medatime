@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Digit from '../Digit'
 
 import './index.styl';
@@ -12,7 +11,7 @@ const TimerDisplay = (props) => {
     minutesTens,
     hoursOnes,
     hoursTens,
-  } = props;
+  } = props.digitData;
 
   return (
     <div className="Timer-digits">
@@ -25,3 +24,5 @@ const TimerDisplay = (props) => {
     </div>
   )
 }
+
+export default TimerDisplay

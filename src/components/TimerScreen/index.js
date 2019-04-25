@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 // Imported components
 import TextInputField from '../TextInputField'
 import Timer from '../Timer'
+import TimerDisplay from '../TimerDisplay'
 import RadialControl from '../RadialControl'
 import NavButton from '../NavButton'
 
@@ -62,6 +63,18 @@ class TimerScreen extends React.Component {
 
 		return (
 			<div className="TimerScreen">
+		    <TimerDisplay
+		    	digitData={
+		    		{
+		    			secondsOnes: 0,
+			    		secondsTens: 0,
+			    		minutesOnes: 0,
+			    		minutesTens: 0,
+			    		hoursOnes: 0,
+			    		hoursTens: 0
+			    	}
+		    	}
+		    />
 				{this.renderInputField()}
 				{this.renderTimer()}
         <RadialControl
