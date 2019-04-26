@@ -8,7 +8,6 @@ import {
 const timerReducer = (state, action) => {
   switch (action.type) {
     case DECREMENT:
-      console.log('state decrment')
       return { ...state, ...updateDigitsState(state.currentSeconds - 1000, state.isAtZero) }
     case SET_STOP_CLOCK_CALLBACK:
       return { ...state, stopClockCallback: action.callback }
@@ -26,7 +25,6 @@ const timerReducer = (state, action) => {
 }
 
 function mapTimeStringToStateObject(timeString) {
-  console.log('timeString: ', timeString)
   const seconds = timeString.substr(6,2)
   const minutes = timeString.substr(3,2)
   const hours = timeString.substr(0,2)

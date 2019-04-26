@@ -22,19 +22,17 @@ import './index.styl'
 
 const TimerScreen = (props) => {
   const { state: timerState, dispatch } = useContext(TimerContext)
-
-  // state
   const [isTimerVisible, setIsTimerVisible] = useState(false)
   const [inputTime, setInputTime] = useState(0)
 
   const inputCallback = () => {
 		setIsTimerVisible(true)
+    startClock(null, dispatch)
+    dispatch(setInitialSeconds(inputTime))
 	}
 
   const inputKeydownCallback = (currentInputTime) => {
     setInputTime(currentInputTime)
-    dispatch(setInitialSeconds(currentInputTime))
-    startClock(null, dispatch)
 	}
 
   const renderInputField = () => {
