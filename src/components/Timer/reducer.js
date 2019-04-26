@@ -8,16 +8,17 @@ import {
 const timerReducer = (state, action) => {
   switch (action.type) {
     case DECREMENT:
-      return { ...state, ...updateDigitsState(state.currentSeconds - 1) }
+      console.log('state decrment')
+      return { ...state, ...updateDigitsState(state.currentSeconds - 1000, state.isAtZero) }
     case SET_STOP_CLOCK_CALLBACK:
       return { ...state, stopClockCallback: action.callback }
     case RESTART_CLOCK:
-      return { ...state, ...updateDigitsState(state.initialTime) }
+      return { ...state, ...updateDigitsState(state.currentSeconds, false) }
     case SET_INITIAL_SECONDS:
       return {
         ...state,
         initalSeconds: action.seconds,
-        totalSeconds: action.seconds,
+        currentSeconds: action.seconds,
       }
     default:
       return state
@@ -25,6 +26,7 @@ const timerReducer = (state, action) => {
 }
 
 function mapTimeStringToStateObject(timeString) {
+  console.log('timeString: ', timeString)
   const seconds = timeString.substr(6,2)
   const minutes = timeString.substr(3,2)
   const hours = timeString.substr(0,2)
@@ -47,22 +49,16 @@ function getTimeStringFrom(seconds, dateObject) {
   return date.toTimeString().substr(0,8)
 }
 
-function updateDigitsState(state) {
-  const { currentSeconds, isAtZero } = state
+function updateDigitsState(seconds, isAtZero) {
+  if (isAtZero) return {}
 
-  if (isAtZero) return
+  const timeString = getTimeStringFrom(seconds, Date)
 
-  const timeString = getTimeStringFrom(currentSeconds, Date)
-  const isOutOfTime = checkTime(currentSeconds)
-
-  if (isOutOfTime)
-    return { isAtZero: true, ...mapTimeStringToStateObject(timeString) }
-
-  return mapTimeStringToStateObject(timeString)
-}
-
-function checkTime(time) {
-  return time === 0 || time < 0
+  return {
+    isAtZero: seconds === 0,
+    currentSeconds: seconds,
+    ...mapTimeStringToStateObject(timeString)
+  }
 }
 
 export default timerReducer

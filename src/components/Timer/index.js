@@ -8,7 +8,7 @@ import timerReducer from './reducer'
 export const TimerContext = React.createContext(null)
 
 const TimerProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(timerReducer, {})
+  const [state, dispatch] = useReducer(timerReducer, { currentSeconds: 1 })
 
   return (
     <TimerContext.Provider
@@ -20,3 +20,4 @@ const TimerProvider = ({ children }) => {
 }
 
 export default TimerProvider
+export * from './actions'

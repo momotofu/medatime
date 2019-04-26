@@ -1,37 +1,40 @@
-import React, { useState, useEffect } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useContext,
+} from 'react'
 import PropTypes from 'prop-types'
 
 // Imported components
 import TextInputField from '../TextInputField'
-import TimerProvider from '../Timer'
 import RadialControl from '../RadialControl'
 import NavButton from '../NavButton'
 import TimerControls from '../TimerControls'
+import TimerDisplay from '../TimerDisplay'
+import {
+  TimerContext,
+  setInitialSeconds,
+  startClock,
+} from '../Timer'
 
 // CSS
 import './index.styl'
 
 const TimerScreen = (props) => {
+  const { state: timerState, dispatch } = useContext(TimerContext)
+
+  // state
   const [isTimerVisible, setIsTimerVisible] = useState(false)
   const [inputTime, setInputTime] = useState(0)
-  console.log('inputTime: ', inputTime)
-  console.log('isTimerVisible: ', isTimerVisible)
-
-  //useEffect(() => {
-    //console.log('isTimerVisible: ', isTimerVisible)
-  //}, [isTimerVisible])
 
   const inputCallback = () => {
-    console.log('before visible: ', isTimerVisible)
 		setIsTimerVisible(true)
-    console.log('before visible: ', isTimerVisible)
 	}
 
   const inputKeydownCallback = (currentInputTime) => {
-    console.log('input: ', currentInputTime)
-    console.log('before time: ', inputTime)
     setInputTime(currentInputTime)
-    console.log('after time: ', inputTime)
+    dispatch(setInitialSeconds(currentInputTime))
+    startClock(null, dispatch)
 	}
 
   const renderInputField = () => {
@@ -58,8 +61,8 @@ const TimerScreen = (props) => {
 	}
 
   return (
-    <TimerProvider>
       <div className="TimerScreen">
+        <TimerDisplay seconds={timerState} />
         {renderInputField()}
         {renderTimerControls()}
         <RadialControl
@@ -79,7 +82,6 @@ const TimerScreen = (props) => {
           isTimerVisible={isTimerVisible}
         />
       </div>
-    </TimerProvider>
   )
 }
 

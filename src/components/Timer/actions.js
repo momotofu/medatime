@@ -28,7 +28,7 @@ export const startClock = (prevClearInterval, dispatch) => {
   dispatch(
     setStopClockCallback(
       returnStopClock(clearInterval, window, setInterval(() => {
-        dispatch(decrementDigitsState)
+        dispatch(decrementDigitsState())
       }, 1000))
     )
   )
