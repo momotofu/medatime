@@ -3,21 +3,32 @@ import {
   SET_STOP_CLOCK_CALLBACK,
   RESTART_CLOCK,
   SET_INITIAL_SECONDS,
+  SET_CURRENT_SECONDS,
 } from './actions'
 
 const timerReducer = (state, action) => {
   switch (action.type) {
     case DECREMENT:
-      return { ...state, ...updateDigitsState(state.currentSeconds - 1000, state.isAtZero) }
+      return {
+        ...state,
+        currentSeconds: state.currentSeconds - 1000,
+        ...updateDigitsState(state.currentSeconds - 1000, state.isAtZero),
+      }
     case SET_STOP_CLOCK_CALLBACK:
       return { ...state, stopClockCallback: action.callback }
     case RESTART_CLOCK:
-      return { ...state, ...updateDigitsState(state.currentSeconds, false) }
-    case SET_INITIAL_SECONDS:
       return {
         ...state,
-        initalSeconds: action.seconds,
+        currentSeconds: state.initialSeconds,
+        ...updateDigitsState(state.initialSeconds, false),
+      }
+    case SET_INITIAL_SECONDS:
+      return { ...state, initalSeconds: action.seconds }
+    case SET_CURRENT_SECONDS:
+      return {
+        ...state,
         currentSeconds: action.seconds,
+        ...updateDigitsState(action.seconds, false),
       }
     default:
       return state
@@ -54,7 +65,6 @@ function updateDigitsState(seconds, isAtZero) {
 
   return {
     isAtZero: seconds === 0,
-    currentSeconds: seconds,
     ...mapTimeStringToStateObject(timeString)
   }
 }

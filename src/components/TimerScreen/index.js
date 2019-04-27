@@ -14,6 +14,7 @@ import TimerDisplay from '../TimerDisplay'
 import {
   TimerContext,
   setInitialSeconds,
+  setCurrentSeconds,
   startClock,
 } from '../Timer'
 
@@ -23,16 +24,20 @@ import './index.styl'
 const TimerScreen = (props) => {
   const { state: timerState, dispatch } = useContext(TimerContext)
   const [isTimerVisible, setIsTimerVisible] = useState(false)
-  const [inputTime, setInputTime] = useState(0)
+
+  useEffect(() => {
+    console.log('state: ', timerState)
+  }, [timerState])
 
   const inputCallback = () => {
 		setIsTimerVisible(true)
     startClock(null, dispatch)
-    dispatch(setInitialSeconds(inputTime))
+    dispatch(setInitialSeconds(timerState.currentTime))
 	}
 
   const inputKeydownCallback = (currentInputTime) => {
-    setInputTime(currentInputTime)
+    console.log('currentTime: ', currentInputTime)
+    dispatch(setCurrentSeconds(currentInputTime))
 	}
 
   const renderInputField = () => {
@@ -75,7 +80,7 @@ const TimerScreen = (props) => {
           </RadialControl>
         </RadialControl>
         <NavButton
-          isDisabled={parseInt(inputTime) === 0}
+          isDisabled={parseInt(timerState.currentTime) === 0}
           transitionCallback={toggleTimerScreen}
           isTimerVisible={isTimerVisible}
         />

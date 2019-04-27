@@ -2,6 +2,7 @@ export const DECREMENT = 'DECREMENT'
 export const SET_STOP_CLOCK_CALLBACK = 'SET_STOP_CLOCK_CALLBACK'
 export const RESTART_CLOCK = 'RESTART_CLOCK'
 export const SET_INITIAL_SECONDS = 'SET_INITIAL_SECONDS'
+export const SET_CURRENT_SECONDS = 'SET_CURRENT_SECONDS'
 
 export const decrementDigitsState = () => {
   return {
@@ -18,6 +19,13 @@ export const restartClock = () => {
 export const setInitialSeconds = (seconds) => {
   return {
     type: SET_INITIAL_SECONDS,
+    seconds,
+  }
+}
+
+export const setCurrentSeconds = (seconds) => {
+  return {
+    type: SET_CURRENT_SECONDS,
     seconds,
   }
 }
