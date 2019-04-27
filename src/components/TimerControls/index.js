@@ -12,17 +12,17 @@ import {
 } from '../Timer'
 
 const TimerControls = () => {
-  const { state, dispatch } = useContext(TimerContext)
+  const { state: timerState, dispatch } = useContext(TimerContext)
 
   const playCallback = startClock.bind(
     null,
-    state.clearInterval,
+    timerState.stopClockCallback,
     dispatch
   )
 
   const stopClockCallback = stopClock.bind(
     null,
-    state.stopClockCallback,
+    timerState.stopClockCallback,
     dispatch
   )
 
@@ -31,8 +31,8 @@ const TimerControls = () => {
   return (
     <React.Fragment>
       <TimerProgressBar
-        totalSeconds={state.initalSeconds}
-        remainingSeconds={state.totalSeconds}
+        totalSeconds={timerState.initialSeconds}
+        remainingSeconds={timerState.currentSeconds}
       />
       <TimerControlButton
         isPlay

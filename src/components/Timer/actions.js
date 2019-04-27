@@ -33,7 +33,6 @@ export const setCurrentSeconds = (seconds) => {
 export const startClock = (prevClearInterval, dispatch) => {
   if (prevClearInterval) prevClearInterval()
 
-  console.log('test')
   dispatch(
     setStopClockCallback(
       returnStopClock(clearInterval, window, setInterval(() => {
