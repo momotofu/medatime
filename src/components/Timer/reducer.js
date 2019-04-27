@@ -23,7 +23,8 @@ const timerReducer = (state, action) => {
         ...updateDigitsState(state.initialSeconds, false),
       }
     case SET_INITIAL_SECONDS:
-      return { ...state, initalSeconds: action.seconds }
+      console.log('action: ', action)
+      return { ...state, initialSeconds: action.seconds }
     case SET_CURRENT_SECONDS:
       return {
         ...state,

@@ -16,6 +16,7 @@ import {
   setInitialSeconds,
   setCurrentSeconds,
   startClock,
+  stopClock,
 } from '../Timer'
 
 // CSS
@@ -23,25 +24,24 @@ import './index.styl'
 
 const TimerScreen = (props) => {
   const { state: timerState, dispatch } = useContext(TimerContext)
-  const [isTimerVisible, setIsTimerVisible] = useState(false)
+  const [isTimerStarted, setIsTimerStarted] = useState(false)
 
-  useEffect(() => {
-    console.log('state: ', timerState)
-  }, [timerState])
+  //useEffect(() => {
+    //console.log('state: ', timerState)
+  //}, [timerState])
 
   const inputCallback = () => {
-		setIsTimerVisible(true)
+		setIsTimerStarted(true)
     startClock(null, dispatch)
-    dispatch(setInitialSeconds(timerState.currentTime))
+    dispatch(setInitialSeconds(timerState.currentSeconds))
 	}
 
   const inputKeydownCallback = (currentInputTime) => {
-    console.log('currentTime: ', currentInputTime)
     dispatch(setCurrentSeconds(currentInputTime))
 	}
 
   const renderInputField = () => {
-		if (!isTimerVisible) {
+		if (!isTimerStarted) {
 			return (
 				<TextInputField
 					onEnterCallback={inputCallback}
@@ -52,7 +52,7 @@ const TimerScreen = (props) => {
 	}
 
   const renderTimerControls = () => {
-		if (isTimerVisible) {
+		if (isTimerStarted) {
 			return (
         <TimerControls />
 			)
@@ -60,7 +60,13 @@ const TimerScreen = (props) => {
 	}
 
   const toggleTimerScreen = () => {
-    setIsTimerVisible((prevState) => !prevState)
+    if (isTimerStarted) {
+      stopClock(timerState.stopClockCallback, dispatch)
+      dispatch(setInitialSeconds(0))
+      dispatch(setCurrentSeconds(0))
+    }
+
+    setIsTimerStarted((prevState) => !prevState)
 	}
 
   return (
@@ -82,7 +88,6 @@ const TimerScreen = (props) => {
         <NavButton
           isDisabled={parseInt(timerState.currentTime) === 0}
           transitionCallback={toggleTimerScreen}
-          isTimerVisible={isTimerVisible}
         />
       </div>
   )
