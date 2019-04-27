@@ -86,7 +86,7 @@ const TimerScreen = (props) => {
           </RadialControl>
         </RadialControl>
         <NavButton
-          isDisabled={parseInt(timerState.currentTime) === 0}
+          isDisabled={parseInt(timerState.currentSeconds) === 0}
           transitionCallback={toggleTimerScreen}
         />
       </div>
