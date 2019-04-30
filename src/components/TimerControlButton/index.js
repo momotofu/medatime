@@ -5,7 +5,6 @@ import './index.css'
 
 const TimerControlButton = (props) => {
   const { onClickCallback, isPlaying } = props
-  console.log('inner isPlaying: ', isPlaying)
 
   return (
     <button
