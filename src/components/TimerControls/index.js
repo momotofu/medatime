@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import TimerControlButton from '../TimerControlButton'
@@ -12,6 +12,11 @@ import {
 } from '../Timer'
 
 const TimerControls = () => {
+  const [
+    isProgressBarTransitioning,
+    setIsProgressBarTransitioning
+  ] = useState(true)
+
   const { state: timerState, dispatch } = useContext(TimerContext)
 
   const playCallback = startClock.bind(
@@ -26,16 +31,21 @@ const TimerControls = () => {
     dispatch
   )
 
-  const restartClockCallback = dispatch.bind(null, restartClock())
+  const restartClockCallback = () => {
+    setIsProgressBarTransitioning(false)
+    stopClock(timerState.stopClockCallback, dispatch)
+    dispatch(restartClock())
+  }
 
   return (
     <React.Fragment>
       <TimerProgressBar
         totalSeconds={timerState.initialSeconds}
         remainingSeconds={timerState.currentSeconds}
+        hasTransition={isProgressBarTransitioning}
       />
       <TimerControlButton
-        isPlay
+        isPlay={timerState.stopClockCallback === null}
         playCallback={playCallback}
         pauseCallback={stopClockCallback}
       />
