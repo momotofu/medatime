@@ -1,82 +1,75 @@
-import React from 'react'
+import React, {
+  useState,
+  useEffect,
+  useContext,
+} from 'react'
 import PropTypes from 'prop-types'
 
 // Imported components
 import TextInputField from '../TextInputField'
 import Timer from '../Timer'
-import TimerDisplay from '../TimerDisplay'
 import RadialControl from '../RadialControl'
 import NavButton from '../NavButton'
+import TimerControls from '../TimerControls'
+import TimerDisplay from '../TimerDisplay'
+import {
+  TimerContext,
+  setInitialSeconds,
+  setCurrentSeconds,
+  startClock,
+} from '../Timer'
 
 // CSS
 import './index.styl'
 
-class TimerScreen extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			isTimerVisible: false,
-			inputTime: 0
-		}
-  }
+const TimerScreen = (props) => {
+  const { state: timerState, dispatch } = useContext(TimerContext)
+  const [isTimerVisible, setIsTimerVisible] = useState(false)
 
-	inputCallback(currentInputTime) {
-		this.setState({isTimerVisible: true})
+  useEffect(() => {
+    console.log('state: ', timerState)
+  }, [timerState])
+
+  const inputCallback = () => {
+		setIsTimerVisible(true)
+    startClock(null, dispatch)
+    dispatch(setInitialSeconds(timerState.currentTime))
 	}
 
-	inputKeydownCallback(currentInputTime) {
-		this.setState({inputTime: currentInputTime})
+  const inputKeydownCallback = (currentInputTime) => {
+    console.log('currentTime: ', currentInputTime)
+    dispatch(setCurrentSeconds(currentInputTime))
 	}
 
-	renderInputField() {
-		const { isTimerVisible } = this.state
-
+  const renderInputField = () => {
 		if (!isTimerVisible) {
 			return (
 				<TextInputField
-					onEnterCallback={this.inputCallback.bind(this)}
-					onKeydownCallback={this.inputKeydownCallback.bind(this)}
+					onEnterCallback={inputCallback}
+					onKeydownCallback={inputKeydownCallback}
 				/>
 			)
 		}
 	}
 
-	renderTimer() {
-		const { isTimerVisible, inputTime } = this.state
+  const renderTimerControls = () => {
 		if (isTimerVisible) {
 			return (
-				<React.Fragment>
-					<Timer startingTimeInMilliseconds={ inputTime } />
-				</React.Fragment>
+        <TimerControls />
 			)
 		}
 	}
 
-	toggleTimerScreen() {
-		const { isTimerVisible } = this.state
-
-		this.setState({ isTimerVisible: !isTimerVisible })
+  const toggleTimerScreen = () => {
+    setIsTimerVisible((prevState) => !prevState)
 	}
 
-	render() {
-		const { inputTime, isTimerVisible } = this.state
 
-		return (
-			<div className="TimerScreen">
-		    <TimerDisplay
-		    	digitData={
-		    		{
-		    			secondsOnes: 1,
-			    		secondsTens: 2,
-			    		minutesOnes: 3,
-			    		minutesTens: 4,
-			    		hoursOnes: 5,
-			    		hoursTens: 6
-			    	}
-		    	}
-		    />
-				{this.renderInputField()}
-				{this.renderTimer()}
+  return (
+      <div className="TimerScreen">
+        <TimerDisplay seconds={timerState} />
+        {renderInputField()}
+        {renderTimerControls()}
         <RadialControl
           radius={200}
         >
@@ -89,13 +82,12 @@ class TimerScreen extends React.Component {
           </RadialControl>
         </RadialControl>
         <NavButton
-        	isDisabled={parseInt(inputTime) === 0}
-        	transitionCallback={this.toggleTimerScreen.bind(this)}
-        	isTimerVisible={isTimerVisible}
+          isDisabled={parseInt(timerState.currentTime) === 0}
+          transitionCallback={toggleTimerScreen}
+          isTimerVisible={isTimerVisible}
         />
-			</div>
-		)
-	}
+      </div>
+  )
 }
 
 export default TimerScreen

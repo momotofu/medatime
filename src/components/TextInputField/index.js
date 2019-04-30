@@ -25,7 +25,9 @@ function Input(props) {
 	const { placeholder = 'Type something...' } = props
 	return (
 		<React.Fragment>
-			<label className="visuallyhidden" htmlFor="medaTime">Enter Meditation Time</label>
+      <label className="visuallyhidden" htmlFor="medaTime">
+        Enter Meditation Time
+      </label>
 			<input
 				className="TextInputField"
 				id="medaTime"

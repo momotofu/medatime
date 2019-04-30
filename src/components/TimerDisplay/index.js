@@ -11,7 +11,7 @@ const TimerDisplay = (props) => {
     minutesTens,
     hoursOnes,
     hoursTens,
-  } = props.digitData;
+  } = props.seconds;
 
   return (
     <div className="Timer-digits">
