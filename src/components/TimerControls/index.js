@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import TimerControlButton from '../TimerControlButton'
-import TimerRestartButton from '../TimerRestartButton'
+import TimerControlButton, { controlTypes } from '../TimerControlButton'
 import TimerProgressBar from '../TimerProgressBar'
 import {
   TimerContext,
@@ -31,14 +30,14 @@ const TimerControls = () => {
     )
   }
 
-  const onTimerControlClick = () => {
+  const onPlayButtonClick = () => {
     if (isPlaying)
       stopClockCallback()
     else
       playCallback()
   }
 
-  const restartClockCallback = () => {
+  const onRestartButtonClick = () => {
     setIsPlaying(false)
     stopClock(timerState.stopClockCallback, dispatch)
     dispatch(restartClock())
@@ -52,10 +51,14 @@ const TimerControls = () => {
         hasTransition={isPlaying}
       />
       <TimerControlButton
+        type={controlTypes.play}
         isPlaying={isPlaying}
-        onClickCallback={onTimerControlClick}
+        onClickCallback={onPlayButtonClick}
       />
-      <TimerRestartButton restartCallback={restartClockCallback} />
+      <TimerControlButton
+        type={controlTypes.restart}
+        onClickCallback={onRestartButtonClick}
+      />
     </React.Fragment>
   )
 }
