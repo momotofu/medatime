@@ -12,27 +12,34 @@ import {
 } from '../Timer'
 
 const TimerControls = () => {
-  const [
-    isProgressBarTransitioning,
-    setIsProgressBarTransitioning
-  ] = useState(true)
-
+  const [ isPlaying, setIsPlaying ] = useState(true)
   const { state: timerState, dispatch } = useContext(TimerContext)
 
-  const playCallback = startClock.bind(
-    null,
-    timerState.stopClockCallback,
-    dispatch
-  )
+  const playCallback = () => {
+    setIsPlaying(true)
+    startClock(
+      timerState.stopClockCallback,
+      dispatch
+    )
+  }
 
-  const stopClockCallback = stopClock.bind(
-    null,
-    timerState.stopClockCallback,
-    dispatch
-  )
+  const stopClockCallback = () => {
+    setIsPlaying(false)
+    stopClock(
+      timerState.stopClockCallback,
+      dispatch
+    )
+  }
+
+  const onTimerControlClick = () => {
+    if (isPlaying)
+      stopClockCallback()
+    else
+      playCallback()
+  }
 
   const restartClockCallback = () => {
-    setIsProgressBarTransitioning(false)
+    setIsPlaying(false)
     stopClock(timerState.stopClockCallback, dispatch)
     dispatch(restartClock())
   }
@@ -42,12 +49,11 @@ const TimerControls = () => {
       <TimerProgressBar
         totalSeconds={timerState.initialSeconds}
         remainingSeconds={timerState.currentSeconds}
-        hasTransition={isProgressBarTransitioning}
+        hasTransition={isPlaying}
       />
       <TimerControlButton
-        isPlay={timerState.stopClockCallback === null}
-        playCallback={playCallback}
-        pauseCallback={stopClockCallback}
+        isPlaying={isPlaying}
+        onClickCallback={onTimerControlClick}
       />
       <TimerRestartButton restartCallback={restartClockCallback} />
     </React.Fragment>

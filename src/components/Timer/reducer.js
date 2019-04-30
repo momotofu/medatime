@@ -7,7 +7,7 @@ import {
 } from './actions'
 
 const timerReducer = (state, action) => {
-  console.log('state: ', state)
+  //console.log('state: ', state)
   switch (action.type) {
     case DECREMENT:
       return {
