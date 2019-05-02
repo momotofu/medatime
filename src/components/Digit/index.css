@@ -5,35 +5,38 @@
 
 .Digit-container {
     display: grid;
-    grid-gap: 0.05rem;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    grid-template:  ". b ."
-                    "a . c"
-                    "a . c"
-                    "a . c"
-                    ". d ."
-                    "e . g"
-                    "e . g"
-                    "e . g"
-                    ". f .";
-    margin-right: 1.5rem;
-    max-width: 60px;
+    grid-template:  "b c d"
+                    "a . e"
+                    "h g f"
+                    "i . m"
+                    "j k l";
+    margin-right: 1.25rem;
     position: relative;
 }
 
-.Digit-container:nth-child(even)::after {
-    content: " : ";
-    color: white;
-    font-size: 2rem;
-    position: absolute;
-    right: -1rem;
-    top: 50%;
-    transform: translateY(-50%);
+.Digit-container:nth-child(even) {
+    margin-right: 1.75rem;
 }
 
-.Digit-container:nth-child(even):last-of-type::after {
+.Digit-container:nth-child(even)::after {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2VlZSIgZD0iTTYgMTEuOTk5TDE4IDI0VjB6Ii8+PC9zdmc+);
+    background-size: contain;
     content: "";
+    position: absolute;
+    width: 1.65rem;
+    height: 1.65rem;
+    grid-column: 4;
+    grid-row: 3;
+}
+
+.Digit-container:nth-child(4)::after {
+    transform: rotate(180deg);
+}
+
+.Digit-container:last-of-type::after {
+    background-image: none;
 }
 
 

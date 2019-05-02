@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 
 // Imported components
 import TextInputField from '../TextInputField'
+import Timer from '../Timer'
 import RadialControl from '../RadialControl'
 import NavButton from '../NavButton'
 import TimerControls from '../TimerControls'
@@ -62,6 +63,7 @@ const TimerScreen = (props) => {
   const toggleTimerScreen = () => {
     setIsTimerVisible((prevState) => !prevState)
 	}
+
 
   return (
       <div className="TimerScreen">

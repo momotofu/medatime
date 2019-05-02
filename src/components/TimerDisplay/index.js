@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Digit from '../Digit'
 
 import './index.styl';
@@ -26,4 +25,4 @@ const TimerDisplay = (props) => {
   )
 }
 
-export default TimerDisplay;
+export default TimerDisplay
