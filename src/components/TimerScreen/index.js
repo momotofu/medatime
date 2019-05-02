@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 
 // Imported components
 import TextInputField from '../TextInputField'
+import Timer from '../Timer'
 import RadialControl from '../RadialControl'
 import NavButton from '../NavButton'
 import TimerControls from '../TimerControls'
@@ -69,6 +70,7 @@ const TimerScreen = (props) => {
     setIsTimerStarted((prevState) => !prevState)
 	}
 
+
   return (
       <div className="TimerScreen">
         <TimerDisplay seconds={timerState} />
@@ -86,6 +88,7 @@ const TimerScreen = (props) => {
           </RadialControl>
         </RadialControl>
         <NavButton
+          isLeft={isTimerStarted}
           isDisabled={parseInt(timerState.currentSeconds) === 0}
           transitionCallback={toggleTimerScreen}
         />
