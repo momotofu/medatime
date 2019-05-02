@@ -43,6 +43,7 @@ export const startClock = (prevClearInterval, dispatch) => {
 }
 
 export const stopClock = (prevClearInterval, dispatch) => {
+  console.log('stopClock called: ')
   if (prevClearInterval) prevClearInterval()
 
   dispatch(setStopClockCallback(null))
