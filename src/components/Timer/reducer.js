@@ -24,7 +24,6 @@ const timerReducer = (state, action) => {
         ...updateDigitsState(state.initialSeconds, false),
       }
     case SET_INITIAL_SECONDS:
-      console.log('action: ', action)
       return { ...state, initialSeconds: action.seconds }
     case SET_CURRENT_SECONDS:
       return {
@@ -38,9 +37,9 @@ const timerReducer = (state, action) => {
 }
 
 function mapTimeStringToStateObject(timeString) {
-  const seconds = timeString.substr(6,2)
-  const minutes = timeString.substr(3,2)
-  const hours = timeString.substr(0,2)
+  const seconds = timeString.substr(6, 2)
+  const minutes = timeString.substr(3, 2)
+  const hours = timeString.substr(0, 2)
 
   return {
     secondsOnes: Number(seconds[1]),
@@ -48,7 +47,7 @@ function mapTimeStringToStateObject(timeString) {
     minutesOnes: Number(minutes[1]),
     minutesTens: Number(minutes[0]),
     hoursOnes: Number(hours[1]),
-    hoursTens: Number(hours[0])
+    hoursTens: Number(hours[0]),
   }
 }
 
@@ -57,7 +56,7 @@ function getTimeStringFrom(seconds, dateObject) {
   date.setHours(0, 0, 0, 0)
   date.setMilliseconds(seconds)
 
-  return date.toTimeString().substr(0,8)
+  return date.toTimeString().substr(0, 8)
 }
 
 function updateDigitsState(seconds, isAtZero) {
@@ -67,8 +66,29 @@ function updateDigitsState(seconds, isAtZero) {
 
   return {
     isAtZero: seconds === 0,
-    ...mapTimeStringToStateObject(timeString)
+    ...mapTimeStringToStateObject(timeString),
   }
 }
+
+/*
+prevState = {
+  currentSeconds: 1000,
+  secondsOnes: 0,
+  etc.
+}
+
+case UPDATE_CURRENT_SECONDS:
+// same as Object.assign({}, prevState, { currentSeconds: 6 })
+return {
+  ...prevState,
+  currentSeconds: 6,
+}
+
+newState = {
+  currentSeconds: 6,
+  secondsOnes: 0,
+  etc.
+}
+*/
 
 export default timerReducer

@@ -16,14 +16,14 @@ export const restartClock = () => {
   }
 }
 
-export const setInitialSeconds = (seconds) => {
+export const setInitialSeconds = seconds => {
   return {
     type: SET_INITIAL_SECONDS,
     seconds,
   }
 }
 
-export const setCurrentSeconds = (seconds) => {
+export const setCurrentSeconds = seconds => {
   return {
     type: SET_CURRENT_SECONDS,
     seconds,
@@ -35,15 +35,18 @@ export const startClock = (prevClearInterval, dispatch) => {
 
   dispatch(
     setStopClockCallback(
-      returnStopClock(clearInterval, window, setInterval(() => {
-        dispatch(decrementDigitsState())
-      }, 1000))
+      returnStopClock(
+        clearInterval,
+        window,
+        setInterval(() => {
+          dispatch(decrementDigitsState())
+        }, 1000)
+      )
     )
   )
 }
 
 export const stopClock = (prevClearInterval, dispatch) => {
-  console.log('stopClock called: ')
   if (prevClearInterval) prevClearInterval()
 
   dispatch(setStopClockCallback(null))
