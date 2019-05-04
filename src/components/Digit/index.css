@@ -1,8 +1,3 @@
-.Timer-digits {
-    display: flex;
-    margin-bottom: 1rem;
-}
-
 .Digit-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -12,23 +7,35 @@
                     "h g f"
                     "i . m"
                     "j k l";
-    margin-right: 1.25rem;
+    margin-right: 1.25em;
     position: relative;
+    transition: margin-right 700ms;
+}
+
+.TimerDisplayInitial .Digit-container {
+    margin-right: .35em;
 }
 
 .Digit-container:nth-child(even) {
     margin-right: 1.75rem;
+    font-size: 16px;
+    transition: height 700ms, width 700ms, margin-right 700ms, font-size 700ms;
+}
+
+.TimerDisplayInitial .Digit-container:nth-child(even) {
+    font-size: 5px;
+    margin-right: .75rem;
 }
 
 .Digit-container:nth-child(even)::after {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2VlZSIgZD0iTTYgMTEuOTk5TDE4IDI0VjB6Ii8+PC9zdmc+);
     background-size: contain;
     content: "";
-    position: absolute;
-    width: 1.65rem;
-    height: 1.65rem;
     grid-column: 4;
     grid-row: 3;
+    height: 1.65em;
+    position: absolute;
+    width: 1.65em;
 }
 
 .Digit-container:nth-child(4)::after {

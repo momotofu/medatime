@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 import Digit from '../Digit'
 
-import './index.styl';
+import './index.styl'
 
-const TimerDisplay = (props) => {
+const TimerDisplay = props => {
   const {
     secondsOnes,
     secondsTens,
@@ -11,10 +11,14 @@ const TimerDisplay = (props) => {
     minutesTens,
     hoursOnes,
     hoursTens,
-  } = props.seconds;
+  } = props.seconds
+
+  const className = `TimerDisplay${
+    props.timerState ? '' : ' TimerDisplayInitial'
+  }`
 
   return (
-    <div className="Timer-digits">
+    <div className={className}>
       <Digit digit={hoursTens} />
       <Digit digit={hoursOnes} />
       <Digit digit={minutesTens} />

@@ -1,8 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 
 // Imported components
@@ -13,35 +9,35 @@ import NavButton from '../NavButton'
 import TimerControls from '../TimerControls'
 import TimerDisplay from '../TimerDisplay'
 import {
-  TimerContext,
-  setInitialSeconds,
-  setCurrentSeconds,
-  startClock,
-  stopClock,
+	TimerContext,
+	setInitialSeconds,
+	setCurrentSeconds,
+	startClock,
+	stopClock,
 } from '../Timer'
 
 // CSS
 import './index.styl'
 
-const TimerScreen = (props) => {
-  const { state: timerState, dispatch } = useContext(TimerContext)
-  const [isTimerStarted, setIsTimerStarted] = useState(false)
+const TimerScreen = props => {
+	const { state: timerState, dispatch } = useContext(TimerContext)
+	const [isTimerStarted, setIsTimerStarted] = useState(false)
 
-  //useEffect(() => {
-    //console.log('state: ', timerState)
-  //}, [timerState])
+	//useEffect(() => {
+	//console.log('state: ', timerState)
+	//}, [timerState])
 
-  const inputCallback = () => {
+	const inputCallback = () => {
 		setIsTimerStarted(true)
-    startClock(null, dispatch)
-    dispatch(setInitialSeconds(timerState.currentSeconds))
+		startClock(null, dispatch)
+		dispatch(setInitialSeconds(timerState.currentSeconds))
 	}
 
-  const inputKeydownCallback = (currentInputTime) => {
-    dispatch(setCurrentSeconds(currentInputTime))
+	const inputKeydownCallback = currentInputTime => {
+		dispatch(setCurrentSeconds(currentInputTime))
 	}
 
-  const renderInputField = () => {
+	const renderInputField = () => {
 		if (!isTimerStarted) {
 			return (
 				<TextInputField
@@ -52,48 +48,39 @@ const TimerScreen = (props) => {
 		}
 	}
 
-  const renderTimerControls = () => {
+	const renderTimerControls = () => {
 		if (isTimerStarted) {
-			return (
-        <TimerControls />
-			)
+			return <TimerControls />
 		}
 	}
 
-  const toggleTimerScreen = () => {
-    if (isTimerStarted) {
-      stopClock(timerState.stopClockCallback, dispatch)
-      dispatch(setInitialSeconds(0))
-      dispatch(setCurrentSeconds(0))
-    }
+	const toggleTimerScreen = () => {
+		if (isTimerStarted) {
+			stopClock(timerState.stopClockCallback, dispatch)
+			dispatch(setInitialSeconds(0))
+			dispatch(setCurrentSeconds(0))
+		}
 
-    setIsTimerStarted((prevState) => !prevState)
+		setIsTimerStarted(prevState => !prevState)
 	}
 
-
-  return (
-      <div className="TimerScreen">
-        <TimerDisplay seconds={timerState} />
-        {renderInputField()}
-        {renderTimerControls()}
-        <RadialControl
-          radius={200}
-        >
-          <RadialControl
-            radius={150}
-          >
-            <RadialControl
-              radius={100}
-            />
-          </RadialControl>
-        </RadialControl>
-        <NavButton
-          isLeft={isTimerStarted}
-          isDisabled={parseInt(timerState.currentSeconds) === 0}
-          transitionCallback={toggleTimerScreen}
-        />
-      </div>
-  )
+	return (
+		<div className="TimerScreen">
+			<TimerDisplay seconds={timerState} timerState={isTimerStarted} />
+			{renderInputField()}
+			{renderTimerControls()}
+			<RadialControl radius={200}>
+				<RadialControl radius={150}>
+					<RadialControl radius={100} />
+				</RadialControl>
+			</RadialControl>
+			<NavButton
+				isLeft={isTimerStarted}
+				isDisabled={parseInt(timerState.currentSeconds) === 0}
+				transitionCallback={toggleTimerScreen}
+			/>
+		</div>
+	)
 }
 
 export default TimerScreen
