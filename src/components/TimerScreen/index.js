@@ -19,6 +19,7 @@ import {
   startClock,
   stopClock,
 } from '../Timer'
+import { highlight } from '../TimerDisplay'
 
 // CSS
 import './index.styl'
@@ -73,7 +74,7 @@ const TimerScreen = (props) => {
 
   return (
       <div className="TimerScreen">
-        <TimerDisplay seconds={timerState} />
+        <TimerDisplay seconds={timerState} highlightSection={highlight.hours} />
         {renderInputField()}
         {renderTimerControls()}
         <RadialControl
