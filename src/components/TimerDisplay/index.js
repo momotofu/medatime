@@ -3,28 +3,41 @@ import Digit from '../Digit'
 
 import './index.styl'
 
-const TimerDisplay = props => {
-  const {
-    secondsOnes,
-    secondsTens,
-    minutesOnes,
-    minutesTens,
-    hoursOnes,
-    hoursTens,
-  } = props.seconds
+export const highlight = Object.freeze({
+  seconds: 'seconds',
+  minutes: 'minutes',
+  hours: 'hours',
+})
 
-  const className = `TimerDisplay${
-    props.timerState ? '' : ' TimerDisplayInitial'
-  }`
+const TimerDisplay = props => {
+  const { seconds, highlightSection } = props
 
   return (
-    <div className={className}>
-      <Digit digit={hoursTens} />
-      <Digit digit={hoursOnes} />
-      <Digit digit={minutesTens} />
-      <Digit digit={minutesOnes} />
-      <Digit digit={secondsTens} />
-      <Digit digit={secondsOnes} />
+    <div className="Timer-digits">
+      <Digit
+        digit={seconds.hoursTens}
+        isHighlighted={highlightSection === highlight.hours}
+      />
+      <Digit
+        digit={seconds.hoursOnes}
+        isHighlighted={highlightSection === highlight.hours}
+      />
+      <Digit
+        digit={seconds.minutesTens}
+        isHighlighted={highlightSection === highlight.minutes}
+      />
+      <Digit
+        digit={seconds.minutesOnes}
+        isHighlighted={highlightSection === highlight.minutes}
+      />
+      <Digit
+        digit={seconds.secondsTens}
+        isHighlighted={highlightSection === highlight.seconds}
+      />
+      <Digit
+        digit={seconds.secondsOnes}
+        isHighlighted={highlightSection === highlight.seconds}
+      />
     </div>
   )
 }

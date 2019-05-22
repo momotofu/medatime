@@ -5,24 +5,25 @@ import DigitLine from '../DigitLine'
 import './index.css'
 
 class Digit extends React.Component {
-  renderDigit(digit) {
+
+  renderDigit(digit, highlightColor) {
     switch (digit) {
       case 0:
         return (
           <React.Fragment>
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
           </React.Fragment>
         )
       case 1:
@@ -31,33 +32,33 @@ class Digit extends React.Component {
             <DigitLine />
             <DigitLine />
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
             <DigitLine />
             <DigitLine />
             <DigitLine />
             <DigitLine />
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
           </React.Fragment>
         )
       case 2:
         return (
           <React.Fragment>
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
             <DigitLine />
           </React.Fragment>
         )
@@ -65,126 +66,126 @@ class Digit extends React.Component {
         return (
           <React.Fragment>
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
           </React.Fragment>
         )
       case 4:
         return (
           <React.Fragment>
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
             <DigitLine />
             <DigitLine />
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
           </React.Fragment>
         )
       case 5:
         return (
           <React.Fragment>
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
           </React.Fragment>
         )
       case 6:
         return (
           <React.Fragment>
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
           </React.Fragment>
         )
       case 7:
         return (
           <React.Fragment>
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
             <DigitLine />
             <DigitLine />
             <DigitLine />
             <DigitLine />
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
           </React.Fragment>
         )
       case 8:
         return (
           <React.Fragment>
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
           </React.Fragment>
         )
       case 9:
         return (
           <React.Fragment>
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
             <DigitLine />
             <DigitLine />
             <DigitLine />
-            <DigitLine isOn />
-            <DigitLine isOn />
+            <DigitLine isOn highlightColor={highlightColor} />
+            <DigitLine isOn highlightColor={highlightColor} />
           </React.Fragment>
         )
       default:
@@ -193,10 +194,18 @@ class Digit extends React.Component {
   }
 
   render() {
-    const { digit } = this.props
+    const { digit, isHighlighted, highlightColor } = this.props
 
-    return <div className="Digit-container">{this.renderDigit(digit)}</div>
+    return (
+      <div className="Digit-container">
+        {this.renderDigit(digit, isHighlighted ? highlightColor : null)}
+      </div>
+    )
   }
+}
+
+Digit.defaultProps = {
+  highlightColor: 'red'
 }
 
 export default Digit
