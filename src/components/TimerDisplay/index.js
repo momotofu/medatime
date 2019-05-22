@@ -16,8 +16,6 @@ const TimerDisplay = props => {
     props.seconds.initialSeconds === 0 ? ' TimerDisplayInitial' : ''
   }`
 
-  console.log(props.seconds)
-
   return (
     <div className={className}>
       <Digit
