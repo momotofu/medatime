@@ -12,8 +12,14 @@ export const highlight = Object.freeze({
 const TimerDisplay = props => {
   const { seconds, highlightSection } = props
 
+  const className = `TimerDisplay${
+    props.seconds.initialSeconds === 0 ? ' TimerDisplayInitial' : ''
+  }`
+
+  console.log(props.seconds)
+
   return (
-    <div className="Timer-digits">
+    <div className={className}>
       <Digit
         digit={seconds.hoursTens}
         isHighlighted={highlightSection === highlight.hours}
