@@ -1,3 +1,16 @@
+.NavButtonContainer {
+  display flex
+}
+
+.NavButtonState {
+  flex 0
+  transition flex 500ms
+
+  &.is-timer {
+    flex 1
+  }
+}
+
 .NavButton {
   background-color black
   border-width .15rem
@@ -5,17 +18,12 @@
   cursor pointer
   height 14rem
   padding 1rem
-  transition transform 500ms
 
   &[disabled] {
     background-color #333
     border-color #777
     color darkgray
     cursor no-drop
-  }
-
-  &.is-timer {
-    transform translateX(50vw)
   }
 }
 
