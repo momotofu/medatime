@@ -11,11 +11,14 @@ function NavButton(props) {
 	const { isDisabled, isLeft } = props
 	return (
 		<div className="NavButtonContainer">
-			<div className={isLeft ? 'NavButtonState is-timer' : 'NavButtonState'} />
+			<div className={isLeft
+				? 'NavButtonState is-timer'
+				: 'NavButtonState'}
+			/>
 			<button className="NavButton" onClick={handleClick} disabled={isDisabled}>
 				<span className="visuallyhidden">Switch Step</span>
 				<svg
-					className="navButtonIcon"
+					className="NavButtonIcon"
 					xmlns="http://www.w3.org/2000/svg"
 					width="32"
 					height="32"

@@ -9,7 +9,7 @@ class RadialControl extends React.Component {
       squareCoord: {
         x: 400,
         y: 180,
-      },
+      }
     }
   }
 
@@ -21,24 +21,24 @@ class RadialControl extends React.Component {
 
     const vector = {
       x: destination.x - origin.x,
-      y: destination.y - origin.y,
+      y: destination.y - origin.y
     }
     const magnitude = Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2))
     const unitVector = {
       x: vector.x / magnitude,
-      y: vector.y / magnitude,
+      y: vector.y / magnitude
     }
 
     const newDestination = {
       x: radius * unitVector.x,
-      y: radius * unitVector.y,
+      y: radius * unitVector.y
     }
 
     return newDestination
   }
 
   getDegreesFromPoint(point) {
-    return (Math.atan(point.y / point.x) * 180) / Math.PI
+    return Math.atan(point.y / point.x) * 180 / Math.PI
   }
 
   onMove(event) {
@@ -49,7 +49,7 @@ class RadialControl extends React.Component {
 
     const destinationPoint = {
       x: squareCoord.x + event.dx,
-      y: squareCoord.y + event.dy,
+      y: squareCoord.y + event.dy
     }
 
     // percentage out of 360 degrees
@@ -64,24 +64,21 @@ class RadialControl extends React.Component {
       this.constrainPointToRadius(
         originPoint,
         destinationPoint,
-        this.props.radius
+        this.props.radius,
       )
     )
 
     // If the draggable event coords
     // match the squareCoords don't do any work
-    if (adjustedPoint.x === squareCoord.x && adjustedPoint.y === squareCoord.y)
+    if (adjustedPoint.x === squareCoord.x
+      && adjustedPoint.y === squareCoord.y)
       return
 
     const deg = this.getDegreesFromPoint(adjustedPoint)
-    target.style.webkitTransform = target.style.transform =
-      'translate(' +
-      adjustedPoint.x +
-      'px, ' +
-      adjustedPoint.y +
-      'px) rotate(' +
-      deg +
-      'deg) '
+    target.style.webkitTransform =
+    target.style.transform =
+      'translate(' + adjustedPoint.x + 'px, ' + adjustedPoint.y + 'px) rotate('+ deg + 'deg) '
+
 
     this.setState({
       squareCoord: destinationPoint,
@@ -106,13 +103,17 @@ class RadialControl extends React.Component {
   }
 
   convertDegreesToPercentage(degrees) {
-    if (degrees < 0) degrees = -1 * degrees
-    else degrees = 180 - degrees + 180
+    if (degrees < 0)
+      degrees = -1 * degrees
+    else
+      degrees = 180 - degrees + 180
 
-    const percentage = (degrees / 360) * 100
+    const percentage = degrees / 360 * 100
 
-    if (percentage <= 0.5) return 0
-    else return Math.ceil(percentage)
+    if (percentage <= 0.5)
+      return 0
+    else
+      return Math.ceil(percentage)
   }
 
   constrainSquareCoord(curPercentage, newControlPoint) {
@@ -120,10 +121,10 @@ class RadialControl extends React.Component {
     // 100% or 0%
     const prevPercentage = this.state.percentage
 
-    if (
-      (prevPercentage >= 95 && curPercentage <= 5) ||
-      (prevPercentage <= 5 && curPercentage >= 95)
-    ) {
+    if ((prevPercentage >= 95
+      && curPercentage <= 5)
+      || (prevPercentage <= 5
+      && curPercentage >= 95)) {
       return this.state.squareCoord // previous square coords
     }
 
@@ -136,36 +137,35 @@ class RadialControl extends React.Component {
       x: originRect.x + originRect.width / 2,
       y: originRect.y + originRect.height / 2,
     }
-    const squareCoord = {
+    const squareCoord =  {
       x: originPoint.x + this.props.radius,
       y: originPoint.y - 1,
     }
 
-    this.setState(
-      {
-        originPoint,
-        squareCoord,
-      },
-      () => {
-        const eventObject = {
-          target: this.square,
-          dx: 0,
-          dy: 0,
-        }
 
-        this.onMove(eventObject)
+    this.setState({
+      originPoint,
+      squareCoord,
+    }, () => {
+      const eventObject = {
+        target: this.square,
+        dx: 0,
+        dy: 0,
       }
-    )
 
-    Interact(this.square).draggable({
-      onstart: event => {
-        //console.log('start event: ', event.speed)
-      },
-      onmove: this.onMove.bind(this),
-      onend: event => {
-        //console.log('end event: ', event.speed)
-      },
+      this.onMove(eventObject)
     })
+
+    Interact(this.square)
+      .draggable({
+        onstart: (event) => {
+          //console.log('start event: ', event.speed)
+        },
+        onmove: this.onMove.bind(this),
+        onend: (event) => {
+          //console.log('end event: ', event.speed)
+        }
+      })
   }
 
   componentDidUpdate(prevState, curState) {
@@ -178,38 +178,40 @@ class RadialControl extends React.Component {
     const width = height
 
     return (
-      <div className="RadialControl" style={{ height, width }}>
-        <svg
-          className="RadialControl-circle-container"
-          height={height}
-          width={width}
-          xmlns="http://www.w3.org/2000/svg"
-        >
+      <div className='RadialControl' style={{ height, width }}>
+      <svg
+        className='RadialControl-circle-container'
+        height={height}
+        width={width}
+        xmlns='http://www.w3.org/2000/svg'>
           <circle
-            className="RadialControl-circle RadialControl-circle-background"
-            ref={el => (this.circle = el)}
-            cx="50%"
-            cy="50%"
+            className='RadialControl-circle RadialControl-circle-background'
+            ref={ (el) => this.circle = el}
+            cx='50%'
+            cy='50%'
             r={radius}
             strokeDasharray={this.getStrokeDashFrom(0, radius)}
             strokeDashoffset={0}
-            fill="none"
+            fill='none'
           />
           <circle
-            className="RadialControl-circle"
-            cx="50%"
-            cy="50%"
+            className='RadialControl-circle'
+            cx='50%'
+            cy='50%'
             r={radius}
             strokeDasharray={this.getStrokeDashFrom(0, radius)}
-            strokeDashoffset={this.getStrokeDashFrom(
-              this.state.percentage,
-              radius
-            )}
-            fill="none"
+            strokeDashoffset={this.getStrokeDashFrom(this.state.percentage, radius)}
+            fill='none'
           />
         </svg>
-        <div className="RadialControl-square" ref={el => (this.square = el)} />
-        <div className="RadialControl-children">{children}</div>
+        <div
+          className='RadialControl-square'
+          ref={ (el) => this.square = el }
+         >
+        </div>
+        <div className='RadialControl-children'>
+         { children }
+         </div>
       </div>
     )
   }
