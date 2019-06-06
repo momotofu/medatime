@@ -24,6 +24,12 @@ import { highlight } from '../TimerDisplay'
 // CSS
 import './index.styl'
 
+const TIME_ORDINALS = Object.freeze({
+  seconds: 'seconds',
+  minutes: 'minutes',
+  hours: 'hours',
+})
+
 const TimerScreen = (props) => {
   const { state: timerState, dispatch } = useContext(TimerContext)
   const [isTimerStarted, setIsTimerStarted] = useState(false)
@@ -31,6 +37,7 @@ const TimerScreen = (props) => {
   //useEffect(() => {
     //console.log('state: ', timerState)
   //}, [timerState])
+  //
 
   const inputCallback = () => {
 		setIsTimerStarted(true)
@@ -71,6 +78,40 @@ const TimerScreen = (props) => {
     setIsTimerStarted((prevState) => !prevState)
 	}
 
+  const transformPercentageToSeconds = (percentage, ordinal) => {
+    let offset = 1
+    switch (ordinal) {
+      case TIME_ORDINALS.seconds:
+        offset = 1000
+        break
+      case TIME_ORDINALS.minutes:
+        offset = 10000
+        break
+      case TIME_ORDINALS.hours:
+        offset = 10000000
+        break
+    }
+
+    const total = 100
+    const decimalPercent = percentage / total
+
+    return decimalPercent * 60 * offset
+  }
+
+  const transfromPercentageToMinutes = (percentage) => {
+  }
+
+  const transfromPercentageToHours = (percentage) => {
+  }
+
+  const secondsRadialOnChange = (percentage) => {
+    const newSeconds = transformPercentageToSeconds(
+      percentage,
+      TIME_ORDINALS.minutes,
+    )
+
+    dispatch(setCurrentSeconds(newSeconds))
+  }
 
   return (
       <div className="TimerScreen">
@@ -78,6 +119,7 @@ const TimerScreen = (props) => {
         {renderInputField()}
         {renderTimerControls()}
         <RadialControl
+          onChange={secondsRadialOnChange}
           radius={200}
         >
           <RadialControl

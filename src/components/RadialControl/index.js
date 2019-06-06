@@ -42,7 +42,6 @@ class RadialControl extends React.Component {
   }
 
   onMove(event) {
-    console.log('onMove: ', event.clientX, event.clientY)
     const target = event.target
     const { squareCoord, originPoint } = this.state
     //console.log('squareCoords: ', squareCoord.x, squareCoord.y)
@@ -168,8 +167,18 @@ class RadialControl extends React.Component {
       })
   }
 
-  componentDidUpdate(prevState, curState) {
-    //console.log('state: ', this.state)
+  componentDidUpdate(prevProps, prevState) {
+    const { percentage } = this.state
+    const { percentage: oldPercentage } = prevState
+    const { onChange } = this.props
+
+    if (oldPercentage !== undefined
+      && percentage !== undefined
+      && oldPercentage !== percentage
+      && typeof onChange === 'function'
+    ) {
+      onChange(percentage)
+    }
   }
 
   render() {
