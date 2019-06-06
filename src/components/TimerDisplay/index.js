@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import Digit from '../Digit'
 
-import './index.styl'
+import './index.styl';
 
 export const highlight = Object.freeze({
   seconds: 'seconds',
@@ -9,8 +9,11 @@ export const highlight = Object.freeze({
   hours: 'hours',
 })
 
-const TimerDisplay = props => {
-  const { seconds, highlightSection } = props
+const TimerDisplay = (props) => {
+  const {
+    seconds,
+    highlightSection,
+  } = props;
 
   const className = `TimerDisplay${
     props.seconds.initialSeconds === 0 ? ' TimerDisplayInitial' : ''

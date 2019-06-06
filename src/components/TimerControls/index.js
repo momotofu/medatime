@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import TimerControlButton, { controlTypes } from '../TimerControlButton'
 import TimerProgressBar from '../TimerProgressBar'
+import Sound from '../Sound'
+import { withPrefix } from 'gatsby'
 import {
   TimerContext,
   startClock,
@@ -59,6 +61,8 @@ const TimerControls = () => {
         type={controlTypes.restart}
         onClickCallback={onRestartButtonClick}
       />
+      {timerState.currentSeconds === 0
+          && (<Sound src={withPrefix('/static/medatime-finish.mp3')} />)}
     </React.Fragment>
   )
 }
