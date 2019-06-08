@@ -39,26 +39,21 @@ const TimerScreen = (props) => {
   const [isTimerStarted, setIsTimerStarted] = useState(false)
   const [highlightedSection, setHighlightedSection] = useState(null)
 
-  //useEffect(() => {
-    //console.log('state: ', timerState)
-  //}, [timerState])
-  //
-
-  const inputCallback = () => {
-		setIsTimerStarted(true)
-    startClock(null, dispatch)
-    dispatch(setInitialSeconds(timerState.currentSeconds))
-	}
-
   const inputKeydownCallback = (currentInputTime) => {
     dispatch(setCurrentSeconds(currentInputTime))
 	}
+
+  const transitionToTimer = () => {
+		setIsTimerStarted(true)
+    startClock(null, dispatch)
+    dispatch(setInitialSeconds(timerState.currentSeconds))
+  }
 
   const renderInputField = () => {
 		if (!isTimerStarted) {
 			return (
 				<TextInputField
-					onEnterCallback={inputCallback}
+					onEnterCallback={transitionToTimer}
 					onKeydownCallback={inputKeydownCallback}
 				/>
 			)
@@ -78,9 +73,11 @@ const TimerScreen = (props) => {
       stopClock(timerState.stopClockCallback, dispatch)
       dispatch(setInitialSeconds(0))
       dispatch(setCurrentSeconds(0))
-    }
+      setIsTimerStarted(false)
 
-    setIsTimerStarted((prevState) => !prevState)
+    } else {
+      transitionToTimer()
+    }
 	}
 
   const transformPercentageToSeconds = (
