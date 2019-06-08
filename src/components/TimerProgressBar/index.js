@@ -14,13 +14,12 @@ function TimerProgressBar(props) {
   const {
     remainingSeconds,
     totalSeconds,
-    hasTransition
+    hasTransition,
+    className
   } = props
 
   const { state: timerState, dispatch } = useContext(TimerContext)
 
-  //const prevRemainingSeconds = useRef(null)
-  //const prevOffset = useRef(null)
   const [offset, setOffset] = useState(0)
   const [percent, setPercent] = useState(
     calcPercent(
@@ -39,15 +38,6 @@ function TimerProgressBar(props) {
   }, [timerState.stopClockCallback])
 
   useEffect(() => {
-    //if (prevRemainingSeconds.current === remainingSeconds
-      //&& prevOffset.current === -1000
-      //&& offset === 0) {
-      //return
-    //}
-
-    //prevRemainingSeconds.current = remainingSeconds
-    //prevOffset.current = offset
-
     setPercent(
       calcPercent(
         remainingSeconds + offset,
@@ -57,10 +47,11 @@ function TimerProgressBar(props) {
 
   }, [remainingSeconds, offset])
 
-  //console.log('inital remaining seconds: ', remainingSeconds)
-
 	return (
-		<div className="TimerProgressBar">
+    <div className={cn(
+      "TimerProgressBar",
+      className,
+    )}>
       <div
         className={cn(
           'TimerProgressBar-percentage',

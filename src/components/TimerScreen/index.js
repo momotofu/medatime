@@ -49,25 +49,6 @@ const TimerScreen = (props) => {
     dispatch(setInitialSeconds(timerState.currentSeconds))
   }
 
-  const renderInputField = () => {
-		if (!isTimerStarted) {
-			return (
-				<TextInputField
-					onEnterCallback={transitionToTimer}
-					onKeydownCallback={inputKeydownCallback}
-				/>
-			)
-		}
-	}
-
-  const renderTimerControls = () => {
-		if (isTimerStarted) {
-			return (
-        <TimerControls />
-			)
-		}
-	}
-
   const toggleTimerScreen = () => {
     if (isTimerStarted) {
       stopClock(timerState.stopClockCallback, dispatch)
@@ -176,31 +157,58 @@ const TimerScreen = (props) => {
       setHighlightedSection(null)
   }
 
-  return (
-      <div className="TimerScreen">
-        <TimerDisplay seconds={timerState} highlightSection={highlightedSection} />
-        {renderInputField()}
-        {renderTimerControls()}
+  const renderInputField = () => {
+		if (!isTimerStarted) {
+			return (
+				<TextInputField
+					onEnterCallback={transitionToTimer}
+					onKeydownCallback={inputKeydownCallback}
+				/>
+			)
+		}
+	}
+
+  const renderTimerControls = () => {
+		if (isTimerStarted) {
+			return (
+        <TimerControls />
+			)
+		}
+	}
+
+  const renderRadialControls = () => {
+		if (!isTimerStarted) {
+			return (
         <RadialControl
           onMouseDown={secondsOnMouseDown}
           onMouseUp={onMouseUp}
           onChange={secondsRadialOnChange}
-          radius={200}
+          radius={150}
         >
           <RadialControl
             onMouseDown={minutesOnMouseDown}
             onMouseUp={onMouseUp}
             onChange={minutesRadialOnChange}
-            radius={150}
+            radius={100}
           >
             <RadialControl
               onMouseDown={hoursOnMouseDown}
               onMouseUp={onMouseUp}
               onChange={hoursRadialOnChange}
-              radius={100}
+              radius={50}
             />
           </RadialControl>
         </RadialControl>
+			)
+		}
+	}
+
+  return (
+      <div className="TimerScreen">
+        <TimerDisplay seconds={timerState} highlightSection={highlightedSection} />
+        {renderInputField()}
+        {renderTimerControls()}
+        {renderRadialControls()}
         <NavButton
           isLeft={isTimerStarted}
           isDisabled={parseInt(timerState.currentSeconds) === 0}

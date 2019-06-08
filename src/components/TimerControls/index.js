@@ -12,6 +12,8 @@ import {
   restartClock,
 } from '../Timer'
 
+import './index.styl'
+
 const TimerControls = () => {
   const [ isPlaying, setIsPlaying ] = useState(true)
   const { state: timerState, dispatch } = useContext(TimerContext)
@@ -48,6 +50,7 @@ const TimerControls = () => {
   return (
     <React.Fragment>
       <TimerProgressBar
+        className="TimerControls-progress-bar"
         totalSeconds={timerState.initialSeconds}
         remainingSeconds={timerState.currentSeconds}
         hasTransition={isPlaying}

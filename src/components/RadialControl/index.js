@@ -8,8 +8,8 @@ class RadialControl extends React.Component {
     super(props)
     this.state = {
       squareCoord: {
-        x: 400,
-        y: 180,
+        x: props.radius * 2,
+        y: 0,
       },
       isSelected: true,
     }
@@ -236,7 +236,10 @@ class RadialControl extends React.Component {
             cy='50%'
             r={radius}
             strokeDasharray={this.getStrokeDashFrom(0, radius)}
-            strokeDashoffset={this.getStrokeDashFrom(this.state.percentage, radius)}
+            strokeDashoffset={this.getStrokeDashFrom(
+              this.state.percentage,
+              radius,
+            )}
             fill='none'
           />
         </svg>
