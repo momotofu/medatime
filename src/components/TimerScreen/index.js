@@ -98,7 +98,7 @@ const TimerScreen = (props) => {
         return Math.ceil(cap(decimalPercentage * 60, 59)) * MINUTE
 
       case ordinals.hours:
-        return Math.ceil(cap(decimalPercentage * 24, 24)) * HOUR
+        return Math.ceil(cap(decimalPercentage * 24, 23)) * HOUR
     }
   }
 
@@ -106,12 +106,6 @@ const TimerScreen = (props) => {
     if (seconds > cap)
       return cap
     return seconds
-  }
-
-  const transfromPercentageToMinutes = (percentage) => {
-  }
-
-  const transfromPercentageToHours = (percentage) => {
   }
 
   const secondsRadialOnChange = (percentage) => {
@@ -147,6 +141,24 @@ const TimerScreen = (props) => {
     dispatch(setCurrentSeconds(newSeconds))
   }
 
+  const hoursRadialOnChange = (percentage) => {
+    const { currentSeconds } = timerState
+    const seconds = transformPercentageToSeconds(
+      percentage,
+      TIME_ORDINALS.hours,
+      TIME_ORDINALS,
+      capSeconds,
+    )
+
+    // zero out hours then add hours back
+    const remainingSeconds = currentSeconds % MINUTE
+    const remainingMinutes = (currentSeconds - remainingSeconds) % HOUR
+    const remainingHours = currentSeconds - remainingMinutes - remainingSeconds
+    const newSeconds = currentSeconds - remainingHours + seconds
+
+    dispatch(setCurrentSeconds(newSeconds))
+  }
+
   return (
       <div className="TimerScreen">
         <TimerDisplay seconds={timerState} highlightSection={highlight.hours} />
@@ -161,6 +173,7 @@ const TimerScreen = (props) => {
             radius={150}
           >
             <RadialControl
+              onChange={hoursRadialOnChange}
               radius={100}
             />
           </RadialControl>
