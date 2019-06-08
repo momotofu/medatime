@@ -30,6 +30,10 @@ const TIME_ORDINALS = Object.freeze({
   hours: 'hours',
 })
 
+const SECOND = 1000
+const MINUTE = SECOND * 60
+const HOUR = MINUTE * 60
+
 const TimerScreen = (props) => {
   const { state: timerState, dispatch } = useContext(TimerContext)
   const [isTimerStarted, setIsTimerStarted] = useState(false)
@@ -78,24 +82,30 @@ const TimerScreen = (props) => {
     setIsTimerStarted((prevState) => !prevState)
 	}
 
-  const transformPercentageToSeconds = (percentage, ordinal) => {
-    let offset = 1
+  const transformPercentageToSeconds = (
+    percentage,
+    ordinal,
+    ordinals,
+    cap
+  ) => {
+    const decimalPercentage = percentage / 100
+
     switch (ordinal) {
-      case TIME_ORDINALS.seconds:
-        offset = 1000
-        break
-      case TIME_ORDINALS.minutes:
-        offset = 10000
-        break
-      case TIME_ORDINALS.hours:
-        offset = 10000000
-        break
+      case ordinals.seconds:
+        return Math.round(cap(decimalPercentage * 60, 59) * SECOND)
+
+      case ordinals.minutes:
+        return Math.ceil(cap(decimalPercentage * 60, 59)) * MINUTE
+
+      case ordinals.hours:
+        return Math.ceil(cap(decimalPercentage * 24, 24)) * HOUR
     }
+  }
 
-    const total = 100
-    const decimalPercent = percentage / total
-
-    return decimalPercent * 60 * offset
+  const capSeconds = (seconds, cap) => {
+    if (seconds > cap)
+      return cap
+    return seconds
   }
 
   const transfromPercentageToMinutes = (percentage) => {
@@ -105,10 +115,34 @@ const TimerScreen = (props) => {
   }
 
   const secondsRadialOnChange = (percentage) => {
-    const newSeconds = transformPercentageToSeconds(
+    const { currentSeconds } = timerState
+    const seconds = transformPercentageToSeconds(
+      percentage,
+      TIME_ORDINALS.seconds,
+      TIME_ORDINALS,
+      capSeconds,
+    )
+
+    //zero out seconds then add new seconds
+    const remainingSeconds = currentSeconds % MINUTE
+    const newSeconds = currentSeconds - remainingSeconds + seconds
+
+    dispatch(setCurrentSeconds(newSeconds))
+  }
+
+  const minutesRadialOnChange = (percentage) => {
+    const { currentSeconds } = timerState
+    const seconds = transformPercentageToSeconds(
       percentage,
       TIME_ORDINALS.minutes,
+      TIME_ORDINALS,
+      capSeconds,
     )
+
+    // zero out minutes then add minutes back
+    const remainingSeconds = currentSeconds % MINUTE
+    const remainingMinutes = (currentSeconds - remainingSeconds) % HOUR
+    const newSeconds = currentSeconds - remainingMinutes + seconds
 
     dispatch(setCurrentSeconds(newSeconds))
   }
@@ -123,6 +157,7 @@ const TimerScreen = (props) => {
           radius={200}
         >
           <RadialControl
+            onChange={minutesRadialOnChange}
             radius={150}
           >
             <RadialControl
