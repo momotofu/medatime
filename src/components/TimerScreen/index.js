@@ -37,6 +37,7 @@ const HOUR = MINUTE * 60
 const TimerScreen = (props) => {
   const { state: timerState, dispatch } = useContext(TimerContext)
   const [isTimerStarted, setIsTimerStarted] = useState(false)
+  const [highlightedSection, setHighlightedSection] = useState(null)
 
   //useEffect(() => {
     //console.log('state: ', timerState)
@@ -150,7 +151,7 @@ const TimerScreen = (props) => {
       capSeconds,
     )
 
-    // zero out hours then add hours back
+    // zero out minutes then add minutes back
     const remainingSeconds = currentSeconds % MINUTE
     const remainingMinutes = (currentSeconds - remainingSeconds) % HOUR
     const remainingHours = currentSeconds - remainingMinutes - remainingSeconds
@@ -159,20 +160,45 @@ const TimerScreen = (props) => {
     dispatch(setCurrentSeconds(newSeconds))
   }
 
+  const secondsOnMouseDown = (event) => {
+    if(highlightedSection !== highlight.seconds)
+      setHighlightedSection(highlight.seconds)
+  }
+
+  const minutesOnMouseDown = (event) => {
+    if(highlightedSection !== highlight.minutes)
+      setHighlightedSection(highlight.minutes)
+  }
+
+  const hoursOnMouseDown = (event) => {
+    if(highlightedSection !== highlight.hours)
+      setHighlightedSection(highlight.hours)
+  }
+
+  const onMouseUp = (event) => {
+      setHighlightedSection(null)
+  }
+
   return (
       <div className="TimerScreen">
-        <TimerDisplay seconds={timerState} highlightSection={highlight.hours} />
+        <TimerDisplay seconds={timerState} highlightSection={highlightedSection} />
         {renderInputField()}
         {renderTimerControls()}
         <RadialControl
+          onMouseDown={secondsOnMouseDown}
+          onMouseUp={onMouseUp}
           onChange={secondsRadialOnChange}
           radius={200}
         >
           <RadialControl
+            onMouseDown={minutesOnMouseDown}
+            onMouseUp={onMouseUp}
             onChange={minutesRadialOnChange}
             radius={150}
           >
             <RadialControl
+              onMouseDown={hoursOnMouseDown}
+              onMouseUp={onMouseUp}
               onChange={hoursRadialOnChange}
               radius={100}
             />

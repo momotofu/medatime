@@ -1,5 +1,6 @@
 import React from 'react'
 import Interact from 'interactjs'
+import cn from 'classnames'
 import './index.styl'
 
 class RadialControl extends React.Component {
@@ -9,7 +10,8 @@ class RadialControl extends React.Component {
       squareCoord: {
         x: 400,
         y: 180,
-      }
+      },
+      isSelected: true,
     }
   }
 
@@ -42,9 +44,14 @@ class RadialControl extends React.Component {
   }
 
   onMove(event) {
+    const {
+      squareCoord,
+      originPoint,
+      isSelected
+    } = this.state
     const target = event.target
-    const { squareCoord, originPoint } = this.state
-    //console.log('squareCoords: ', squareCoord.x, squareCoord.y)
+
+    if (!isSelected) return
 
     const destinationPoint = {
       x: squareCoord.x + event.dx,
@@ -163,7 +170,7 @@ class RadialControl extends React.Component {
         onmove: this.onMove.bind(this),
         onend: (event) => {
           //console.log('end event: ', event.speed)
-        }
+        },
       })
   }
 
@@ -181,8 +188,28 @@ class RadialControl extends React.Component {
     }
   }
 
+  radialOnMouseDown = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    const { onMouseDown } = this.props
+
+    this.setState({ isSelected: true })
+    onMouseDown()
+  }
+
+  radialOnMouseUp = () => {
+    const { onMouseUp } = this.props
+
+    this.setState({ isSelected: false })
+    onMouseUp()
+  }
+
   render() {
-    const { children, radius } = this.props
+    const {
+      children,
+      radius,
+    } = this.props
+
     const height = radius * 2 + 4
     const width = height
 
@@ -214,7 +241,13 @@ class RadialControl extends React.Component {
           />
         </svg>
         <div
-          className='RadialControl-square'
+          className={cn(
+            'RadialControl-knob',
+            'RadialControl-knob-circle',
+          )}
+          onMouseDown={this.radialOnMouseDown}
+          onMouseUp={this.radialOnMouseUp}
+          onMouseOut={this.radialOnMouseUp}
           ref={ (el) => this.square = el }
          >
         </div>
