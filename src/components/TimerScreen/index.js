@@ -216,7 +216,8 @@ const TimerScreen = (props) => {
       {renderTimerControls()}
       {renderRadialControls()}
       <QuoteDisplay
-        quote="Be still and know that I AM"
+        quote="Be still and know that I am God"
+        reference="Psalm 46:10"
       />
       <NavButton
         isLeft={isTimerStarted}
