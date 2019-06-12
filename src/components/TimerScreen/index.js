@@ -12,6 +12,7 @@ import RadialControl from '../RadialControl'
 import NavButton from '../NavButton'
 import TimerControls from '../TimerControls'
 import TimerDisplay from '../TimerDisplay'
+import Quotes from '../Quotes'
 import {
   TimerContext,
   setInitialSeconds,
@@ -168,6 +169,16 @@ const TimerScreen = (props) => {
 		}
 	}
 
+  const renderQuotes = () => {
+		if (isTimerStarted) {
+			if (parseInt(timerState.currentSeconds) === 0) {
+				return (
+	        <Quotes />
+				)
+			}
+		}
+	}
+
   const renderTimerControls = () => {
 		if (isTimerStarted) {
 			return (
@@ -209,6 +220,7 @@ const TimerScreen = (props) => {
         {renderInputField()}
         {renderTimerControls()}
         {renderRadialControls()}
+        {renderQuotes()}
         <NavButton
           isLeft={isTimerStarted}
           isDisabled={parseInt(timerState.currentSeconds) === 0}
