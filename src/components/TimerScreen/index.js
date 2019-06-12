@@ -205,7 +205,7 @@ const TimerScreen = (props) => {
 
   return (
       <div className="TimerScreen">
-        <TimerDisplay seconds={timerState} highlightSection={highlightedSection} />
+        <TimerDisplay highlightSection={highlightedSection} />
         {renderInputField()}
         {renderTimerControls()}
         {renderRadialControls()}
