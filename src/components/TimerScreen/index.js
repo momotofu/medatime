@@ -13,6 +13,7 @@ import NavButton from '../NavButton'
 import TimerControls from '../TimerControls'
 import TimerDisplay from '../TimerDisplay'
 import Quotes from '../Quotes'
+import QuoteDisplay from '../QuoteDisplay'
 import {
   TimerContext,
   setInitialSeconds,
@@ -190,43 +191,52 @@ const TimerScreen = (props) => {
   const renderRadialControls = () => {
 		if (!isTimerStarted) {
 			return (
-        <RadialControl
-          onMouseDown={secondsOnMouseDown}
-          onMouseUp={onMouseUp}
-          onChange={secondsRadialOnChange}
-          radius={150}
-        >
+        <div className="TimerScreen-radial-controls">
           <RadialControl
-            onMouseDown={minutesOnMouseDown}
+            onMouseDown={secondsOnMouseDown}
             onMouseUp={onMouseUp}
-            onChange={minutesRadialOnChange}
-            radius={100}
+            onChange={secondsRadialOnChange}
+            radius={150}
           >
             <RadialControl
-              onMouseDown={hoursOnMouseDown}
+              onMouseDown={minutesOnMouseDown}
               onMouseUp={onMouseUp}
-              onChange={hoursRadialOnChange}
-              radius={50}
-            />
+              onChange={minutesRadialOnChange}
+              radius={100}
+            >
+              <RadialControl
+                onMouseDown={hoursOnMouseDown}
+                onMouseUp={onMouseUp}
+                onChange={hoursRadialOnChange}
+                radius={50}
+              />
+            </RadialControl>
           </RadialControl>
-        </RadialControl>
+        </div>
 			)
 		}
 	}
 
   return (
-      <div className="TimerScreen">
-        <TimerDisplay highlightSection={highlightedSection} />
-        {renderInputField()}
-        {renderTimerControls()}
-        {renderRadialControls()}
-        {renderQuotes()}
-        <NavButton
-          isLeft={isTimerStarted}
-          isDisabled={parseInt(timerState.currentSeconds) === 0}
-          transitionCallback={toggleTimerScreen}
-        />
-      </div>
+    <div className="TimerScreen">
+      <TimerDisplay
+        seconds={timerState}
+        highlightSection={highlightedSection}
+      />
+      {renderInputField()}
+      {renderTimerControls()}
+      {renderRadialControls()}
+      {renderQuotes()}
+      <QuoteDisplay
+        quote="Be still and know that I am God"
+        reference="Psalm 46:10"
+      />
+      <NavButton
+        isLeft={isTimerStarted}
+        isDisabled={parseInt(timerState.currentSeconds) === 0}
+        transitionCallback={toggleTimerScreen}
+      />
+    </div>
   )
 }
 
