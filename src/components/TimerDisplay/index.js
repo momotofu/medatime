@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Digit from '../Digit'
-import { TimerContext } from '../Timer'
 
 import './index.styl';
 
@@ -11,14 +10,13 @@ export const highlight = Object.freeze({
 })
 
 const TimerDisplay = (props) => {
-  const { state: seconds } = useContext(TimerContext)
-
   const {
+    seconds,
     highlightSection,
   } = props;
 
   const className = `TimerDisplay${
-    seconds.initialSeconds === 0 ? ' TimerDisplayInitial' : ''
+    props.seconds.initialSeconds === 0 ? ' TimerDisplayInitial' : ''
   }`
 
   return (
