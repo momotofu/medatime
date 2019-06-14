@@ -172,11 +172,9 @@ const TimerScreen = (props) => {
 
   const renderQuotes = () => {
 		if (isTimerStarted) {
-			if (parseInt(timerState.currentSeconds) === 0) {
-				return (
-	        <Quotes />
-				)
-			}
+			return (
+        <Quotes />
+			)
 		}
 	}
 
@@ -227,10 +225,6 @@ const TimerScreen = (props) => {
       {renderTimerControls()}
       {renderRadialControls()}
       {renderQuotes()}
-      <QuoteDisplay
-        quote="Be still and know that I am God"
-        reference="Psalm 46:10"
-      />
       <NavButton
         isLeft={isTimerStarted}
         isDisabled={parseInt(timerState.currentSeconds) === 0}

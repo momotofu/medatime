@@ -1,38 +1,38 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 // import { TimerContext } from '../Timer'
+import QuoteDisplay from '../QuoteDisplay'
 
 import './index.styl'
 
-const Quotes = () => (
+const Quotes = (props) => (
   // const { state: timerState, dispatch } = useContext(TimerContext)
-
 	<StaticQuery
 		query={graphql`
 			query TimerQuotesQuery {
 			  allQuotesJson {
-			    edges {
-			      node {
-			        quote
-			      }
-			    }
+		      nodes {
+		        quote
+		        reference
+		      }
 			  }
 			}
 		`}
 		render={data => (
-			// {timerState.currentSeconds === 0
-   //        && (<div>{getQuotes(data)}</div>)}
-      <p className="Quotes">{getQuotes(data)}</p>
+      <>
+      	<QuoteDisplay
+      		{...getQuotes(data)}
+      	/>
+      </>
 		)}
 	/>
 )
 
 function getQuotes(data) {
-	const quotesArray = data.allQuotesJson.edges
-	const randomQuoteObj = quotesArray[Math.floor(Math.random()*quotesArray.length)].node.quote
-	const quoteText = JSON.stringify(randomQuoteObj)
+	const quotesArray = data.allQuotesJson.nodes
+	const randomQuoteObj = quotesArray[Math.floor(Math.random()*quotesArray.length)]
 
-	return quoteText
+	return randomQuoteObj
 }
 
 export default Quotes

@@ -1,7 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import './index.styl'
@@ -27,7 +24,7 @@ const QuoteDisplay = (props) => {
 }
 
 QuoteDisplay.propTypes = {
-  quote: PropTypes.string.isRequired,
+  quote: PropTypes.string,
   reference: PropTypes.string,
 }
 
