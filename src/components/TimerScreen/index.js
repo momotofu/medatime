@@ -12,6 +12,7 @@ import RadialControl from '../RadialControl'
 import NavButton from '../NavButton'
 import TimerControls from '../TimerControls'
 import TimerDisplay from '../TimerDisplay'
+import Quotes from '../Quotes'
 import QuoteDisplay from '../QuoteDisplay'
 import {
   TimerContext,
@@ -169,6 +170,14 @@ const TimerScreen = (props) => {
 		}
 	}
 
+  const renderQuotes = () => {
+		if (isTimerStarted) {
+			return (
+        <Quotes />
+			)
+		}
+	}
+
   const renderTimerControls = () => {
 		if (isTimerStarted) {
 			return (
@@ -215,10 +224,7 @@ const TimerScreen = (props) => {
       {renderInputField()}
       {renderTimerControls()}
       {renderRadialControls()}
-      <QuoteDisplay
-        quote="Be still and know that I am God"
-        reference="Psalm 46:10"
-      />
+      {renderQuotes()}
       <NavButton
         isLeft={isTimerStarted}
         isDisabled={parseInt(timerState.currentSeconds) === 0}
