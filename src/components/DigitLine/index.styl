@@ -19,7 +19,7 @@
     top auto
 
   &:nth-child(1) { grid-area: a; height: 3.5em; }
-  &:nth-child(2) { grid-area: b; width: .75em; height: calc(.25em + .5vh) }
+  &:nth-child(2) { grid-area: b; width: .75em; }
   &:nth-child(3) { grid-area: c; width: 1.7em; }
   &:nth-child(4) { grid-area: d; width: .75em; }
   &:nth-child(5) { grid-area: e; height: 3.5em; }
@@ -27,7 +27,7 @@
   &:nth-child(7) { grid-area: g; width: 1.7em; }
   &:nth-child(8) { grid-area: h; width: .75em; }
   &:nth-child(9) { grid-area: i; height: 3.5em; }
-  &:nth-child(10) { grid-area: j; width: .75em; height: calc(.25em + .5vh) }
+  &:nth-child(10) { grid-area: j; width: .75em; }
   &:nth-child(11) { grid-area: k; width: 1.7em; }
   &:nth-child(12) { grid-area: l; width: .75em; }
   &:nth-child(13) { grid-area: m; height: 3.5em; }
@@ -43,4 +43,8 @@
 .TimerDisplayInitial .DigitLine
   font-size 5px
   padding 0.4em
+
+  &:nth-child(2),
+  &:nth-child(10)
+    height: calc(.25em + .5vh)
 
