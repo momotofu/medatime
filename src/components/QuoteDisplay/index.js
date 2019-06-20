@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import cn from 'classnames'
 
 import './index.styl'
 
@@ -7,10 +8,14 @@ const QuoteDisplay = (props) => {
   const {
     quote,
     reference,
+    display,
   } = props
 
   return (
-    <div className="QuoteDisplay">
+    <div className={cn(
+      "QuoteDisplay",
+    { ["QuoteDisplay-visible"]: display },
+    )}>
       <p className="QuoteDisplay-quote">
         {`"${quote}"`}
       </p>

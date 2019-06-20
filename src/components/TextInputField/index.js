@@ -32,7 +32,6 @@ function Input(props) {
 				className="TextInputField"
 				id="medaTime"
 				placeholder={ placeholder }
-				type="number"
 				onChange={ handleChange }
 				onKeyDown={ handleKeyPress }
 				autoFocus

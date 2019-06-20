@@ -41,6 +41,12 @@ const TimerScreen = (props) => {
   const [isTimerStarted, setIsTimerStarted] = useState(false)
   const [highlightedSection, setHighlightedSection] = useState(null)
 
+  if (timerState.currentSeconds === 0
+    && isTimerStarted
+    && timerState.stopClockCallback
+  )
+    stopClock(timerState.stopClockCallback, dispatch)
+
   const inputKeydownCallback = (currentInputTime) => {
     dispatch(setCurrentSeconds(currentInputTime))
 	}
@@ -160,22 +166,24 @@ const TimerScreen = (props) => {
   }
 
   const renderInputField = () => {
-		if (!isTimerStarted) {
-			return (
-				<TextInputField
-					onEnterCallback={transitionToTimer}
-					onKeydownCallback={inputKeydownCallback}
-				/>
-			)
-		}
+    if (!isTimerStarted) {
+      return (
+        <TextInputField
+          onEnterCallback={transitionToTimer}
+          onKeydownCallback={inputKeydownCallback}
+        />
+      )
+    }
 	}
 
+  const isNavDisabled = () => {
+    return timerState.currentSeconds === 0 && !isTimerStarted
+  }
+
   const renderQuotes = () => {
-		if (isTimerStarted) {
-			return (
-        <Quotes />
-			)
-		}
+    const isVisible = timerState.currentSeconds === 0
+      && isTimerStarted
+        return <Quotes display={isVisible} />
 	}
 
   const renderTimerControls = () => {
@@ -224,12 +232,14 @@ const TimerScreen = (props) => {
       {renderInputField()}
       {renderTimerControls()}
       {renderRadialControls()}
-      {renderQuotes()}
-      <NavButton
-        isLeft={isTimerStarted}
-        isDisabled={parseInt(timerState.currentSeconds) === 0}
-        transitionCallback={toggleTimerScreen}
-      />
+      <div className="TimerScreen-footer">
+        {renderQuotes()}
+        <NavButton
+          isLeft={isTimerStarted}
+          isDisabled={isNavDisabled()}
+          transitionCallback={toggleTimerScreen}
+        />
+      </div>
     </div>
   )
 }

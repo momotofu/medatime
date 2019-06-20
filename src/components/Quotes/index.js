@@ -5,28 +5,32 @@ import QuoteDisplay from '../QuoteDisplay'
 
 import './index.styl'
 
-const Quotes = (props) => (
-  // const { state: timerState, dispatch } = useContext(TimerContext)
-	<StaticQuery
-		query={graphql`
-			query TimerQuotesQuery {
-			  allQuotesJson {
-		      nodes {
-		        quote
-		        reference
-		      }
-			  }
-			}
-		`}
-		render={data => (
-      <>
-      	<QuoteDisplay
-      		{...getQuotes(data)}
-      	/>
-      </>
-		)}
-	/>
-)
+const Quotes = (props) => {
+  const { display } = props
+
+  return (
+    <StaticQuery
+      query={graphql`
+        query TimerQuotesQuery {
+          allQuotesJson {
+            nodes {
+              quote
+              reference
+            }
+          }
+        }
+      `}
+      render={data => (
+        <>
+          <QuoteDisplay
+            display={display}
+            {...getQuotes(data)}
+          />
+        </>
+      )}
+    />
+  )
+}
 
 function getQuotes(data) {
 	const quotesArray = data.allQuotesJson.nodes
