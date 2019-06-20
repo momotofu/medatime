@@ -1,6 +1,9 @@
 .DigitLine
-  font-size 16px
-  padding 0.4rem
+  --responsive calc((var(--min-font) * 1px) + (var(--max-font) - var(--min-font)) * ((100vw - 320px) / (1200 - 320)))
+  --max-font 50
+  --min-font 8.1
+  font-size var(--responsive)
+  padding 0.2rem
   position relative
   transition padding 700ms, height 700ms, width 700ms
 
@@ -29,7 +32,19 @@
   &:nth-child(12) { grid-area: l; width: .75em; }
   &:nth-child(13) { grid-area: m; height: 3.5em; }
 
+  @media (min-width 31.25em)
+    font-size 16px
+    padding .4rem
+
+    &:nth-child(2),
+    &:nth-child(10)
+      height: calc(.25em + 1vh)
+
 .TimerDisplayInitial .DigitLine
   font-size 5px
   padding 0.4em
+
+  &:nth-child(2),
+  &:nth-child(10)
+    height: calc(.25em + .25vh)
 

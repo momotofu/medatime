@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import DigitLine from '../DigitLine'
 
-import './index.css'
+import './index.styl'
 
 class Digit extends React.Component {
 
