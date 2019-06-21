@@ -65,7 +65,7 @@ const TimerControls = () => {
         onClickCallback={onRestartButtonClick}
       />
       {timerState.currentSeconds === 0
-          && (<Sound src={withPrefix('/static/medatime-finish.mp3')} />)}
+          && (<Sound src="public/medatime-finish.mp3" />)}
     </React.Fragment>
   )
 }
