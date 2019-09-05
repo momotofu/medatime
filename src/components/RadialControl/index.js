@@ -249,8 +249,11 @@ class RadialControl extends React.Component {
             'RadialControl-knob-circle',
           )}
           onMouseDown={this.radialOnMouseDown}
+          onTouchStart={this.radialOnMouseDown}
           onMouseUp={this.radialOnMouseUp}
+          onTouchEnd={this.radialOnMouseUp}
           onMouseOut={this.radialOnMouseUp}
+          onTouchCancel={this.radialOnMouseUp}
           ref={ (el) => this.square = el }
          >
         </div>
