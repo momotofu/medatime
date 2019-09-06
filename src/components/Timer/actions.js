@@ -35,7 +35,7 @@ export const startClock = (prevClearInterval, dispatch) => {
 
   dispatch(
     setStopClockCallback(
-      returnStopClock(
+     returnStopClock(
         clearInterval,
         window,
         setInterval(() => {
@@ -45,13 +45,14 @@ export const startClock = (prevClearInterval, dispatch) => {
     )
   )
 }
-
+// clearInterval.bind(window, intervaleId)
 export const stopClock = (prevClearInterval, dispatch) => {
   if (prevClearInterval) prevClearInterval()
 
   dispatch(setStopClockCallback(null))
 }
 
+// const someAction = setStopClockCallback(getACallback())
 function setStopClockCallback(callback) {
   return {
     type: SET_STOP_CLOCK_CALLBACK,
@@ -62,3 +63,5 @@ function setStopClockCallback(callback) {
 function returnStopClock(callback, context, timerId) {
   return callback.bind(context, timerId)
 }
+
+// const a = returnStopClock.bind(window, () => {}, window, 4)

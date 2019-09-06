@@ -54,6 +54,7 @@ const TimerScreen = (props) => {
   const transitionToTimer = () => {
 		setIsTimerStarted(true)
     startClock(null, dispatch)
+    console.log('Current Milliseconds is ', timerState.currentSeconds)
     dispatch(setInitialSeconds(timerState.currentSeconds))
   }
 
@@ -79,7 +80,12 @@ const TimerScreen = (props) => {
 
     switch (ordinal) {
       case ordinals.seconds:
-        return Math.round(cap(decimalPercentage * 60, 59) * SECOND)
+        // const decimalPercentageConvert = decimalPercentage * 60
+        // const calculatedCap = cap(decimalPercentageConvert, 59) * SECOND
+        // const convertToSeconds = calculatedCap / 1000
+        // const roundSeconds = Math.ceil(convertToSeconds)
+        // const convertBackToMilliseconds = roundSeconds * 1000
+        return Math.ceil((cap(decimalPercentage * 60, 59)) * SECOND / 1000) * 1000
 
       case ordinals.minutes:
         return Math.ceil(cap(decimalPercentage * 60, 59)) * MINUTE
