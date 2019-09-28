@@ -14,6 +14,7 @@ import TimerControls from '../TimerControls'
 import TimerDisplay from '../TimerDisplay'
 import Quotes from '../Quotes'
 import QuoteDisplay from '../QuoteDisplay'
+import ModalContainer from '../ModalContainer'
 import {
   TimerContext,
   setInitialSeconds,
@@ -192,6 +193,14 @@ const TimerScreen = (props) => {
         return <Quotes display={isVisible} />
 	}
 
+  const renderModal = () => {
+    const renderModal = timerState.currentSeconds === 0 && isTimerStarted
+
+    if (renderModal) {
+      return <ModalContainer renderModal={renderModal} />
+    }
+	}
+
   const renderTimerControls = () => {
 		if (isTimerStarted) {
 			return (
@@ -238,6 +247,7 @@ const TimerScreen = (props) => {
       {renderInputField()}
       {renderTimerControls()}
       {renderRadialControls()}
+      {renderModal()}
       <div className="TimerScreen-footer">
         {renderQuotes()}
         <NavButton
