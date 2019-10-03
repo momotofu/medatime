@@ -1,21 +1,21 @@
-import React from 'react'
+import React, {
+  useState,
+  useLayoutEffect,
+  useEffect,
+  useRef,
+} from 'react'
 import Interact from 'interactjs'
 import cn from 'classnames'
 import './index.styl'
 
-class RadialControl extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      squareCoord: {
-        x: props.radius * 2,
-        y: 0,
-      },
-      isSelected: true,
-    }
-  }
+function RadialControl(props) {
+  const [squareCoord, setSquareCoord] = useState()
+  const [isSelected, setIsSelected] = useState()
+  const [originPoint, setOriginPoint] = useState()
+  const [percentage, setPercentage] = useState()
+  const oldPercentage = useRef()
 
-  constrainPointToRadius(origin, destination, radius) {
+  function constrainPointToRadius(origin, destination, radius) {
     /* First get vector from destination and origin
      * Then get unit vector
      * then add radius to unit vector
@@ -39,16 +39,11 @@ class RadialControl extends React.Component {
     return newDestination
   }
 
-  getDegreesFromPoint(point) {
+  function getDegreesFromPoint(point) {
     return Math.atan(point.y / point.x) * 180 / Math.PI
   }
 
-  onMove(event) {
-    const {
-      squareCoord,
-      originPoint,
-      isSelected
-    } = this.state
+  function onMove(event) {
     const target = event.target
 
     if (!isSelected) return
@@ -59,18 +54,18 @@ class RadialControl extends React.Component {
     }
 
     // percentage out of 360 degrees
-    const percentage = this.convertDegreesToPercentage(
-      this.getDegreesFromPoint2(destinationPoint)
+    const percentage = convertDegreesToPercentage(
+      getDegreesFromPoint2(destinationPoint)
     )
 
     // prevent square coords from going beyond 100% or 0%
     // Also constrains the squares coordinates to the radius
-    const adjustedPoint = this.constrainSquareCoord(
+    const adjustedPoint = constrainSquareCoord(
       percentage,
-      this.constrainPointToRadius(
+      constrainPointToRadius(
         originPoint,
         destinationPoint,
-        this.props.radius,
+        props.radius,
       )
     )
 
@@ -80,26 +75,23 @@ class RadialControl extends React.Component {
       && adjustedPoint.y === squareCoord.y)
       return
 
-    const deg = this.getDegreesFromPoint(adjustedPoint)
+    const deg = getDegreesFromPoint(adjustedPoint)
     target.style.webkitTransform =
     target.style.transform =
       'translate(' + adjustedPoint.x + 'px, ' + adjustedPoint.y + 'px) rotate('+ deg + 'deg) '
 
-
-    this.setState({
-      squareCoord: destinationPoint,
-      percentage,
-    })
+      setSquareCoord(destinationPoint)
+      setPercentage(percentage)
   }
 
-  getStrokeDashFrom(percentage, radius) {
+  function getStrokeDashFrom(percentage, radius) {
     const circumference = Math.PI * (radius * 2)
 
     return `${((100 - percentage) / 100) * circumference}px`
   }
 
-  getDegreesFromPoint2(point) {
-    const { originPoint } = this.state
+  function getDegreesFromPoint2(point) {
+    const { originPoint } = state
 
     const deltaX = point.x - originPoint.x
     const deltaY = point.y - originPoint.y
@@ -108,7 +100,7 @@ class RadialControl extends React.Component {
     return radians * (180 / Math.PI)
   }
 
-  convertDegreesToPercentage(degrees) {
+  function convertDegreesToPercentage(degrees) {
     if (degrees < 0)
       degrees = -1 * degrees
     else
@@ -122,7 +114,7 @@ class RadialControl extends React.Component {
       return Math.ceil(percentage)
   }
 
-  constrainSquareCoord(curPercentage, newControlPoint) {
+  function constrainSquareCoord(curPercentage, newControlPoint) {
     // constrains the square control from dragging beyond
     // 100% or 0%
     const prevPercentage = this.state.percentage
@@ -137,13 +129,13 @@ class RadialControl extends React.Component {
     return newControlPoint
   }
 
-  componentDidMount() {
+  useLayoutEffect(() => {
     const originRect = this.circle.getBoundingClientRect()
     const originPoint = {
       x: originRect.x + originRect.width / 2,
       y: originRect.y + originRect.height / 2,
     }
-    const squareCoord =  {
+    const squareCoord = {
       x: originPoint.x + this.props.radius,
       y: originPoint.y - 1,
     }
@@ -172,23 +164,20 @@ class RadialControl extends React.Component {
           //console.log('end event: ', event.speed)
         },
       })
-  }
+  })
 
-  componentDidUpdate(prevProps, prevState) {
-    const { percentage } = this.state
-    const { percentage: oldPercentage } = prevState
-    const { onChange } = this.props
-
+  useEffect(() => {
     if (oldPercentage !== undefined
       && percentage !== undefined
-      && oldPercentage !== percentage
+      && oldPercentage.current !== percentage
       && typeof onChange === 'function'
     ) {
+      oldPercentage.current = percentage
       onChange(percentage)
     }
-  }
+  }, [precentage])
 
-  radialOnMouseDown = (event) => {
+  function radialOnMouseDown(event) {
     event.preventDefault()
     event.stopPropagation()
     const { onMouseDown } = this.props
@@ -197,72 +186,70 @@ class RadialControl extends React.Component {
     onMouseDown()
   }
 
-  radialOnMouseUp = () => {
+  function radialOnMouseUp() {
     const { onMouseUp } = this.props
 
     this.setState({ isSelected: false })
     onMouseUp()
   }
 
-  render() {
-    const {
-      children,
-      radius,
-    } = this.props
+  const {
+    children,
+    radius,
+  } = props
 
-    const height = radius * 2 + 4
-    const width = height
+  const height = radius * 2 + 4
+  const width = height
 
-    return (
-      <div className='RadialControl' style={{ height, width }}>
-      <svg
-        className='RadialControl-circle-container'
-        height={height}
-        width={width}
-        xmlns='http://www.w3.org/2000/svg'>
-          <circle
-            className='RadialControl-circle RadialControl-circle-background'
-            ref={ (el) => this.circle = el}
-            cx='50%'
-            cy='50%'
-            r={radius}
-            strokeDasharray={this.getStrokeDashFrom(0, radius)}
-            strokeDashoffset={0}
-            fill='none'
-          />
-          <circle
-            className='RadialControl-circle'
-            cx='50%'
-            cy='50%'
-            r={radius}
-            strokeDasharray={this.getStrokeDashFrom(0, radius)}
-            strokeDashoffset={this.getStrokeDashFrom(
-              this.state.percentage,
-              radius,
-            )}
-            fill='none'
-          />
-        </svg>
-        <div
-          className={cn(
-            'RadialControl-knob',
-            'RadialControl-knob-circle',
+  return (
+    <div className='RadialControl' style={{ height, width }}>
+    <svg
+      className='RadialControl-circle-container'
+      height={height}
+      width={width}
+      xmlns='http://www.w3.org/2000/svg'>
+        <circle
+          className='RadialControl-circle RadialControl-circle-background'
+          ref={ (el) => this.circle = el}
+          cx='50%'
+          cy='50%'
+          r={radius}
+          strokeDasharray={this.getStrokeDashFrom(0, radius)}
+          strokeDashoffset={0}
+          fill='none'
+        />
+        <circle
+          className='RadialControl-circle'
+          cx='50%'
+          cy='50%'
+          r={radius}
+          strokeDasharray={this.getStrokeDashFrom(0, radius)}
+          strokeDashoffset={this.getStrokeDashFrom(
+            this.state.percentage,
+            radius,
           )}
-          onMouseDown={this.radialOnMouseDown}
-          onTouchStart={this.radialOnMouseDown}
-          onMouseUp={this.radialOnMouseUp}
-          onTouchEnd={this.radialOnMouseUp}
-          onMouseOut={this.radialOnMouseUp}
-          onTouchCancel={this.radialOnMouseUp}
-          ref={ (el) => this.square = el }
-         >
-        </div>
-        <div className='RadialControl-children'>
-         { children }
-         </div>
+          fill='none'
+        />
+      </svg>
+      <div
+        className={cn(
+          'RadialControl-knob',
+          'RadialControl-knob-circle',
+        )}
+        onMouseDown={this.radialOnMouseDown}
+        onTouchStart={this.radialOnMouseDown}
+        onMouseUp={this.radialOnMouseUp}
+        onTouchEnd={this.radialOnMouseUp}
+        onMouseOut={this.radialOnMouseUp}
+        onTouchCancel={this.radialOnMouseUp}
+        ref={ (el) => this.square = el }
+       >
       </div>
-    )
-  }
+      <div className='RadialControl-children'>
+       { children }
+       </div>
+    </div>
+  )
 }
 
 export default RadialControl
