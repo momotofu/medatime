@@ -13,6 +13,8 @@ function RadialControl(props) {
   const [isSelected, setIsSelected] = useState()
   const [originPoint, setOriginPoint] = useState()
   const [percentage, setPercentage] = useState()
+  const [mounted, setMounted] = useState()
+  const mountedRef = useRef()
   const oldPercentage = useRef()
   const circleRef = useRef()
   const squareRef = useRef()
@@ -52,9 +54,13 @@ function RadialControl(props) {
   }
 
   function onMove(event) {
+    console.log('onMove called: ', event)
+    console.log('originPoint: ', originPoint)
+    console.log('squareCoord: ', squareCoord)
     const target = event.target
 
-    if (!isSelected) return
+    //if (!isSelected) return
+    if (!squareCoord) return
 
     const destinationPoint = {
       x: squareCoord.x + event.dx,
@@ -77,6 +83,7 @@ function RadialControl(props) {
       )
     )
 
+    console.log('just before return')
     // If the draggable event coords
     // match the squareCoords don't do any work
     if (adjustedPoint.x === squareCoord.x
@@ -88,8 +95,9 @@ function RadialControl(props) {
     target.style.transform =
       'translate(' + adjustedPoint.x + 'px, ' + adjustedPoint.y + 'px) rotate('+ deg + 'deg) '
 
-      setSquareCoord(destinationPoint)
-      setPercentage(percentage)
+    setSquareCoord(destinationPoint)
+    setPercentage(percentage)
+    console.log(destinationPoint, percentage)
   }
 
   function getStrokeDashFrom(percentage, radius) {
@@ -136,6 +144,34 @@ function RadialControl(props) {
   }
 
   useLayoutEffect(() => {
+    if(mountedRef.current)
+      return
+
+    if (originPoint && squareCoord && !mountedRef.current) {
+      const eventObject = {
+        target: squareRef.current,
+        dx: 0,
+        dy: 0,
+      }
+
+      onMove(eventObject)
+
+      Interact(squareRef.current)
+        .draggable({
+          onstart: (event) => {
+            //console.log('start event: ', event.speed)
+          },
+          onmove: onMove,
+          onend: (event) => {
+            //console.log('end event: ', event.speed)
+          },
+        })
+
+      mountedRef.current = true
+    }
+  }, [originPoint, squareCoord])
+
+  useLayoutEffect(() => {
     const originRect = circleRef.current.getBoundingClientRect()
     const originPoint = {
       x: originRect.x + originRect.width / 2,
@@ -145,29 +181,9 @@ function RadialControl(props) {
       x: originPoint.x + radius,
       y: originPoint.y - 1,
     }
-    console.log('originRect: ', originRect)
 
     setOriginPoint(originPoint)
     setSquareCoord(squareCoord)
-
-    const eventObject = {
-      target: squareRef.current,
-      dx: 0,
-      dy: 0,
-    }
-
-    onMove(eventObject)
-
-    Interact(squareRef.current)
-      .draggable({
-        onstart: (event) => {
-          //console.log('start event: ', event.speed)
-        },
-        onmove: onMove,
-        onend: (event) => {
-          //console.log('end event: ', event.speed)
-        },
-      })
   }, [])
 
   useEffect(() => {
