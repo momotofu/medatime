@@ -24,7 +24,6 @@ function RadialControl(props) {
   } = props
 
   useLayoutEffect(() => {
-    console.log('effect layout called')
     const originRect = circleRef.current.getBoundingClientRect()
     const originPoint = {
       x: originRect.x + originRect.width / 2,
@@ -34,16 +33,6 @@ function RadialControl(props) {
       x: originPoint.x + radius,
       y: originPoint.y - 1,
     }
-
-    const eventObject = {
-      target: squareRef.current,
-      movementX: 0,
-      movementY: 0,
-      originPoint,
-      squareCoord,
-    }
-
-    //onMove(eventObject)
 
     setOriginPoint(originPoint)
     setSquareCoord(squareCoord)
@@ -89,7 +78,6 @@ function RadialControl(props) {
   }
 
   function onMove(event) {
-    console.log('onMove called: ', event)
     const target = event.target
     const currentOriginPoint = event.originPoint ? event.originPoint : originPoint
     const currentSquareCoord = event.squareCoord ? event.squareCoord : squareCoord
