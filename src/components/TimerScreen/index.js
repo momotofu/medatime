@@ -41,10 +41,6 @@ const TimerScreen = (props) => {
   const [isTimerStarted, setIsTimerStarted] = useState(false)
   const [highlightedSection, setHighlightedSection] = useState(null)
 
-  useEffect(() => {
-    console.log('timerState: ', timerState)
-  }, [timerState])
-
   if (timerState.currentSeconds === 0
     && isTimerStarted
     && timerState.stopClockCallback

@@ -43,7 +43,9 @@ function RadialControl(props) {
       squareCoord,
     }
 
-    onMove(eventObject)
+    squareRef.current.style.transform = `translateX(${radius}px)`
+
+    //onMove(eventObject)
 
     setOriginPoint(originPoint)
     setSquareCoord(squareCoord)
