@@ -207,7 +207,7 @@ const TimerScreen = (props) => {
             onMouseUp={onMouseUp}
             onChange={secondsRadialOnChange}
             radius={150}
-          >
+          >{ /*
             <RadialControl
               onMouseDown={minutesOnMouseDown}
               onMouseUp={onMouseUp}
@@ -221,6 +221,7 @@ const TimerScreen = (props) => {
                 radius={50}
               />
             </RadialControl>
+            */}
           </RadialControl>
         </div>
 			)

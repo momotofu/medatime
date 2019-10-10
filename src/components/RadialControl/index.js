@@ -89,6 +89,7 @@ function RadialControl(props) {
   }
 
   function onMove(event) {
+    console.log('onMove called: ', event)
     const target = event.target
     const currentOriginPoint = event.originPoint ? event.originPoint : originPoint
     const currentSquareCoord = event.squareCoord ? event.squareCoord : squareCoord
