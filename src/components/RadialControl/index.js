@@ -12,7 +12,7 @@ function RadialControl(props) {
   const [squareCoord, setSquareCoord] = useState()
   const [isSelected, setIsSelected] = useState()
   const [originPoint, setOriginPoint] = useState()
-  const [percentage, setPercentage] = useState()
+  const [percentage, setPercentage] = useState(0)
   const oldPercentage = useRef()
   const circleRef = useRef()
   const squareRef = useRef()
