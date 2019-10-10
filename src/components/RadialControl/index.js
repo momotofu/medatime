@@ -54,17 +54,13 @@ function RadialControl(props) {
   }
 
   function onMove(event) {
-    console.log('onMove called: ', event)
-    console.log('originPoint: ', originPoint)
-    console.log('squareCoord: ', squareCoord)
     const target = event.target
 
-    //if (!isSelected) return
     if (!squareCoord) return
 
     const destinationPoint = {
-      x: squareCoord.x + event.dx,
-      y: squareCoord.y + event.dy
+      x: squareCoord.x + event.movementX,
+      y: squareCoord.y + event.movementY,
     }
 
     // percentage out of 360 degrees
@@ -83,7 +79,6 @@ function RadialControl(props) {
       )
     )
 
-    console.log('just before return')
     // If the draggable event coords
     // match the squareCoords don't do any work
     if (adjustedPoint.x === squareCoord.x
@@ -97,7 +92,6 @@ function RadialControl(props) {
 
     setSquareCoord(destinationPoint)
     setPercentage(percentage)
-    console.log(destinationPoint, percentage)
   }
 
   function getStrokeDashFrom(percentage, radius) {
@@ -150,22 +144,11 @@ function RadialControl(props) {
     if (originPoint && squareCoord && !mountedRef.current) {
       const eventObject = {
         target: squareRef.current,
-        dx: 0,
-        dy: 0,
+        movementX: 0,
+        movementY: 0,
       }
 
       onMove(eventObject)
-
-      Interact(squareRef.current)
-        .draggable({
-          onstart: (event) => {
-            //console.log('start event: ', event.speed)
-          },
-          onmove: onMove,
-          onend: (event) => {
-            //console.log('end event: ', event.speed)
-          },
-        })
 
       mountedRef.current = true
     }
@@ -198,12 +181,16 @@ function RadialControl(props) {
   }, [percentage])
 
   function radialOnMouseDown(event) {
-    event.preventDefault()
-    event.stopPropagation()
     const { onMouseDown } = props
 
     setIsSelected(true);
     onMouseDown()
+  }
+
+  function radialOnMouseMove(event) {
+    if (!isSelected) return
+
+    onMove(event)
   }
 
   function radialOnMouseUp() {
@@ -251,12 +238,14 @@ function RadialControl(props) {
           'RadialControl-knob',
           'RadialControl-knob-circle',
         )}
-        onMouseDown={radialOnMouseDown}
         onTouchStart={radialOnMouseDown}
-        onMouseUp={radialOnMouseUp}
         onTouchEnd={radialOnMouseUp}
-        onMouseOut={radialOnMouseUp}
         onTouchCancel={radialOnMouseUp}
+        onTouchMove={radialOnMouseMove}
+        onMouseMove={radialOnMouseMove}
+        onMouseUp={radialOnMouseUp}
+        onMouseDown={radialOnMouseDown}
+        onMouseOut={radialOnMouseUp}
         ref={squareRef}
        >
       </div>
