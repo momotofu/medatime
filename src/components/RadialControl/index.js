@@ -23,6 +23,43 @@ function RadialControl(props) {
     children,
   } = props
 
+  useLayoutEffect(() => {
+    console.log('effect layout called')
+    const originRect = circleRef.current.getBoundingClientRect()
+    const originPoint = {
+      x: originRect.x + originRect.width / 2,
+      y: originRect.y + originRect.height / 2,
+    }
+    const squareCoord = {
+      x: originPoint.x + radius,
+      y: originPoint.y - 1,
+    }
+
+    const eventObject = {
+      target: squareRef.current,
+      movementX: 0,
+      movementY: 0,
+      originPoint,
+      squareCoord,
+    }
+
+    onMove(eventObject)
+
+    setOriginPoint(originPoint)
+    setSquareCoord(squareCoord)
+  }, [])
+
+  useEffect(() => {
+    if (oldPercentage !== undefined
+      && percentage !== undefined
+      && oldPercentage.current !== percentage
+      && typeof onChange === 'function'
+    ) {
+      oldPercentage.current = percentage
+      onChange(percentage)
+    }
+  }, [percentage])
+
   function constrainPointToRadius(origin, destination, radius) {
     /* First get vector from destination and origin
      * Then get unit vector
@@ -137,41 +174,6 @@ function RadialControl(props) {
     return newControlPoint
   }
 
-  useLayoutEffect(() => {
-    const originRect = circleRef.current.getBoundingClientRect()
-    const originPoint = {
-      x: originRect.x + originRect.width / 2,
-      y: originRect.y + originRect.height / 2,
-    }
-    const squareCoord = {
-      x: originPoint.x + radius,
-      y: originPoint.y - 1,
-    }
-
-    const eventObject = {
-      target: squareRef.current,
-      movementX: 0,
-      movementY: 0,
-      originPoint,
-      squareCoord,
-    }
-
-    onMove(eventObject)
-
-    setOriginPoint(originPoint)
-    setSquareCoord(squareCoord)
-  }, [])
-
-  useEffect(() => {
-    if (oldPercentage !== undefined
-      && percentage !== undefined
-      && oldPercentage.current !== percentage
-      && typeof onChange === 'function'
-    ) {
-      oldPercentage.current = percentage
-      onChange(percentage)
-    }
-  }, [percentage])
 
   function radialOnMouseDown(event) {
     const { onMouseDown } = props
