@@ -41,6 +41,10 @@ const TimerScreen = (props) => {
   const [isTimerStarted, setIsTimerStarted] = useState(false)
   const [highlightedSection, setHighlightedSection] = useState(null)
 
+  useEffect(() => {
+    console.log('timerState: ', timerState)
+  }, [timerState])
+
   if (timerState.currentSeconds === 0
     && isTimerStarted
     && timerState.stopClockCallback
@@ -79,7 +83,7 @@ const TimerScreen = (props) => {
 
     switch (ordinal) {
       case ordinals.seconds:
-        return Math.round(cap(decimalPercentage * 60, 59) * SECOND)
+        return Math.round(cap(decimalPercentage * 60, 59)) * SECOND
 
       case ordinals.minutes:
         return Math.ceil(cap(decimalPercentage * 60, 59)) * MINUTE
