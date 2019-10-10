@@ -43,8 +43,6 @@ function RadialControl(props) {
       squareCoord,
     }
 
-    squareRef.current.style.transform = `translateX(${radius}px)`
-
     //onMove(eventObject)
 
     setOriginPoint(originPoint)
@@ -236,6 +234,7 @@ function RadialControl(props) {
           'RadialControl-knob',
           'RadialControl-knob-circle',
         )}
+        style={{ transform: `translateX(${radius}px)` }}
         onTouchStart={radialOnMouseDown}
         onTouchEnd={radialOnMouseUp}
         onTouchCancel={radialOnMouseUp}
