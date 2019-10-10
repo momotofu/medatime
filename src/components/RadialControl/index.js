@@ -13,8 +13,6 @@ function RadialControl(props) {
   const [isSelected, setIsSelected] = useState()
   const [originPoint, setOriginPoint] = useState()
   const [percentage, setPercentage] = useState()
-  const [mounted, setMounted] = useState()
-  const mountedRef = useRef()
   const oldPercentage = useRef()
   const circleRef = useRef()
   const squareRef = useRef()
@@ -55,17 +53,19 @@ function RadialControl(props) {
 
   function onMove(event) {
     const target = event.target
+    const currentOriginPoint = event.originPoint ? event.originPoint : originPoint
+    const currentSquareCoord = event.squareCoord ? event.squareCoord : squareCoord
 
-    if (!squareCoord) return
+    if (!currentSquareCoord) return
 
     const destinationPoint = {
-      x: squareCoord.x + event.movementX,
-      y: squareCoord.y + event.movementY,
+      x: currentSquareCoord.x + event.movementX,
+      y: currentSquareCoord.y + event.movementY,
     }
 
     // percentage out of 360 degrees
     const percentage = convertDegreesToPercentage(
-      getDegreesFromPoint2(destinationPoint)
+      getDegreesFromPoint2(destinationPoint, currentOriginPoint)
     )
 
     // prevent square coords from going beyond 100% or 0%
@@ -73,7 +73,7 @@ function RadialControl(props) {
     const adjustedPoint = constrainSquareCoord(
       percentage,
       constrainPointToRadius(
-        originPoint,
+        currentOriginPoint,
         destinationPoint,
         radius,
       )
@@ -81,8 +81,8 @@ function RadialControl(props) {
 
     // If the draggable event coords
     // match the squareCoords don't do any work
-    if (adjustedPoint.x === squareCoord.x
-      && adjustedPoint.y === squareCoord.y)
+    if (adjustedPoint.x === currentSquareCoord.x
+      && adjustedPoint.y === currentSquareCoord.y)
       return
 
     const deg = getDegreesFromPoint(adjustedPoint)
@@ -100,7 +100,7 @@ function RadialControl(props) {
     return `${((100 - percentage) / 100) * circumference}px`
   }
 
-  function getDegreesFromPoint2(point) {
+  function getDegreesFromPoint2(point, originPoint) {
     const deltaX = point.x - originPoint.x
     const deltaY = point.y - originPoint.y
     const radians = Math.atan2(deltaY, deltaX)
@@ -138,23 +138,6 @@ function RadialControl(props) {
   }
 
   useLayoutEffect(() => {
-    if(mountedRef.current)
-      return
-
-    if (originPoint && squareCoord && !mountedRef.current) {
-      const eventObject = {
-        target: squareRef.current,
-        movementX: 0,
-        movementY: 0,
-      }
-
-      onMove(eventObject)
-
-      mountedRef.current = true
-    }
-  }, [originPoint, squareCoord])
-
-  useLayoutEffect(() => {
     const originRect = circleRef.current.getBoundingClientRect()
     const originPoint = {
       x: originRect.x + originRect.width / 2,
@@ -164,6 +147,16 @@ function RadialControl(props) {
       x: originPoint.x + radius,
       y: originPoint.y - 1,
     }
+
+    const eventObject = {
+      target: squareRef.current,
+      movementX: 0,
+      movementY: 0,
+      originPoint,
+      squareCoord,
+    }
+
+    onMove(eventObject)
 
     setOriginPoint(originPoint)
     setSquareCoord(squareCoord)
