@@ -9,3 +9,5 @@ A progressive web app to keep track of your meditation progress. The timer is no
 3. Install JavaScript dependencies by running $ `npm i`
 4. Run `gatsby develop` to start up your dev server
 5. Open your browser to `localhost:8000`
+
+For more CLI options check out the [Gatsby docs](https://www.gatsbyjs.org/docs/gatsby-cli/)
