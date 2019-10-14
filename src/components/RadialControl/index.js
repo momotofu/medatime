@@ -222,6 +222,7 @@ function RadialControl(props) {
           'RadialControl-knob',
           'RadialControl-knob-circle',
         )}
+        draggable={false}
         style={{ transform: `translateX(${radius}px)` }}
         onTouchStart={radialOnMouseDown}
         onTouchEnd={radialOnMouseUp}

@@ -171,6 +171,7 @@ const TimerScreen = (props) => {
         <TextInputField
           onEnterCallback={transitionToTimer}
           onKeydownCallback={inputKeydownCallback}
+          placeholder={'Enter a time (20 minutes, 20m, 1h etc.)'}
         />
       )
     }
