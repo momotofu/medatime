@@ -81,12 +81,16 @@ const TimerScreen = (props) => {
 
     switch (ordinal) {
       case ordinals.seconds:
+<<<<<<< HEAD
         // const decimalPercentageConvert = decimalPercentage * 60
         // const calculatedCap = cap(decimalPercentageConvert, 59) * SECOND
         // const convertToSeconds = calculatedCap / 1000
         // const roundSeconds = Math.ceil(convertToSeconds)
         // const convertBackToMilliseconds = roundSeconds * 1000
         return Math.ceil((cap(decimalPercentage * 60, 59)) * SECOND / 1000) * 1000
+=======
+        return Math.round(cap(decimalPercentage * 60, 59)) * SECOND
+>>>>>>> c15a974236029bf69b8fdfcc418aaa09ed1cdf89
 
       case ordinals.minutes:
         return Math.ceil(cap(decimalPercentage * 60, 59)) * MINUTE
@@ -178,6 +182,7 @@ const TimerScreen = (props) => {
         <TextInputField
           onEnterCallback={transitionToTimer}
           onKeydownCallback={inputKeydownCallback}
+          placeholder={'Enter a time (20 minutes, 20m, 1h etc.)'}
         />
       )
     }
