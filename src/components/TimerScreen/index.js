@@ -14,7 +14,7 @@ import TimerControls from '../TimerControls'
 import TimerDisplay from '../TimerDisplay'
 import Quotes from '../Quotes'
 import QuoteDisplay from '../QuoteDisplay'
-import ModalContainer from '../ModalContainer'
+import Modal, { useModal } from '../Modal'
 import {
   TimerContext,
   setInitialSeconds,
@@ -41,6 +41,14 @@ const TimerScreen = (props) => {
   const { state: timerState, dispatch } = useContext(TimerContext)
   const [isTimerStarted, setIsTimerStarted] = useState(false)
   const [highlightedSection, setHighlightedSection] = useState(null)
+  const [modalProps, openModal] = useModal(false)
+  useEffect(() => {
+    const showModal = timerState.currentSeconds === 0 && isTimerStarted
+    const {isVisible} = modalProps  
+    if (showModal && !isVisible) {
+      openModal()
+    }
+  },[timerState])
 
   if (timerState.currentSeconds === 0
     && isTimerStarted
@@ -188,17 +196,8 @@ const TimerScreen = (props) => {
   }
 
   const renderQuotes = () => {
-    const isVisible = timerState.currentSeconds === 0
-      && isTimerStarted
+    const isVisible = timerState.currentSeconds === 0 && isTimerStarted
         return <Quotes display={isVisible} />
-	}
-
-  const renderModal = () => {
-    const renderModal = timerState.currentSeconds === 0 && isTimerStarted
-
-    if (renderModal) {
-      return <ModalContainer renderModal={renderModal} />
-    }
 	}
 
   const renderTimerControls = () => {
@@ -247,7 +246,7 @@ const TimerScreen = (props) => {
       {renderInputField()}
       {renderTimerControls()}
       {renderRadialControls()}
-      {renderModal()}
+      <Modal {...modalProps} />
       <div className="TimerScreen-footer">
         {renderQuotes()}
         <NavButton
