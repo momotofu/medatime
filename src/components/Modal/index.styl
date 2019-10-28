@@ -13,7 +13,44 @@
 
 .ModalContainer
   background-color white
-  padding 5rem 8rem
+  padding 4rem
+  position relative
+
+.ModalClose {
+  background-color black
+  border none
+  border-radius 10rem
+  cursor pointer
+  height 2rem
+  padding 0
+  position absolute
+  right -1rem
+  top -1rem
+  width 2rem
+  z-index 10
+}
+
+.ModalCloseIcon
+  border 1px solid
+  border-radius 10rem
+  height inherit
+  width inherit
 
 .isVisible
   visibility visible
+
+.ButtonList
+  align-items center
+  display flex
+  flex-direction column
+  list-style none
+  margin 0
+  padding-left 0
+
+.Button
+  background black
+  border 1px solid #bbb
+  color white
+  cursor pointer
+  font-family sans-serif
+  padding 1rem
