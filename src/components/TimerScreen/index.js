@@ -6,6 +6,7 @@ import React, {
 import PropTypes from 'prop-types'
 
 // Imported components
+import Survey from '../Survey'
 import TextInputField from '../TextInputField'
 import Timer from '../Timer'
 import RadialControl from '../RadialControl'
@@ -232,6 +233,17 @@ const TimerScreen = (props) => {
 		}
 	}
 
+  const surveyData = [
+    { 
+      question: 'Is this real life?', 
+      questionType: 'multipleChoice', 
+      options: [
+        { value: 'Red Pill' }, 
+        {value: 'Blue Pill' }
+      ] 
+    }
+  ]
+
   return (
     <div className="TimerScreen">
       <TimerDisplay
@@ -242,6 +254,7 @@ const TimerScreen = (props) => {
       {renderTimerControls()}
       {renderRadialControls()}
       <Modal {...modalProps} />
+      <Survey questions={surveyData} />
       <div className="TimerScreen-footer">
         {renderQuotes()}
         <NavButton
