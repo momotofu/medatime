@@ -42,13 +42,13 @@ const TimerScreen = (props) => {
   const [isTimerStarted, setIsTimerStarted] = useState(false)
   const [highlightedSection, setHighlightedSection] = useState(null)
   const [modalProps, openModal] = useModal(false)
-  useEffect(() => {
-    const showModal = timerState.currentSeconds === 0 && isTimerStarted
-    const {isVisible} = modalProps  
-    if (showModal && !isVisible) {
-      openModal()
-    }
-  },[timerState])
+  // useEffect(() => {
+  //   const showModal = timerState.currentSeconds === 0 && isTimerStarted
+  //   const {isVisible} = modalProps  
+  //   if (showModal && !isVisible) {
+  //     openModal()
+  //   }
+  // },[timerState])
 
   if (timerState.currentSeconds === 0
     && isTimerStarted
@@ -63,7 +63,6 @@ const TimerScreen = (props) => {
   const transitionToTimer = () => {
 		setIsTimerStarted(true)
     startClock(null, dispatch)
-    console.log('Current Milliseconds is ', timerState.currentSeconds)
     dispatch(setInitialSeconds(timerState.currentSeconds))
   }
 
