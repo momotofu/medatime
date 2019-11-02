@@ -5,22 +5,22 @@
   "author": "Chris and Micah",
   "dependencies": {
     "classnames": "^2.2.6",
-    "gatsby": "^2.0.53",
-    "gatsby-cli": "^2.8.8",
-    "gatsby-image": "^2.0.20",
-    "gatsby-plugin-manifest": "^2.0.9",
-    "gatsby-plugin-offline": "^2.0.16",
-    "gatsby-plugin-react-helmet": "^3.0.2",
-    "gatsby-plugin-sharp": "^2.0.14",
-    "gatsby-plugin-stylus": "^2.0.3",
-    "gatsby-source-filesystem": "^2.0.8",
-    "gatsby-transformer-json": "^2.1.11",
-    "gatsby-transformer-sharp": "^2.1.8",
+    "gatsby": "^2.17.7",
+    "gatsby-cli": "^2.6.0",
+    "gatsby-image": "^2.2.30",
+    "gatsby-plugin-manifest": "^2.2.26",
+    "gatsby-plugin-offline": "^3.0.17",
+    "gatsby-plugin-react-helmet": "^3.1.13",
+    "gatsby-plugin-sharp": "^2.2.36",
+    "gatsby-plugin-stylus": "^2.1.14",
+    "gatsby-source-filesystem": "^2.1.35",
+    "gatsby-transformer-json": "^2.2.16",
+    "gatsby-transformer-sharp": "^2.3.2",
     "interactjs": "^1.4.9",
     "prop-types": "^15.6.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-helmet": "^5.2.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-helmet": "^5.2.1",
     "rupture": "^0.7.1",
     "update": "^0.7.4",
     "words-to-time": "^1.0.0"
@@ -42,7 +42,7 @@
     "npm": "6.4.1"
   },
   "devDependencies": {
-    "prettier": "^1.15.2"
+    "prettier": "^1.18.2"
   },
   "repository": {
     "type": "git",
