@@ -39,9 +39,11 @@ const Modal = (props) => {
     )
   }
 
+  const win = window ? window : { document: { body: <div></div> } }
+
   return createPortal(
     renderModal(),
-    window.document.body
+    win.document.body,
   )
 }
 
