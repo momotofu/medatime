@@ -13,9 +13,11 @@ function RadialControl(props) {
   const [isSelected, setIsSelected] = useState()
   const [originPoint, setOriginPoint] = useState()
   const [percentage, setPercentage] = useState(0)
+  const [touchPos, setTouchPos] = useState(0)
   const oldPercentage = useRef()
   const circleRef = useRef()
   const squareRef = useRef()
+  const prevTouchPosRef = usePrevious(touchPos)
 
   const {
     onChange,
@@ -84,10 +86,32 @@ function RadialControl(props) {
 
     if (!currentSquareCoord) return
 
-    const destinationPoint = {
-      x: currentSquareCoord.x + event.movementX,
-      y: currentSquareCoord.y + event.movementY,
+    let eventX = event.movementX
+    let eventY = event.movementY
+
+    if (event.type === 'touchmove') {
+      const touch = event.touches[0]
+
+      if (touchPos && prevTouchPosRef) {
+        eventX = touchPos.x - prevTouchPosRef.x
+        eventY = touchPos.y - prevTouchPosRef.y
+      } else {
+        eventX = 0
+        eventY = 0
+      }
+
+      setTouchPos({
+        x: touch.clientX,
+        y: touch.clientY,
+      })
+
     }
+
+    const destinationPoint = {
+      x: currentSquareCoord.x + eventX,
+      y: currentSquareCoord.y + eventY,
+    }
+
 
     // percentage out of 360 degrees
     const percentage = convertDegreesToPercentage(
@@ -240,6 +264,14 @@ function RadialControl(props) {
        </div>
     </div>
   )
+}
+
+function usePrevious(value) {
+  const ref = useRef()
+  useEffect(() => {
+    ref.current = value
+  })
+  return ref.current
 }
 
 export default RadialControl
