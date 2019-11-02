@@ -39,12 +39,14 @@ const Modal = (props) => {
     )
   }
 
-  const win = typeof window !== 'undefined' ? window : { document: { body: <div></div> } }
+  if (typeof window === 'undefined') {
+    return createPortal(
+      renderModal(),
+      window.document.body,
+    )
+  }
 
-  return createPortal(
-    renderModal(),
-    win.document.body,
-  )
+  return <div></div>
 }
 
 export default Modal
