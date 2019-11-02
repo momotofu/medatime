@@ -41,7 +41,7 @@ const Modal = (props) => {
 
   return createPortal(
     renderModal(),
-    document.body
+    window.document.body
   )
 }
 
