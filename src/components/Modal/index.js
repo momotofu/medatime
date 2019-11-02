@@ -39,7 +39,7 @@ const Modal = (props) => {
     )
   }
 
-  const win = window ? window : { document: { body: <div></div> } }
+  const win = typeof window !== 'undefined' ? window : { document: { body: <div></div> } }
 
   return createPortal(
     renderModal(),
