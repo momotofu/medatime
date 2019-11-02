@@ -1,7 +1,6 @@
 import React, {
   useState,
   useEffect,
-  useRef,
   useContext,
 } from 'react'
 import cn from 'classnames'
@@ -18,7 +17,7 @@ function TimerProgressBar(props) {
     className
   } = props
 
-  const { state: timerState, dispatch } = useContext(TimerContext)
+  const { state: timerState } = useContext(TimerContext)
 
   const [offset, setOffset] = useState(0)
   const [percent, setPercent] = useState(

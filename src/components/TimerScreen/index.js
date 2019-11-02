@@ -3,17 +3,14 @@ import React, {
   useEffect,
   useContext,
 } from 'react'
-import PropTypes from 'prop-types'
 
 // Imported components
 import TextInputField from '../TextInputField'
-import Timer from '../Timer'
 import RadialControl from '../RadialControl'
 import NavButton from '../NavButton'
 import TimerControls from '../TimerControls'
 import TimerDisplay from '../TimerDisplay'
 import Quotes from '../Quotes'
-import QuoteDisplay from '../QuoteDisplay'
 import Modal, { useModal } from '../Modal'
 import {
   TimerContext,
@@ -95,6 +92,8 @@ const TimerScreen = (props) => {
 
       case ordinals.hours:
         return Math.ceil(cap(decimalPercentage * 24, 23)) * HOUR
+      default:
+        return Math.round(cap(decimalPercentage * 60, 59)) * SECOND
     }
   }
 

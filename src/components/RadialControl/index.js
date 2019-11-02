@@ -4,7 +4,6 @@ import React, {
   useEffect,
   useRef,
 } from 'react'
-import Interact from 'interactjs'
 import cn from 'classnames'
 import './index.styl'
 

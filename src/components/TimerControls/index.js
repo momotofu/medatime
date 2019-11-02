@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react'
-import PropTypes from 'prop-types'
 
 import TimerControlButton, { controlTypes } from '../TimerControlButton'
 import TimerProgressBar from '../TimerProgressBar'
 import Sound from '../Sound'
-import { withPrefix } from 'gatsby'
 import {
   TimerContext,
   startClock,

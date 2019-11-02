@@ -14,7 +14,7 @@ const QuoteDisplay = (props) => {
   return (
     <div className={cn(
       "QuoteDisplay",
-    { ["QuoteDisplay-visible"]: display },
+    { "QuoteDisplay-visible": display },
     )}>
       <p className="QuoteDisplay-quote">
         {`"${quote}"`}

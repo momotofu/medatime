@@ -1,7 +1,6 @@
 import React, {
   useReducer,
 } from 'react'
-import PropTypes from 'prop-types'
 
 import timerReducer from './reducer'
 
